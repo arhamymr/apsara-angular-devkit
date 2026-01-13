@@ -1,21 +1,20 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-users',
-  imports: [RouterOutlet],
+  standalone: true,
   template: `
-    <div class="page">
-      <h1>{{ title() }}</h1>
-      <p>User management page.</p>
-      <router-outlet />
+    <div class="page-container p-6">
+      <h1 class="text-2xl font-semibold mb-2">Users</h1>
+      <p class="text-gray-600 mb-6">User management - Coming soon</p>
+      <div class="placeholder-card p-8 text-center text-gray-400">
+        User management under development
+      </div>
     </div>
   `,
   styles: [`
-    .page { padding: 2rem; }
-    h1 { color: #f57c00; }
+    .page-container { max-width: 1200px; margin: 0 auto; padding: 32px; }
+    .placeholder-card { background: #f5f5f5; border-radius: 8px; }
   `]
 })
-export class UsersComponent {
-  protected readonly title = signal('Users Page');
-}
+export class UsersComponent {}

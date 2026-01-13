@@ -1,36 +1,36 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import { ButtonComponent } from '@shared/ui/button/button.component';
 
 @Component({
   selector: 'app-hero-section',
-  imports: [MatIconModule, MatButtonModule],
+  standalone: true,
+  imports: [ButtonComponent],
   template: `
     <section class="hero-section">
       <div class="hero-content">
         <div class="logo-badge">
-          <mat-icon>code</mat-icon>
+          <span>&lt;/&gt;</span>
         </div>
         <h1 class="hero-title">Angular Dev Starter</h1>
         <p class="hero-subtitle">
-          A modern Angular boilerplate with Material Design, reusable components, 
-          and best practices built-in. Jumpstart your next project!
+          A modern Angular boilerplate with reusable components,
+          Tailwind CSS, and best practices built-in. Jumpstart your next project!
         </p>
         <div class="hero-actions">
-          <button mat-raised-button color="primary" (click)="navigateTo('/components')">
-            <mat-icon>widgets</mat-icon>
-            Explore Components
-          </button>
-          <button mat-stroked-button color="primary" (click)="navigateTo('/about')">
-            Learn More
-          </button>
+          <app-button
+            label="Get Started"
+            (clicked)="navigateTo('/auth/register')" />
+          <app-button
+            variant="outlined"
+            label="Learn More"
+            (clicked)="navigateTo('/about')" />
         </div>
       </div>
-      
+
       <div class="tech-stack">
         <span class="tech-badge">Angular v19+</span>
-        <span class="tech-badge">Material Design</span>
+        <span class="tech-badge">Tailwind CSS</span>
         <span class="tech-badge">TypeScript</span>
         <span class="tech-badge">Signals</span>
       </div>
@@ -58,12 +58,8 @@ import { MatButtonModule } from '@angular/material/button';
       align-items: center;
       justify-content: center;
       margin: 0 auto 24px;
-    }
-
-    .logo-badge mat-icon {
-      font-size: 40px;
-      width: 40px;
-      height: 40px;
+      font-size: 32px;
+      font-weight: bold;
     }
 
     .hero-title {
@@ -85,16 +81,6 @@ import { MatButtonModule } from '@angular/material/button';
       justify-content: center;
       gap: 16px;
       flex-wrap: wrap;
-    }
-
-    .hero-actions button {
-      height: 48px;
-      padding: 0 24px;
-      font-size: 16px;
-    }
-
-    .hero-actions button mat-icon {
-      margin-right: 8px;
     }
 
     .tech-stack {

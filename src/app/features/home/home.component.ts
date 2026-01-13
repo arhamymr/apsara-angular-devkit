@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { HeroSectionComponent } from './components/hero-section';
 import { FeaturesSectionComponent } from './components/features-section';
-import { NavigationSectionComponent } from './components/navigation-section';
-import { ComponentsGridSectionComponent } from './components/components-grid-section';
 import { CodeExampleSectionComponent } from './components/code-example-section';
 import { CtaSectionComponent } from './components/cta-section';
 import { ResourcesSectionComponent } from './components/resources-section';
@@ -12,8 +10,6 @@ import { ResourcesSectionComponent } from './components/resources-section';
   imports: [
     HeroSectionComponent,
     FeaturesSectionComponent,
-    NavigationSectionComponent,
-    ComponentsGridSectionComponent,
     CodeExampleSectionComponent,
     CtaSectionComponent,
     ResourcesSectionComponent
@@ -22,8 +18,6 @@ import { ResourcesSectionComponent } from './components/resources-section';
     <div class="landing-page">
       <app-hero-section />
       <app-features-section />
-      <app-navigation-section />
-      <app-components-grid-section />
       <app-code-example-section />
       <app-cta-section />
       <app-resources-section />

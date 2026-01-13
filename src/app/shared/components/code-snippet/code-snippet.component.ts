@@ -1,12 +1,10 @@
 import { Component, input, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-code-snippet',
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule],
+  standalone: true,
+  imports: [CommonModule],
   template: `
     <div class="code-snippet">
       <div class="header">
@@ -17,11 +15,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         </div>
         <span class="language">{{ language() }}</span>
         <div class="header-right">
-          <button mat-icon-button 
-                  [matTooltip]="copyTooltip()"
+          <button
                   (click)="copyCode()"
                   class="copy-btn">
-            <mat-icon>{{ copied() ? 'check' : 'content_copy' }}</mat-icon>
+            {{ copied() ? 'Check' : 'Copy' }}
           </button>
         </div>
       </div>
@@ -36,7 +33,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
       margin: 20px 0;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
-    
+
     .header {
       display: flex;
       align-items: center;
@@ -45,22 +42,22 @@ import { MatTooltipModule } from '@angular/material/tooltip';
       background: #2d2d2d;
       border-bottom: 1px solid #3d3d3d;
     }
-    
+
     .header-left {
       display: flex;
       gap: 8px;
     }
-    
+
     .dot {
       width: 12px;
       height: 12px;
       border-radius: 50%;
     }
-    
+
     .dot.red { background: #ff5f56; }
     .dot.yellow { background: #ffbd2e; }
     .dot.green { background: #27c93f; }
-    
+
     .language {
       font-size: 12px;
       color: #888;
@@ -68,29 +65,36 @@ import { MatTooltipModule } from '@angular/material/tooltip';
       font-weight: 500;
       letter-spacing: 0.5px;
     }
-    
+
     .header-right {
       display: flex;
       gap: 4px;
     }
-    
+
     .copy-btn {
+      background: transparent;
+      border: 1px solid #555;
       color: #888;
+      padding: 4px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
       transition: all 0.2s ease;
-      
-      &:hover {
-        color: #fff;
-        background: rgba(255, 255, 255, 0.1);
-      }
     }
-    
+
+    .copy-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #666;
+    }
+
     .code-content {
       margin: 0;
       padding: 20px;
       overflow-x: auto;
       background: #1e1e1e;
     }
-    
+
     code {
       font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
       font-size: 14px;
@@ -98,7 +102,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
       line-height: 1.7;
       white-space: pre;
     }
-    
+
     :host ::ng-deep {
       .keyword { color: #569cd6; }
       .string { color: #ce9178; }
@@ -117,10 +121,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class CodeSnippetComponent {
   readonly code = input<string>('');
   readonly language = input<string>('typescript');
-  
+
   copied = signal(false);
   copyTooltip = signal<string>('Copy Code');
-  
+
   constructor() {
     effect(() => {
       if (this.copied()) {
@@ -132,7 +136,7 @@ export class CodeSnippetComponent {
       }
     });
   }
-  
+
   async copyCode(): Promise<void> {
     try {
       await navigator.clipboard.writeText(this.code());

@@ -9,10 +9,5 @@ export const routes: Routes = [
   { path: 'auth/login', component: AuthComponent },
   { path: 'auth/register', component: AuthComponent },
   { path: 'docs', component: DocsComponent },
-  { 
-    path: 'components', 
-    loadComponent: () => import('./features/components-showcase/components-showcase.component').then(m => m.ComponentsShowcaseComponent),
-    loadChildren: () => import('./features/components-showcase/components-showcase.routes').then(m => m.COMPONENTS_SHOWCASE_ROUTES)
-  },
   { path: '**', redirectTo: '' }
 ];

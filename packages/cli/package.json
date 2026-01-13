@@ -1,0 +1,38 @@
+{
+  "name": "apsara-ui",
+  "version": "1.0.0",
+  "description": "shadcn-style UI component installer for Angular",
+  "type": "module",
+  "bin": {
+    "apsara-ui": "./dist/main.js"
+  },
+  "files": [
+    "dist",
+    "ui",
+    "boilerplate"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "fs-extra": "^11.0.0",
+    "inquirer": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.0",
+    "@types/inquirer": "^9.0.9",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "angular",
+    "cli",
+    "ui",
+    "components",
+    "tailwind"
+  ],
+  "license": "MIT"
+}

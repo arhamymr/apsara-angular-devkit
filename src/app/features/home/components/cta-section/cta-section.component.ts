@@ -1,33 +1,31 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { CardComponent } from '@shared/ui/card';
+import { ButtonComponent } from '@shared/ui/button/button.component';
 
 @Component({
   selector: 'app-cta-section',
-  imports: [MatIconModule, MatButtonModule, CardComponent],
+  standalone: true,
+  imports: [ButtonComponent],
   template: `
     <section class="cta-section">
-      <app-card variant="tonal" class="cta-card">
+      <div class="cta-card">
         <div class="cta-content">
           <h2 class="cta-title">Ready to Build?</h2>
           <p class="cta-text">
-            Start your next Angular project with this boilerplate. 
+            Start your next Angular project with this boilerplate.
             It includes everything you need to build modern, scalable applications.
           </p>
           <div class="cta-buttons">
-            <button mat-raised-button color="primary" (click)="navigateTo('/components')">
-              <mat-icon>explore</mat-icon>
-              Explore Components
-            </button>
-            <button mat-stroked-button (click)="navigateTo('/settings')">
-              <mat-icon>settings</mat-icon>
-              View Settings
-            </button>
+            <app-button
+              label="Get Started"
+              (clicked)="navigateTo('/auth/register')" />
+            <app-button
+              variant="outlined"
+              label="Learn More"
+              (clicked)="navigateTo('/about')" />
           </div>
         </div>
-      </app-card>
+      </div>
     </section>
   `,
   styles: [`
@@ -38,7 +36,10 @@ import { CardComponent } from '@shared/ui/card';
     }
 
     .cta-card {
+      background: white;
+      border-radius: 16px;
       padding: 40px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
     }
 
     .cta-content {
@@ -64,10 +65,6 @@ import { CardComponent } from '@shared/ui/card';
       justify-content: center;
       gap: 16px;
       flex-wrap: wrap;
-    }
-
-    .cta-buttons button mat-icon {
-      margin-right: 8px;
     }
   `]
 })

@@ -1,8 +1,4 @@
-import { Component, input, output, computed, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Component, input, output } from '@angular/core';
 
 export type ButtonVariant = 'filled' | 'outlined' | 'text' | 'soft';
 export type ButtonColor = 'primary' | 'accent' | 'warn' | 'success' | 'neutral';
@@ -10,9 +6,9 @@ export type ButtonSize = 'small' | 'medium' | 'large';
 
 @Component({
   selector: 'app-button',
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule],
+  standalone: true,
   template: `
-    <button 
+    <button
       [attr.variant]="variant()"
       [attr.size]="size()"
       [attr.color]="color()"
@@ -21,27 +17,17 @@ export type ButtonSize = 'small' | 'medium' | 'large';
       [class.full-width]="fullWidth()"
       class="custom-button"
       (click)="onClick($event)">
-      
+
       @if (loading()) {
         <span class="spinner-wrapper">
           <svg class="spinner" viewBox="0 0 24 24">
             <circle class="path" cx="12" cy="12" r="10" fill="none" stroke-width="3"/>
           </svg>
         </span>
-      } @else if (icon()) {
-        <span class="icon-wrapper" [class.icon-only]="!label()">
-          <mat-icon>{{ icon() }}</mat-icon>
-        </span>
       }
-      
+
       @if (label()) {
         <span class="label">{{ label() }}</span>
-      }
-      
-      @if (iconRight() && !loading()) {
-        <span class="icon-wrapper icon-right">
-          <mat-icon>{{ iconRight() }}</mat-icon>
-        </span>
       }
     </button>
   `,
@@ -64,7 +50,7 @@ export type ButtonSize = 'small' | 'medium' | 'large';
       --btn-neutral-hover: #424242;
       --btn-neutral-active: #212121;
     }
-    
+
     .custom-button {
       display: inline-flex;
       align-items: center;
@@ -72,7 +58,7 @@ export type ButtonSize = 'small' | 'medium' | 'large';
       gap: 8px;
       border: none;
       border-radius: 8px;
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-weight: 500;
       font-size: 14px;
       cursor: pointer;
@@ -80,7 +66,7 @@ export type ButtonSize = 'small' | 'medium' | 'large';
       text-decoration: none;
       position: relative;
       overflow: hidden;
-      
+
       &::before {
         content: '';
         position: absolute;
@@ -88,38 +74,36 @@ export type ButtonSize = 'small' | 'medium' | 'large';
         background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
         pointer-events: none;
       }
-      
+
       &:disabled, &.loading {
         cursor: not-allowed;
         opacity: 0.6;
       }
-      
+
       &:focus-visible {
         outline: 2px solid var(--btn-primary);
         outline-offset: 2px;
       }
     }
-    
-    // Sizes
+
     [size="small"] {
       height: 32px;
       padding: 0 12px;
       font-size: 13px;
     }
-    
+
     [size="medium"] {
       height: 40px;
       padding: 0 16px;
       font-size: 14px;
     }
-    
+
     [size="large"] {
       height: 48px;
       padding: 0 24px;
       font-size: 16px;
     }
-    
-    // Variants
+
     [variant="filled"] {
       &[color="primary"] {
         background: var(--btn-primary);
@@ -152,11 +136,11 @@ export type ButtonSize = 'small' | 'medium' | 'large';
         &:active:not(:disabled) { background: var(--btn-neutral-active); }
       }
     }
-    
+
     [variant="outlined"] {
       background: transparent;
       border: 1.5px solid currentColor;
-      
+
       &[color="primary"] {
         color: var(--btn-primary);
         &:hover:not(:disabled) { background: rgba(25, 118, 210, 0.08); }
@@ -183,25 +167,25 @@ export type ButtonSize = 'small' | 'medium' | 'large';
         &:active:not(:disabled) { background: rgba(97, 97, 97, 0.16); }
       }
     }
-    
+
     [variant="text"] {
       background: transparent;
       color: var(--btn-primary);
       &:hover:not(:disabled) { background: rgba(25, 118, 210, 0.08); }
       &:active:not(:disabled) { background: rgba(25, 118, 210, 0.16); }
-      
+
       &[color="accent"] { color: var(--btn-accent); &:hover:not(:disabled) { background: rgba(255, 64, 129, 0.08); } }
       &[color="warn"] { color: var(--btn-warn); &:hover:not(:disabled) { background: rgba(244, 67, 54, 0.08); } }
       &[color="success"] { color: var(--btn-success); &:hover:not(:disabled) { background: rgba(76, 175, 80, 0.08); } }
       &[color="neutral"] { color: var(--btn-neutral); &:hover:not(:disabled) { background: rgba(97, 97, 97, 0.08); } }
     }
-    
+
     [variant="soft"] {
       background: rgba(25, 118, 210, 0.1);
       color: var(--btn-primary);
       &:hover:not(:disabled) { background: rgba(25, 118, 210, 0.16); }
       &:active:not(:disabled) { background: rgba(25, 118, 210, 0.24); }
-      
+
       &[color="accent"] {
         background: rgba(255, 64, 129, 0.1);
         color: var(--btn-accent);
@@ -223,58 +207,37 @@ export type ButtonSize = 'small' | 'medium' | 'large';
         &:hover:not(:disabled) { background: rgba(97, 97, 97, 0.16); }
       }
     }
-    
+
     .full-width {
       width: 100%;
     }
-    
+
     .spinner-wrapper {
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    
+
     .spinner {
       width: 20px;
       height: 20px;
       animation: rotate 2s linear infinite;
     }
-    
+
     .path {
       stroke: currentColor;
       stroke-linecap: round;
       animation: dash 1.5s ease-in-out infinite;
     }
-    
-    .icon-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      
-      &.icon-only {
-        margin: 0;
-      }
-      
-      mat-icon {
-        font-size: 20px;
-        width: 20px;
-        height: 20px;
-      }
-    }
-    
-    .icon-right {
-      margin-left: 4px;
-    }
-    
+
     .label {
       font-weight: 500;
     }
-    
+
     @keyframes rotate {
       100% { transform: rotate(360deg); }
     }
-    
+
     @keyframes dash {
       0% {
         stroke-dasharray: 1, 150;
@@ -293,8 +256,6 @@ export type ButtonSize = 'small' | 'medium' | 'large';
 })
 export class ButtonComponent {
   readonly label = input<string>('');
-  readonly icon = input<string>('');
-  readonly iconRight = input<string>('');
   readonly variant = input<ButtonVariant>('filled');
   readonly color = input<ButtonColor>('primary');
   readonly size = input<ButtonSize>('medium');

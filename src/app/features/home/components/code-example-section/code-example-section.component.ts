@@ -1,36 +1,35 @@
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { ButtonComponent } from '@shared/ui/button/button.component';
 
 @Component({
   selector: 'app-code-example-section',
-  imports: [MatButtonModule],
+  standalone: true,
+  imports: [ButtonComponent],
   template: `
     <section class="code-section">
       <h2 class="section-title">Quick Start Example</h2>
       <p class="section-subtitle">Using the custom Button component</p>
-      
+
       <div class="code-example">
         <div class="code-preview">
           <div class="preview-row">
-            <button mat-raised-button color="primary">Primary</button>
-            <button mat-raised-button color="accent">Accent</button>
-            <button mat-raised-button color="warn">Warn</button>
+            <app-button label="Primary" color="primary" />
+            <app-button label="Accent" color="accent" />
+            <app-button label="Warn" color="warn" />
           </div>
           <div class="preview-row">
-            <button mat-stroked-button>Outlined</button>
-            <button mat-flat-button>Flat</button>
-            <button mat-button>Text</button>
+            <app-button label="Outlined" variant="outlined" />
+            <app-button label="Soft" variant="soft" />
+            <app-button label="Text" variant="text" />
           </div>
         </div>
-        
-        <div class="code-snippet">
-          <pre><code>&lt;button mat-raised-button color="primary"&gt;
-  Primary Button
-&lt;/button&gt;
 
-&lt;button mat-stroked-button color="accent"&gt;
-  Outlined Button
-&lt;/button&gt;</code></pre>
+        <div class="code-snippet">
+          <pre><code>&lt;app-button label="Primary" color="primary"&gt;
+&lt;/app-button&gt;
+
+&lt;app-button label="Outlined" variant="outlined"&gt;
+&lt;/app-button&gt;</code></pre>
         </div>
       </div>
     </section>

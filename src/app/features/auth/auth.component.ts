@@ -2,41 +2,22 @@ import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ButtonComponent } from '../../shared/ui/button/button.component';
-import { InputComponent } from '../../shared/ui/input/input.component';
 import { AuthService } from './services/auth.service';
 
 type AuthMode = 'login' | 'register';
 
 @Component({
   selector: 'app-auth',
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatDividerModule,
-    MatProgressSpinnerModule,
-    ButtonComponent,
-    InputComponent
-  ],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, ButtonComponent],
   template: `
     <div class="auth-page">
       <div class="auth-container">
         <div class="auth-card">
           <div class="auth-header">
             <div class="logo-badge">
-              <mat-icon>lock</mat-icon>
+              <span>Lock</span>
             </div>
             <h1 class="auth-title">{{ isRegister() ? 'Create Account' : 'Welcome Back' }}</h1>
             <p class="auth-subtitle">
@@ -46,59 +27,66 @@ type AuthMode = 'login' | 'register';
 
           @if (error()) {
             <div class="error-alert">
-              <mat-icon>error</mat-icon>
               <span>{{ error() }}</span>
-              <button mat-icon-button (click)="clearError()">
-                <mat-icon>close</mat-icon>
-              </button>
+              <button class="close-btn" (click)="clearError()">Close</button>
             </div>
           }
 
           <form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="auth-form">
             @if (isRegister()) {
-              <app-input
-                label="Full Name"
-                type="text"
-                placeholder="Enter your full name"
-                prefixIcon="person"
-                [fullWidth]="true"
-                [required]="true"
-                formControlName="name"
-                [error]="getFieldError('name')" />
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <input
+                  id="name"
+                  type="text"
+                  formControlName="name"
+                  placeholder="Enter your full name"
+                  [class.invalid]="getFieldError('name')">
+                @if (getFieldError('name')) {
+                  <span class="error-text">{{ getFieldError('name') }}</span>
+                }
+              </div>
             }
 
-            <app-input
-              label="Email Address"
-              type="email"
-              placeholder="Enter your email"
-              prefixIcon="email"
-              [fullWidth]="true"
-              [required]="true"
-              formControlName="email"
-              [error]="getFieldError('email')" />
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                placeholder="Enter your email"
+                [class.invalid]="getFieldError('email')">
+              @if (getFieldError('email')) {
+                <span class="error-text">{{ getFieldError('email') }}</span>
+              }
+            </div>
 
-            <app-input
-              [label]="isRegister() ? 'Password' : 'Password'"
-              [type]="showPassword() ? 'text' : 'password'"
-              [placeholder]="isRegister() ? 'Create a password' : 'Enter your password'"
-              prefixIcon="lock"
-              suffixIcon="showPassword"
-              [fullWidth]="true"
-              [required]="true"
-              formControlName="password"
-              [error]="getFieldError('password')"
-              (suffixClick)="togglePasswordVisibility()" />
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                id="password"
+                [type]="showPassword() ? 'text' : 'password'"
+                formControlName="password"
+                placeholder="{{ isRegister() ? 'Create a password' : 'Enter your password' }}"
+                [class.invalid]="getFieldError('password')">
+              @if (getFieldError('password')) {
+                <span class="error-text">{{ getFieldError('password') }}</span>
+              }
+            </div>
 
             @if (isRegister()) {
-              <app-input
-                label="Confirm Password"
-                type="password"
-                placeholder="Confirm your password"
-                prefixIcon="lock"
-                [fullWidth]="true"
-                [required]="true"
-                formControlName="confirmPassword"
-                [error]="getFieldError('confirmPassword')" />
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  formControlName="confirmPassword"
+                  placeholder="Confirm your password"
+                  [class.invalid]="getFieldError('confirmPassword')">
+                @if (getFieldError('confirmPassword')) {
+                  <span class="error-text">{{ getFieldError('confirmPassword') }}</span>
+                }
+              </div>
             }
 
             @if (!isRegister()) {
@@ -118,22 +106,18 @@ type AuthMode = 'login' | 'register';
           </form>
 
           <div class="auth-divider">
-            <mat-divider />
             <span>or continue with</span>
-            <mat-divider />
           </div>
 
           <div class="social-buttons">
             <app-button
               variant="outlined"
               label="Google"
-              icon="img"
               [fullWidth]="true"
               (clicked)="onSocialLogin('google')" />
             <app-button
               variant="outlined"
               label="GitHub"
-              icon="code"
               [fullWidth]="true"
               (clicked)="onSocialLogin('github')" />
           </div>
@@ -150,24 +134,18 @@ type AuthMode = 'login' | 'register';
         </div>
 
         <div class="demo-credentials">
-          <mat-card variant="tonal">
-            <mat-card-content>
-              <h4>Demo Credentials</h4>
-              <p><strong>Email:</strong> demo&#64;example.com</p>
-              <p><strong>Password:</strong> password123</p>
-            </mat-card-content>
-          </mat-card>
+          <p><strong>Demo:</strong> demo&#64;example.com / password123</p>
         </div>
       </div>
     </div>
   `,
   styles: [`
     .auth-page {
-      min-height: 100vh;
+      min-height: calc(100vh - 64px);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+      background: #f5f7fa;
       padding: 24px;
     }
 
@@ -197,13 +175,9 @@ type AuthMode = 'login' | 'register';
       align-items: center;
       justify-content: center;
       margin: 0 auto 20px;
-    }
-
-    .logo-badge mat-icon {
-      font-size: 32px;
-      width: 32px;
-      height: 32px;
+      font-size: 24px;
       color: white;
+      font-weight: bold;
     }
 
     .auth-title {
@@ -222,6 +196,7 @@ type AuthMode = 'login' | 'register';
     .error-alert {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 8px;
       background: rgba(244, 67, 54, 0.1);
       border: 1px solid rgba(244, 67, 54, 0.2);
@@ -232,35 +207,55 @@ type AuthMode = 'login' | 'register';
       font-size: 14px;
     }
 
-    .error-alert mat-icon {
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-    }
-
-    .error-alert span {
-      flex: 1;
-    }
-
-    .error-alert button {
-      width: 24px;
-      height: 24px;
-      line-height: 24px;
-    }
-
-    .error-alert button mat-icon {
-      font-size: 16px;
-      width: 16px;
-      height: 16px;
+    .close-btn {
+      background: none;
+      border: none;
+      color: #f44336;
+      cursor: pointer;
+      font-size: 14px;
     }
 
     .auth-form {
       margin-bottom: 24px;
     }
 
-    .auth-form app-input {
+    .form-group {
       margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #49454f;
+      margin-bottom: 6px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #1976d2;
+      box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+    }
+
+    .form-group input.invalid {
+      border-color: #f44336;
+    }
+
+    .error-text {
+      display: block;
+      font-size: 12px;
+      color: #f44336;
+      margin-top: 4px;
     }
 
     .forgot-password {
@@ -290,8 +285,12 @@ type AuthMode = 'login' | 'register';
       margin: 24px 0;
     }
 
-    .auth-divider mat-divider {
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
       flex: 1;
+      height: 1px;
+      background: #e0e0e0;
     }
 
     .auth-divider span {
@@ -326,21 +325,10 @@ type AuthMode = 'login' | 'register';
 
     .demo-credentials {
       margin-top: 24px;
-    }
-
-    .demo-credentials mat-card {
+      text-align: center;
       padding: 16px;
-    }
-
-    .demo-credentials h4 {
-      margin: 0 0 12px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #1c1b1f;
-    }
-
-    .demo-credentials p {
-      margin: 4px 0;
+      background: #f5f5f5;
+      border-radius: 8px;
       font-size: 13px;
       color: #616161;
     }
@@ -417,7 +405,7 @@ export class AuthComponent {
   onSubmit(): void {
     if (this.authForm.valid) {
       const { name, email, password, confirmPassword } = this.authForm.value;
-      
+
       if (this.isRegister()) {
         if (password !== confirmPassword) {
           this.authForm.get('confirmPassword')?.setErrors({ mismatch: true });

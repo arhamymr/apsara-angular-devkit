@@ -7,9 +7,7 @@ import { NavbarComponent } from './shared/components';
   imports: [RouterOutlet, NavbarComponent],
   template: `
     <app-navbar />
-    <main>
-      <router-outlet />
-    </main>
+    <router-outlet />
   `,
   styleUrl: './app.css'
 })
