@@ -21,6 +21,7 @@ export function initCommand(): Command {
             message: 'Choose a boilerplate:',
             choices: [
               { name: 'Minimal - Angular + Tailwind only', value: 'minimal' },
+              { name: 'Minimal with Lucide Icons - Angular + Tailwind + Lucide Icons', value: 'minimal-with-lucide' },
               { name: 'Complex - Full featured (coming soon)', value: 'complex', disabled: true }
             ]
           },
@@ -56,7 +57,12 @@ export function initCommand(): Command {
         logger.info(`\nNext steps:`);
         logger.info(`  cd ${answers.projectName}`);
         logger.info(`  npm install`);
-        logger.info(`  npx apsara-ui add button input card`);
+        
+        if (answers.boilerplate === 'minimal-with-lucide') {
+          logger.info(`  Your project includes Lucide Angular icons! Check app.component.html for examples.`);
+        } else {
+          logger.info(`  npx apsara-ui add button input card`);
+        }
 
       } catch (error) {
         logger.error('Failed to initialize project.');

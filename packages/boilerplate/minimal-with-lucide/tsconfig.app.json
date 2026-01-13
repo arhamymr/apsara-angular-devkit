@@ -4,19 +4,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": [],
-    "baseUrl": "./",
-    "paths": {
-      "@app/*": ["src/app/*"],
-      "@shared/*": ["src/app/shared/*"],
-      "@apsara/ui/button": ["packages/ui/src/components/button/index.ts"],
-      "@apsara/ui/card": ["packages/ui/src/components/card/index.ts"],
-      "@apsara/ui/input": ["packages/ui/src/components/input/index.ts"]
-    }
+    "types": []
   },
   "include": [
-    "src/**/*.ts",
-    "packages/**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "src/**/*.spec.ts"

@@ -1,0 +1,1 @@
+export { IconsDemoComponent } from './icons-demo.component';

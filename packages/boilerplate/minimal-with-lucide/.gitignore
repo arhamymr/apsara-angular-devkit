@@ -6,10 +6,6 @@
 /out-tsc
 /bazel-out
 
-# apsara-ui CLI build output
-packages/cli/dist/
-packages/ui/dist/
-
 # Node
 /node_modules
 npm-debug.log

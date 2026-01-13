@@ -19,6 +19,7 @@ import { ThemeService } from '../../../core/services';
         </a>
 
         <div class="nav-links">
+          <a routerLink="/components" routerLinkActive="active">Components</a>
           <a routerLink="/docs" routerLinkActive="active">Docs</a>
 
           <button class="theme-toggle" (click)="themeService.toggle()">
@@ -28,8 +29,6 @@ import { ThemeService } from '../../../core/services';
               <span>Dark</span>
             }
           </button>
-
-          <a routerLink="/auth/login" routerLinkActive="active">Login</a>
         </div>
       </div>
     </nav>
