@@ -89,7 +89,7 @@ export default defineConfig({{ '{' }}
 
               <h2>Button</h2>
               <p>The Button component supports multiple variants and sizes.</p>
-              <pre class="code-block"><code>import {{ '{' }} ButtonComponent {{ '}' }} from '@apsaradigital/ui';</code></pre>
+              <pre class="code-block"><code>import {{ '{' }} ButtonComponent {{ '}' }} from '@apsara/ui';</code></pre>
 
               <h3>Usage</h3>
               <pre class="code-block"><code>&lt;button apsaraButton variant="primary" size="md"&gt;
@@ -130,11 +130,11 @@ export default defineConfig({{ '{' }}
 
               <h2>Card</h2>
               <p>Card components for displaying grouped content.</p>
-              <pre class="code-block"><code>import {{ '{' }} CardComponent {{ '}' }} from '@apsaradigital/ui';</code></pre>
+              <pre class="code-block"><code>import {{ '{' }} CardComponent {{ '}' }} from '@apsara/ui';</code></pre>
 
               <h2>Input</h2>
               <p>Form inputs with validation and styling.</p>
-              <pre class="code-block"><code>import {{ '{' }} InputComponent {{ '}' }} from '@apsaradigital/ui';</code></pre>
+              <pre class="code-block"><code>import {{ '{' }} InputComponent {{ '}' }} from '@apsara/ui';</code></pre>
             </section>
           }
 

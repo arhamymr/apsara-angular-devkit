@@ -1,5 +1,4 @@
-import { Component, input, output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 interface SidebarItem {
@@ -15,52 +14,33 @@ interface SidebarCategory {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive],
   template: `
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <h2>Components</h2>
-        <p class="sidebar-subtitle">UI Library Documentation</p>
-      </div>
-
-      <nav class="sidebar-nav">
-        @for (category of categories(); track category.name) {
-          <div class="category">
-            <button
-              class="category-header"
-              [class.expanded]="isExpanded(category.name)"
-              (click)="toggleCategory(category.name)">
-              <span class="category-icon">
-                @if (isExpanded(category.name)) {
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                  </svg>
-                } @else {
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                }
+    <aside class="h-full lg:pr-8 pb-10 max-lg:pb-20 outline-none base-ui-disable-scrollbar overflow-y-auto"
+           style="overflow: auto; --scroll-area-overflow-x-start: 0px; --scroll-area-overflow-x-end: 0px; --scroll-area-overflow-y-start: 0px; --scroll-area-overflow-y-end: 0px;">
+      <div class="pl-1" style="min-width: fit-content;">
+        <nav class="flex flex-col gap-4.5 py-9">
+          @for (category of categories(); track category.name) {
+            <section class="flex flex-wrap gap-0.5 *:data-[slot=sidebar-list]:p-0">
+              <span class="inline-flex items-center text-sm font-medium text-dimmed **:[svg]:size-3.5">
+                {{ category.name }}
               </span>
-              <span class="category-name">{{ category.name }}</span>
-            </button>
-
-            @if (isExpanded(category.name)) {
-              <ul class="category-items">
+              <ul class="flex flex-col gap-0.5 w-full" data-slot="sidebar-list">
                 @for (item of category.items; track item.route) {
-                  <li>
-                    <a
-                      [routerLink]="item.route"
-                      routerLinkActive="active"
-                      [routerLinkActiveOptions]="{ exact: item.route === '/' }">
+                  <li class="group/sidebar-item **:data-[slot=sidebar-submenu]:w-auto relative flex">
+                    <a [routerLink]="item.route"
+                       routerLinkActive="active bg-accent"
+                       [routerLinkActiveOptions]="{ exact: item.route === '/' }"
+                       class="flex items-center gap-2.5 w-full relative z-10 text-foreground cursor-pointer text-left transition-colors duration-75 hover:bg-accent **:[svg]:size-4 **:[svg]:text-muted focus-visible:outline-2 focus-visible:outline-offset-2 outline-primary data-popup-open:bg-accent">
                       {{ item.label }}
                     </a>
                   </li>
                 }
               </ul>
-            }
-          </div>
-        }
-      </nav>
+            </section>
+          }
+        </nav>
+      </div>
     </aside>
   `,
   styles: [`
@@ -68,106 +48,60 @@ interface SidebarCategory {
       display: block;
     }
 
-    .sidebar {
-      width: 260px;
-      background: #f8fafc;
-      border-right: 1px solid #e2e8f0;
+    aside {
       position: sticky;
       top: 64px;
       height: calc(100vh - 64px);
-      overflow-y: auto;
-      flex-shrink: 0;
     }
 
-    .sidebar-header {
-      padding: 20px 16px 12px;
-      border-bottom: 1px solid #e2e8f0;
+    nav {
+      min-width: fit-content;
     }
 
-    .sidebar-header h2 {
-      font-size: 18px;
-      font-weight: 600;
-      color: #1e293b;
-      margin: 0 0 4px;
-    }
-
-    .sidebar-subtitle {
-      font-size: 12px;
-      color: #64748b;
-      margin: 0;
-    }
-
-    .sidebar-nav {
-      padding: 8px 0;
-    }
-
-    .category {
-      border-bottom: 1px solid #e2e8f0;
-    }
-
-    .category-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      width: 100%;
-      padding: 10px 16px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 500;
-      color: #475569;
-      text-align: left;
-      transition: background 0.15s;
-    }
-
-    .category-header:hover {
-      background: #e2e8f0;
-    }
-
-    .category-header.expanded {
-      background: #e2e8f0;
-    }
-
-    .category-icon {
-      display: flex;
-      align-items: center;
-      color: #64748b;
-    }
-
-    .category-name {
-      flex: 1;
-    }
-
-    .category-items {
+    ul {
       list-style: none;
       margin: 0;
-      padding: 4px 0 4px 36px;
+      padding: 0;
     }
 
-    .category-items li a {
-      display: block;
+    li {
+      margin: 0;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       padding: 8px 12px;
-      font-size: 13px;
-      color: #64748b;
       text-decoration: none;
+      font-size: 14px;
+      color: var(--color-text-primary);
       border-radius: 6px;
-      transition: background 0.15s, color 0.15s;
+      transition: background-color 0.15s ease;
     }
 
-    .category-items li a:hover {
-      background: #e2e8f0;
-      color: #1e293b;
+    a:hover {
+      background: var(--color-bg-hover);
     }
 
-    .category-items li a.active {
-      background: #dbeafe;
-      color: #1d4ed8;
-      font-weight: 500;
+    a.active,
+    a.bg-accent {
+      background: var(--color-bg-hover);
+    }
+
+    a:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 1024px) {
+      aside {
+        padding-bottom: 80px;
+      }
     }
 
     @media (max-width: 768px) {
-      .sidebar {
+      aside {
         display: none;
       }
     }
@@ -175,14 +109,4 @@ interface SidebarCategory {
 })
 export class SidebarComponent {
   categories = input.required<SidebarCategory[]>();
-  expandedCategories = input.required<ReadonlySet<string>>();
-  toggleCategoryEvent = output<string>();
-
-  isExpanded(categoryName: string): boolean {
-    return this.expandedCategories().has(categoryName);
-  }
-
-  toggleCategory(categoryName: string): void {
-    this.toggleCategoryEvent.emit(categoryName);
-  }
 }

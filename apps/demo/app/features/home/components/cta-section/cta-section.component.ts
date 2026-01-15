@@ -20,7 +20,7 @@ import { ButtonComponent } from '@apsara/ui';
               label="Get Started"
               (clicked)="navigateTo('/auth/register')" />
             <app-button
-              variant="outlined"
+              variant="outline"
               label="Learn More"
               (clicked)="navigateTo('/about')" />
           </div>

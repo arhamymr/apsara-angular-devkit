@@ -1,10 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 import { SidebarComponent } from './sidebar.component';
 import { ButtonShowcaseComponent } from './button-showcase.component';
 import { CardShowcaseComponent } from './card-showcase.component';
 import { InputShowcaseComponent } from './input-showcase.component';
+import { TabsShowcaseComponent } from './tabs-showcase.component';
 
 interface SidebarItem {
   label: string;
@@ -21,19 +21,15 @@ interface SidebarCategory {
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
-    RouterLinkActive,
     SidebarComponent,
     ButtonShowcaseComponent,
     CardShowcaseComponent,
-    InputShowcaseComponent
+    InputShowcaseComponent,
+    TabsShowcaseComponent
   ],
   template: `
     <div class="layout">
-      <app-sidebar
-        [categories]="categories"
-        [expandedCategories]="expandedCategories()"
-        (categoryToggle)="toggleCategory($event)" />
+      <app-sidebar [categories]="categories" />
 
       <main class="content">
         <div class="page-container">
@@ -45,6 +41,7 @@ interface SidebarCategory {
           <app-button-showcase />
           <app-card-showcase />
           <app-input-showcase />
+          <app-tabs-showcase />
         </div>
       </main>
     </div>
@@ -93,36 +90,69 @@ interface SidebarCategory {
 export class ComponentsShowcaseComponent {
   categories: SidebarCategory[] = [
     {
-      name: 'Actions',
+      name: 'Prologue',
       items: [
-        { label: 'Button', route: '/components#button' }
+        { label: 'Introduction', route: '/docs/introduction' },
+        { label: 'Installation', route: '/docs/installation' },
+        { label: 'Design Approach', route: '/docs/design-approach' },
+        { label: 'Customization', route: '/docs/customization' }
       ]
     },
     {
-      name: 'Layout',
+      name: 'Components',
       items: [
-        { label: 'Card', route: '/components#card' }
-      ]
-    },
-    {
-      name: 'Forms',
-      items: [
-        { label: 'Input', route: '/components#input' }
+        { label: 'Accordion', route: '/docs/accordion' },
+        { label: 'Alert', route: '/docs/alert' },
+        { label: 'Alert dialog', route: '/docs/alert-dialog' },
+        { label: 'Autocomplete', route: '/docs/autocomplete' },
+        { label: 'Avatar', route: '/docs/avatar' },
+        { label: 'Badge', route: '/docs/badge' },
+        { label: 'Button', route: '/docs/button' },
+        { label: 'Card', route: '/docs/card' },
+        { label: 'Checkbox', route: '/docs/checkbox' },
+        { label: 'Chip', route: '/docs/chip' },
+        { label: 'Collapsible', route: '/docs/collapsible' },
+        { label: 'Combobox', route: '/docs/combobox' },
+        { label: 'Command', route: '/docs/command' },
+        { label: 'Dialog', route: '/docs/dialog' },
+        { label: 'Divider', route: '/docs/divider' },
+        { label: 'Field', route: '/docs/field' },
+        { label: 'Fieldset', route: '/docs/fieldset' },
+        { label: 'Form', route: '/docs/form' },
+        { label: 'Heading', route: '/docs/heading' },
+        { label: 'Icon box', route: '/docs/icon-box' },
+        { label: 'Input', route: '/docs/input' },
+        { label: 'Input group', route: '/docs/input-group' },
+        { label: 'Item', route: '/docs/item' },
+        { label: 'Kbd', route: '/docs/kbd' },
+        { label: 'Label', route: '/docs/label' },
+        { label: 'Menu', route: '/docs/menu' },
+        { label: 'Menubar', route: '/docs/menubar' },
+        { label: 'Meter', route: '/docs/meter' },
+        { label: 'Number field', route: '/docs/number-field' },
+        { label: 'Pagination', route: '/docs/pagination' },
+        { label: 'Popover', route: '/docs/popover' },
+        { label: 'Preview card', route: '/docs/preview-card' },
+        { label: 'Progress', route: '/docs/progress' },
+        { label: 'Radio', route: '/docs/radio' },
+        { label: 'Scroll area', route: '/docs/scroll-area' },
+        { label: 'Select', route: '/docs/select' },
+        { label: 'Separator', route: '/docs/separator' },
+        { label: 'Sidebar', route: '/docs/sidebar' },
+        { label: 'Slider', route: '/docs/slider' },
+        { label: 'Spinner', route: '/docs/spinner' },
+        { label: 'Stack', route: '/docs/stack' },
+        { label: 'Switch', route: '/docs/switch' },
+        { label: 'Table', route: '/docs/table' },
+        { label: 'Tabs', route: '/docs/tabs' },
+        { label: 'Text', route: '/docs/text' },
+        { label: 'Textarea', route: '/docs/textarea' },
+        { label: 'Toast', route: '/docs/toast' },
+        { label: 'Toggle', route: '/docs/toggle' },
+        { label: 'Toggle group', route: '/docs/toggle-group' },
+        { label: 'Toolbar', route: '/docs/toolbar' },
+        { label: 'Tooltip', route: '/docs/tooltip' }
       ]
     }
   ];
-
-  expandedCategories = signal<Set<string>>(new Set(['Actions', 'Layout', 'Forms']));
-
-  toggleCategory(categoryName: string): void {
-    this.expandedCategories.update(set => {
-      const newSet = new Set(set);
-      if (newSet.has(categoryName)) {
-        newSet.delete(categoryName);
-      } else {
-        newSet.add(categoryName);
-      }
-      return newSet;
-    });
-  }
 }

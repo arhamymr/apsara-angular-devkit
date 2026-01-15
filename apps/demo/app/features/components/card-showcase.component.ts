@@ -81,8 +81,8 @@ import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-
               <h4>Card Title</h4>
               <p>This is a sample card with multiple content elements including headers, text, and actions.</p>
               <div class="card-actions">
-                <app-button label="Action 1" size="small" />
-                <app-button label="Action 2" size="small" variant="text" />
+                <app-button label="Action 1" size="sm" />
+                <app-button label="Action 2" size="sm" variant="plain" />
               </div>
             </div>
           </app-card>

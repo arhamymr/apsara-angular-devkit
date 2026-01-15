@@ -13,22 +13,22 @@ import { ButtonComponent } from '@apsara/ui';
       <div class="code-example">
         <div class="code-preview">
           <div class="preview-row">
-            <app-button label="Primary" color="primary" />
-            <app-button label="Accent" color="accent" />
-            <app-button label="Warn" color="warn" />
+            <app-button label="Primary" variant="primary" />
+            <app-button label="Secondary" variant="secondary" />
+            <app-button label="Tertiary" variant="tertiary" />
           </div>
           <div class="preview-row">
-            <app-button label="Outlined" variant="outlined" />
-            <app-button label="Soft" variant="soft" />
-            <app-button label="Text" variant="text" />
+            <app-button label="Danger" variant="danger" />
+            <app-button label="Outline" variant="outline" />
+            <app-button label="Plain" variant="plain" />
           </div>
         </div>
 
         <div class="code-snippet">
-          <pre><code>&lt;app-button label="Primary" color="primary"&gt;
+          <pre><code>&lt;app-button label="Primary" variant="primary"&gt;
 &lt;/app-button&gt;
 
-&lt;app-button label="Outlined" variant="outlined"&gt;
+&lt;app-button label="Outline" variant="outline"&gt;
 &lt;/app-button&gt;</code></pre>
         </div>
       </div>

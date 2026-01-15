@@ -20,48 +20,28 @@ import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-
           <h3>Variants</h3>
           <div class="preview-grid">
             <div class="preview-item">
-              <span class="preview-label">Filled</span>
-              <app-button label="Filled Button" variant="filled" color="primary" />
-            </div>
-            <div class="preview-item">
-              <span class="preview-label">Outlined</span>
-              <app-button label="Outlined Button" variant="outlined" color="primary" />
-            </div>
-            <div class="preview-item">
-              <span class="preview-label">Text</span>
-              <app-button label="Text Button" variant="text" color="primary" />
-            </div>
-            <div class="preview-item">
-              <span class="preview-label">Soft</span>
-              <app-button label="Soft Button" variant="soft" color="primary" />
-            </div>
-          </div>
-        </div>
-      </app-card>
-
-      <app-card>
-        <div class="preview-section">
-          <h3>Colors</h3>
-          <div class="preview-grid">
-            <div class="preview-item">
               <span class="preview-label">Primary</span>
-              <app-button label="Primary" color="primary" />
+              <app-button label="Primary" variant="primary" />
             </div>
             <div class="preview-item">
-              <span class="preview-label">Accent</span>
-              <app-button label="Accent" color="accent" />
+              <span class="preview-label">Secondary</span>
+              <app-button label="Secondary" variant="secondary" />
             </div>
             <div class="preview-item">
-              <span class="preview-label">Success</span>
-              <app-button label="Success" color="success" />
+              <span class="preview-label">Tertiary</span>
+              <app-button label="Tertiary" variant="tertiary" />
             </div>
             <div class="preview-item">
-              <span class="preview-label">Warn</span>
-              <app-button label="Warn" color="warn" />
+              <span class="preview-label">Danger</span>
+              <app-button label="Danger" variant="danger" />
             </div>
             <div class="preview-item">
-              <span class="preview-label">Neutral</span>
-              <app-button label="Neutral" color="neutral" />
+              <span class="preview-label">Outline</span>
+              <app-button label="Outline" variant="outline" />
+            </div>
+            <div class="preview-item">
+              <span class="preview-label">Plain</span>
+              <app-button label="Plain" variant="plain" />
             </div>
           </div>
         </div>
@@ -72,16 +52,26 @@ import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-
           <h3>Sizes</h3>
           <div class="preview-grid">
             <div class="preview-item">
-              <span class="preview-label">Small</span>
-              <app-button label="Small" size="small" />
+              <span class="preview-label">XS</span>
+              <app-button label="XS" size="xs" />
             </div>
             <div class="preview-item">
-              <span class="preview-label">Medium</span>
-              <app-button label="Medium" size="medium" />
+              <span class="preview-label">SM</span>
+              <app-button label="SM" size="sm" />
             </div>
             <div class="preview-item">
-              <span class="preview-label">Large</span>
-              <app-button label="Large" size="large" />
+              <span class="preview-label">MD</span>
+              <app-button label="MD" size="md" />
+            </div>
+            <div class="preview-item">
+              <span class="preview-label">LG</span>
+              <app-button label="LG" size="lg" />
+            </div>
+            <div class="preview-item">
+              <span class="preview-label">Icon</span>
+              <app-button size="icon">
+                <span slot="">+</span>
+              </app-button>
             </div>
           </div>
         </div>
@@ -104,8 +94,8 @@ import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-
               <app-button label="Loading" [loading]="true" />
             </div>
             <div class="preview-item">
-              <span class="preview-label">Full Width</span>
-              <app-button label="Full Width" [fullWidth]="true" />
+              <span class="preview-label">Block</span>
+              <app-button label="Block" [block]="true" />
             </div>
           </div>
         </div>
@@ -137,20 +127,14 @@ import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-
             </tr>
             <tr>
               <td><code>variant</code></td>
-              <td>'filled' | 'outlined' | 'text' | 'soft'</td>
-              <td>'filled'</td>
+              <td>'primary' | 'secondary' | 'tertiary' | 'danger' | 'outline' | 'plain'</td>
+              <td>'primary'</td>
               <td>Visual style variant</td>
             </tr>
             <tr>
-              <td><code>color</code></td>
-              <td>'primary' | 'accent' | 'warn' | 'success' | 'neutral'</td>
-              <td>'primary'</td>
-              <td>Color theme</td>
-            </tr>
-            <tr>
               <td><code>size</code></td>
-              <td>'small' | 'medium' | 'large'</td>
-              <td>'medium'</td>
+              <td>'xs' | 'sm' | 'md' | 'lg' | 'icon'</td>
+              <td>'md'</td>
               <td>Button size</td>
             </tr>
             <tr>
@@ -166,10 +150,16 @@ import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-
               <td>Shows loading spinner</td>
             </tr>
             <tr>
-              <td><code>fullWidth</code></td>
+              <td><code>block</code></td>
               <td>boolean</td>
               <td>false</td>
               <td>Makes button full width</td>
+            </tr>
+            <tr>
+              <td><code>pill</code></td>
+              <td>boolean</td>
+              <td>false</td>
+              <td>Makes button pill shaped</td>
             </tr>
             <tr>
               <td><code>clicked</code></td>
@@ -296,8 +286,7 @@ export class ButtonShowcaseComponent {
 
   buttonUsageCode = `<app-button
   label="Click me"
-  variant="filled"
-  color="primary"
-  size="medium"
+  variant="primary"
+  size="md"
   (clicked)="onClick($event)" />`;
 }
