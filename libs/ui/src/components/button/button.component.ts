@@ -18,17 +18,20 @@ export type ButtonSize = 'xs' | 'xs-icon' | 'sm' | 'sm-icon' | 'md' | 'icon' | '
       [class.pill]="pill()"
       [class.block]="block()"
       [class.progress]="loading()"
+      [style.background-color]="variant() === 'outline' || variant() === 'plain' ? 'transparent' : 'var(--' + variant() + ')'"
+      [style.color]="variant() === 'outline' || variant() === 'plain' ? 'var(--foreground)' : 'var(--' + variant() + '-foreground)'"
+      [style.border-color]="variant() === 'outline' || variant() === 'plain' ? 'var(--border)' : 'var(--' + variant() + '-border)'"
       [class]="cn(
-        'relative font-medium select-none inline-flex justify-center items-center gap-2.5 transition-colors',
-        'after:absolute after:inset-0 after:bg-white/15 after:opacity-0',
-        'hover:after:opacity-100 active:after:opacity-100',
-        'data-popup-open:after:opacity-100 after:transition-opacity',
+        'relative font-medium select-none inline-flex justify-center items-center gap-2.5 transition-all duration-200',
+        'after:absolute after:inset-0 after:bg-white/15 after:opacity-0 after:transition-opacity',
+        'hover:after:opacity-100 active:scale-[0.98]',
+        'data-popup-open:after:opacity-100',
         'focus:outline-0 focus-visible:outline-2 focus-visible:outline-offset-2',
-        'disabled:opacity-70 disabled:pointer-events-none',
-        'data-disabled:opacity-70 data-disabled:pointer-events-none',
-        'ring ring-border inset-shadow-2xs shadow outline-primary',
-        getSizeClass(),
-        getVariantClass()
+        'disabled:cursor-not-allowed disabled:opacity-50 disabled:pointer-events-none',
+        'data-disabled:cursor-not-allowed data-disabled:opacity-50 data-disabled:pointer-events-none',
+        'cursor-pointer',
+        'ring ring-[var(--border)] inset-shadow-2xs',
+        getSizeClass()
       )"
       (click)="onClick($event)">
 
@@ -84,28 +87,20 @@ export class ButtonComponent {
 
   getSizeClass(): string {
     const sizeMap: Record<ButtonSize, string> = {
-      'xs': 'h-7 px-2 text-xs rounded-xs [&>svg]:size-3.5',
-      'xs-icon': 'size-7 rounded-xs [&>svg]:size-3.5',
-      'sm': 'h-[34px] px-3 text-sm rounded-sm [&>svg]:size-4',
-      'sm-icon': 'size-[34px] rounded-sm [&>svg]:size-4',
-      'md': 'h-[38px] px-4 text-sm rounded-md [&>svg]:size-[18px]',
-      'icon': 'size-[38px] rounded-md [&>svg]:size-[18px]',
-      'lg': 'h-[46px] px-[22px] text-sm rounded-lg [&>svg]:size-[18px]',
-      'lg-icon': 'size-[46px] rounded-lg [&>svg]:size-[18px]'
+      'xs': 'h-7 px-2 text-xs rounded-xs',
+      'xs-icon': 'size-7 rounded-xs',
+      'sm': 'h-[34px] px-3 text-sm rounded-sm',
+      'sm-icon': 'size-[34px] rounded-sm',
+      'md': 'h-[38px] px-4 text-sm rounded-md',
+      'icon': 'size-[38px] rounded-md',
+      'lg': 'h-[46px] px-[22px] text-sm rounded-lg',
+      'lg-icon': 'size-[46px] rounded-lg'
     };
     return sizeMap[this.size()];
   }
 
   getVariantClass(): string {
-    const variantMap: Record<ButtonVariant, string> = {
-      'primary': 'bg-primary text-primary-foreground ring-primary-border',
-      'secondary': 'bg-secondary text-secondary-foreground ring-secondary-border',
-      'tertiary': 'bg-tertiary text-tertiary-foreground ring-tertiary-border',
-      'danger': 'bg-danger text-danger-foreground ring-danger-border',
-      'outline': 'bg-transparent text-foreground ring-border',
-      'plain': 'bg-transparent text-foreground ring-0 shadow-none'
-    };
-    return variantMap[this.variant()];
+    return '';
   }
 
   onClick(event: Event): void {

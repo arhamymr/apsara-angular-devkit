@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonComponent } from '@apsara/ui';
-import { CardComponent } from '@apsara/ui';
+import { ButtonComponent, CardComponent } from '@apsara/ui';
 import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-snippet.component';
 
 @Component({
@@ -185,13 +184,13 @@ import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-
     .section-header h2 {
       font-size: 24px;
       font-weight: 600;
-      color: var(--color-text-primary);
+      color: var(--color-foreground);
       margin: 0 0 8px;
     }
 
     .section-header p {
       font-size: 15px;
-      color: var(--color-text-secondary);
+      color: var(--color-dimmed);
       margin: 0;
     }
 
@@ -202,39 +201,23 @@ import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-
     .preview-section h3 {
       font-size: 14px;
       font-weight: 600;
-      color: var(--color-text-secondary);
+      color: var(--color-dimmed);
       margin: 0 0 16px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
-    .preview-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 24px;
-    }
-
-    .preview-item {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
     .preview-label {
       font-size: 12px;
-      color: var(--color-text-secondary);
+      color: var(--color-dimmed);
       font-weight: 500;
-    }
-
-    .code-section {
-      margin-top: 24px;
     }
 
     .code-section h3,
     .props-section h3 {
       font-size: 16px;
       font-weight: 600;
-      color: var(--color-text-primary);
+      color: var(--color-foreground);
       margin: 24px 0 16px;
     }
 
@@ -242,10 +225,10 @@ import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-
       width: 100%;
       border-collapse: collapse;
       font-size: 14px;
-      background: var(--color-bg-card);
+      background: var(--color-card);
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--shadow);
     }
 
     .props-table th,
@@ -256,24 +239,24 @@ import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-
     }
 
     .props-table th {
-      background: var(--color-bg-tertiary);
+      background: var(--color-muted);
       font-weight: 600;
-      color: var(--color-text-secondary);
+      color: var(--color-dimmed);
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
     .props-table td {
-      color: var(--color-text-primary);
+      color: var(--color-foreground);
     }
 
     .props-table code {
-      background: var(--color-bg-tertiary);
+      background: var(--color-muted);
       padding: 2px 6px;
       border-radius: 4px;
       font-size: 13px;
-      color: var(--color-text-primary);
+      color: var(--color-foreground);
     }
 
     .props-table tr:last-child td {

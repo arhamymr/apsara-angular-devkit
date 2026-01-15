@@ -22,8 +22,6 @@ Import the theme CSS in your global styles file (e.g., `styles.css`):
 
 ```css
 @import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
-
 @import "@apsara/ui/theme.css";
 ```
 
@@ -33,16 +31,35 @@ Add the base styles to your global styles file:
 
 ```css
 @layer base {
+  .dark {
+    color-scheme: dark;
+  }
+
   .root {
     isolation: isolate;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 ```
 
-### 4. Import Components
+### 4. Dark Mode
+
+Add the `dark` class to your HTML element:
+
+```html
+<html>
+  <body>
+    <div class="dark">
+      <!-- dark mode content -->
+    </div>
+  </body>
+</html>
+```
+
+### 5. Import Components
 
 Import components in your Angular modules or standalone components:
 
@@ -104,20 +121,4 @@ import { cn } from '@apsara/ui';
   `
 })
 export class MyComponent {}
-```
-
-## Dark Mode
-
-Add the `dark` class to your HTML element or use a theme provider:
-
-```html
-<html class="dark">
-  <!-- or -->
-  <html>
-    <body>
-      <div class="dark">
-        <!-- dark mode content -->
-      </div>
-    </body>
-  </html>
 ```

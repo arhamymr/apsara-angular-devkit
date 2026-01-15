@@ -35,7 +35,8 @@ import { ThemeService } from '../../../core/services';
   `,
   styles: [`
     .navbar {
-      background: #1a1a2e;
+      background: var(--color-background);
+      border-bottom: 1px solid var(--color-border);
       padding: 0 1rem;
     }
     .nav-content {
@@ -57,10 +58,10 @@ import { ThemeService } from '../../../core/services';
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.25rem;
     }
     .nav-links a {
-      color: white;
+      color: var(--color-foreground);
       text-decoration: none;
       padding: 0.5rem 1rem;
       border-radius: 6px;
@@ -69,15 +70,15 @@ import { ThemeService } from '../../../core/services';
       transition: background 0.2s;
     }
     .nav-links a:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--color-muted);
     }
     .nav-links a.active {
-      background: rgba(255, 255, 255, 0.15);
+      background: var(--color-muted);
     }
     .theme-toggle {
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      color: white;
+      background: var(--color-muted);
+      border: 1px solid var(--color-border);
+      color: var(--color-foreground);
       padding: 0.5rem 1rem;
       border-radius: 6px;
       cursor: pointer;
@@ -86,7 +87,7 @@ import { ThemeService } from '../../../core/services';
       transition: background 0.2s;
     }
     .theme-toggle:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--color-border);
     }
   `]
 })
