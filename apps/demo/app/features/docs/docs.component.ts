@@ -338,8 +338,8 @@ export class UserComponent {{ '{' }}
 
     .docs-sidebar {
       width: 280px;
-      background: #f8fafc;
-      border-right: 1px solid #e2e8f0;
+      background: var(--color-bg-secondary);
+      border-right: 1px solid var(--color-border);
       display: flex;
       flex-direction: column;
       position: sticky;
@@ -350,15 +350,15 @@ export class UserComponent {{ '{' }}
 
     .sidebar-header {
       padding: 20px 24px;
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 1px solid var(--color-border);
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
     .version-badge {
-      background: #e0e7ff;
-      color: #4338ca;
+      background: var(--color-primary-light);
+      color: var(--color-primary);
       font-size: 12px;
       font-weight: 600;
       padding: 4px 8px;
@@ -384,17 +384,17 @@ export class UserComponent {{ '{' }}
       cursor: pointer;
       text-align: left;
       transition: all 0.2s;
-      color: #475569;
+      color: var(--color-text-secondary);
       font-size: 14px;
       font-weight: 500;
     }
 
     .nav-item:hover {
-      background: #e2e8f0;
+      background: var(--color-bg-hover);
     }
 
     .nav-item.active {
-      background: #3b82f6;
+      background: var(--color-primary);
       color: white;
     }
 
@@ -406,21 +406,21 @@ export class UserComponent {{ '{' }}
 
     .sidebar-footer {
       padding: 16px 24px;
-      border-top: 1px solid #e2e8f0;
+      border-top: 1px solid var(--color-border);
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
     .footer-link {
-      color: #64748b;
+      color: var(--color-text-secondary);
       text-decoration: none;
       font-size: 13px;
       transition: color 0.2s;
     }
 
     .footer-link:hover {
-      color: #3b82f6;
+      color: var(--color-primary);
     }
 
     .docs-content {
@@ -432,15 +432,15 @@ export class UserComponent {{ '{' }}
     .doc-section h1 {
       font-size: 32px;
       font-weight: 700;
-      color: #0f172a;
+      color: var(--color-text-primary);
       margin: 0 0 8px 0;
       padding-bottom: 16px;
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 1px solid var(--color-border);
     }
 
     .doc-section .lead {
       font-size: 18px;
-      color: #64748b;
+      color: var(--color-text-secondary);
       margin: 16px 0 32px 0;
       line-height: 1.6;
     }
@@ -448,43 +448,43 @@ export class UserComponent {{ '{' }}
     .doc-section h2 {
       font-size: 24px;
       font-weight: 600;
-      color: #1e293b;
+      color: var(--color-text-primary);
       margin: 40px 0 16px 0;
     }
 
     .doc-section h3 {
       font-size: 18px;
       font-weight: 600;
-      color: #334155;
+      color: var(--color-text-primary);
       margin: 24px 0 12px 0;
     }
 
     .doc-section p {
-      color: #475569;
+      color: var(--color-text-secondary);
       line-height: 1.7;
       margin: 16px 0;
     }
 
     .doc-section code {
-      background: #f1f5f9;
+      background: var(--color-bg-tertiary);
       padding: 2px 6px;
       border-radius: 4px;
       font-size: 14px;
-      color: #0f172a;
+      color: var(--color-text-primary);
     }
 
     .info-box {
-      background: #eff6ff;
-      border-left: 4px solid #3b82f6;
+      background: var(--color-primary-light);
+      border-left: 4px solid var(--color-primary);
       padding: 16px 20px;
       border-radius: 0 8px 8px 0;
       margin: 24px 0;
-      color: #1e40af;
+      color: var(--color-primary);
     }
 
     .code-block {
-      background: #1e293b;
-      color: #e2e8f0;
+      background: var(--color-bg-tertiary);
+      color: var(--color-text-primary);
       padding: 20px;
       border-radius: 8px;
       overflow-x: auto;
@@ -504,23 +504,26 @@ export class UserComponent {{ '{' }}
       border-collapse: collapse;
       margin: 16px 0;
       font-size: 14px;
+      background: var(--color-bg-card);
+      border-radius: 8px;
+      overflow: hidden;
     }
 
     .props-table th,
     .props-table td {
       text-align: left;
       padding: 12px 16px;
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 1px solid var(--color-border);
     }
 
     .props-table th {
-      background: #f8fafc;
+      background: var(--color-bg-tertiary);
       font-weight: 600;
-      color: #334155;
+      color: var(--color-text-secondary);
     }
 
     .props-table td {
-      color: #475569;
+      color: var(--color-text-primary);
     }
 
     .props-table code {
@@ -535,8 +538,8 @@ export class UserComponent {{ '{' }}
 
     .guide-steps li {
       padding: 16px 0;
-      border-bottom: 1px solid #e2e8f0;
-      color: #475569;
+      border-bottom: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
     }
 
     .guide-steps li:last-child {
@@ -555,7 +558,7 @@ export class UserComponent {{ '{' }}
 
     .resource-list li {
       padding: 16px 20px;
-      background: #f8fafc;
+      background: var(--color-bg-secondary);
       border-radius: 8px;
       margin-bottom: 12px;
       display: flex;
@@ -564,11 +567,11 @@ export class UserComponent {{ '{' }}
     }
 
     .resource-list strong {
-      color: #1e293b;
+      color: var(--color-text-primary);
     }
 
     .resource-list a {
-      color: #3b82f6;
+      color: var(--color-primary);
       text-decoration: none;
       font-size: 14px;
     }
@@ -578,7 +581,7 @@ export class UserComponent {{ '{' }}
     }
 
     .resource-list span {
-      color: #64748b;
+      color: var(--color-text-secondary);
       font-size: 14px;
     }
   `]

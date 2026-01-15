@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -28,10 +28,10 @@ interface SidebarCategory {
           <div class="category">
             <button
               class="category-header"
-              [class.expanded]="expandedCategories().has(category.name)"
+              [class.expanded]="isExpanded(category.name)"
               (click)="toggleCategory(category.name)">
               <span class="category-icon">
-                @if (expandedCategories().has(category.name)) {
+                @if (isExpanded(category.name)) {
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
@@ -44,14 +44,14 @@ interface SidebarCategory {
               <span class="category-name">{{ category.name }}</span>
             </button>
 
-            @if (expandedCategories().has(category.name)) {
+            @if (isExpanded(category.name)) {
               <ul class="category-items">
                 @for (item of category.items; track item.route) {
                   <li>
                     <a
                       [routerLink]="item.route"
                       routerLinkActive="active"
-                      [routerLinkActiveOptions]="{ exact: true }">
+                      [routerLinkActiveOptions]="{ exact: item.route === '/' }">
                       {{ item.label }}
                     </a>
                   </li>
@@ -64,6 +64,10 @@ interface SidebarCategory {
     </aside>
   `,
   styles: [`
+    :host {
+      display: block;
+    }
+
     .sidebar {
       width: 260px;
       background: #f8fafc;
@@ -161,17 +165,24 @@ interface SidebarCategory {
       color: #1d4ed8;
       font-weight: 500;
     }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+    }
   `]
 })
 export class SidebarComponent {
   categories = input.required<SidebarCategory[]>();
-  expandedCategories = input.required<Set<string>>();
-  categoryToggle = input<(categoryName: string) => void>();
+  expandedCategories = input.required<ReadonlySet<string>>();
+  toggleCategoryEvent = output<string>();
+
+  isExpanded(categoryName: string): boolean {
+    return this.expandedCategories().has(categoryName);
+  }
 
   toggleCategory(categoryName: string): void {
-    const toggleFn = this.categoryToggle();
-    if (toggleFn) {
-      toggleFn(categoryName);
-    }
+    this.toggleCategoryEvent.emit(categoryName);
   }
 }

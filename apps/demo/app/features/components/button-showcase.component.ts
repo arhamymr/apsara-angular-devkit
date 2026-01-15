@@ -195,13 +195,13 @@ import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-
     .section-header h2 {
       font-size: 24px;
       font-weight: 600;
-      color: #0f172a;
+      color: var(--color-text-primary);
       margin: 0 0 8px;
     }
 
     .section-header p {
       font-size: 15px;
-      color: #64748b;
+      color: var(--color-text-secondary);
       margin: 0;
     }
 
@@ -212,7 +212,7 @@ import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-
     .preview-section h3 {
       font-size: 14px;
       font-weight: 600;
-      color: #475569;
+      color: var(--color-text-secondary);
       margin: 0 0 16px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -232,7 +232,7 @@ import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-
 
     .preview-label {
       font-size: 12px;
-      color: #64748b;
+      color: var(--color-text-secondary);
       font-weight: 500;
     }
 
@@ -244,7 +244,7 @@ import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-
     .props-section h3 {
       font-size: 16px;
       font-weight: 600;
-      color: #1e293b;
+      color: var(--color-text-primary);
       margin: 24px 0 16px;
     }
 
@@ -252,38 +252,38 @@ import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-
       width: 100%;
       border-collapse: collapse;
       font-size: 14px;
-      background: white;
+      background: var(--color-bg-card);
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-md);
     }
 
     .props-table th,
     .props-table td {
       padding: 12px 16px;
       text-align: left;
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 1px solid var(--color-border);
     }
 
     .props-table th {
-      background: #f8fafc;
+      background: var(--color-bg-tertiary);
       font-weight: 600;
-      color: #475569;
+      color: var(--color-text-secondary);
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
     .props-table td {
-      color: #334155;
+      color: var(--color-text-primary);
     }
 
     .props-table code {
-      background: #f1f5f9;
+      background: var(--color-bg-tertiary);
       padding: 2px 6px;
       border-radius: 4px;
       font-size: 13px;
-      color: #1e293b;
+      color: var(--color-text-primary);
     }
 
     .props-table tr:last-child td {

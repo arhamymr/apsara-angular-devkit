@@ -73,13 +73,13 @@ interface SidebarCategory {
     .page-header h1 {
       font-size: 32px;
       font-weight: 700;
-      color: #0f172a;
+      color: var(--color-text-primary);
       margin: 0 0 8px;
     }
 
     .page-header p {
       font-size: 16px;
-      color: #64748b;
+      color: var(--color-text-secondary);
       margin: 0;
     }
 

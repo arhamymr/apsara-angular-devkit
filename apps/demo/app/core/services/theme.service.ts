@@ -22,6 +22,7 @@ export type Theme = 'light' | 'dark';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ThemeService {
   /** LocalStorage key used to persist the user's theme preference */
   private readonly STORAGE_KEY = 'apsara-theme';
