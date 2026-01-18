@@ -21,7 +21,6 @@
     "ui",
     "components",
     "tailwind",
-    "shadcn",
     "cli"
   ],
   "license": "MIT",
@@ -29,6 +28,7 @@
     "@angular-devkit/build-angular": "^21.0.5",
     "@angular/build": "^21.0.5",
     "@angular/compiler-cli": "^21.1.0",
+    "@angular/material": "21.1.0",
     "@nx/angular": "^22.3.3",
     "@nx/eslint": "^22.3.3",
     "@nx/js": "^22.3.3",
@@ -48,10 +48,12 @@
   },
   "packageManager": "pnpm@10.28.0",
   "dependencies": {
+    "@angular/cdk": "21.1.0",
     "@angular/common": "^21.1.0",
     "@angular/compiler": "^21.1.0",
     "@angular/core": "^21.1.0",
     "@angular/forms": "^21.1.0",
+    "@angular/material": "~21.1.0",
     "@angular/platform-browser": "^21.1.0",
     "@angular/platform-browser-dynamic": "^21.1.0",
     "@angular/router": "^21.1.0"

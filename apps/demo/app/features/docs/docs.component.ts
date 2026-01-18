@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 interface DocSection {
   id: string;
@@ -10,7 +11,7 @@ interface DocSection {
 @Component({
   selector: 'app-docs',
   standalone: true,
-  imports: [NgOptimizedImage],
+  imports: [NgOptimizedImage, MatIconModule],
   template: `
     <div class="flex min-h-[calc(100vh-64px)]">
       <aside class="w-[280px] bg-secondary border-r border-border flex flex-col sticky top-16 h-[calc(100vh-64px)] overflow-y-auto">
@@ -31,7 +32,7 @@ interface DocSection {
               [class.text-white]="activeSection() === section.id"
               [class.hover:bg-accent]="activeSection() !== section.id"
               (click)="setActiveSection(section.id)">
-              <span class="text-lg w-6 text-center">{{ section.icon }}</span>
+              <mat-icon class="w-6 text-center">{{ section.icon }}</mat-icon>
               <span>{{ section.title }}</span>
             </button>
           }
@@ -337,12 +338,12 @@ export class DocsComponent {
   activeSection = signal<string>('getting-started');
 
   sections: DocSection[] = [
-    { id: 'getting-started', title: 'Getting Started', icon: '🚀' },
-    { id: 'components', title: 'Components', icon: '🧩' },
-    { id: 'theming', title: 'Theming', icon: '🎨' },
-    { id: 'cli', title: 'CLI Commands', icon: '⚡' },
-    { id: 'guides', title: 'Guides', icon: '📚' },
-    { id: 'resources', title: 'Resources', icon: '🔗' }
+    { id: 'getting-started', title: 'Getting Started', icon: 'rocket_launch' },
+    { id: 'components', title: 'Components', icon: 'view_comfortable' },
+    { id: 'theming', title: 'Theming', icon: 'palette' },
+    { id: 'cli', title: 'CLI Commands', icon: 'terminal' },
+    { id: 'guides', title: 'Guides', icon: 'menu_book' },
+    { id: 'resources', title: 'Resources', icon: 'link' }
   ];
 
   setActiveSection(sectionId: string) {

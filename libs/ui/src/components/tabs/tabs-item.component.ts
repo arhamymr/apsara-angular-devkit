@@ -1,52 +1,24 @@
-import { Component, input, output, inject, HostBinding } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TabsComponent } from './tabs.component';
-import { cn } from '../../lib/cn';
+import { MatTabsModule, MatTabLink } from '@angular/material/tabs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-tabs-item',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatTabsModule, MatTabLink, RouterModule],
   template: `
-    <button
-      type="button"
-      role="tab"
-      [attr.aria-selected]="isActive()"
-      [attr.aria-controls]="panelId"
-      [attr.data-active]="isActive()"
-      [class]="cn(
-        'px-5 py-3 text-sm font-medium transition-colors',
-        'mb-px border-b-2 border-transparent cursor-pointer',
-        'hover:text-foreground focus-visible:outline-none focus-visible:bg-muted',
-        isActive() ? 'text-primary border-primary' : 'text-dimmed'
-      )"
-      (click)="onClick()">
+    <a mat-tab-link
+      class="px-4 py-3 text-sm font-medium border-b-2 transition-colors cursor-pointer focus:outline-none
+             hover:text-primary disabled:cursor-not-allowed disabled:opacity-50
+             border-transparent text-dimmed
+             [&.mat-mdc-tab-active]:text-primary [&.mat-mdc-tab-active]:border-primary">
       <ng-content></ng-content>
-    </button>
-  `
+    </a>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabsItemComponent {
   readonly value = input.required<string>();
-  cn = cn;
-
-  private tabs = inject(TabsComponent, { optional: true });
-
-  @HostBinding('attr.id')
-  get itemId(): string {
-    return `tab-${this.value()}`;
-  }
-
-  get panelId(): string {
-    return `panel-${this.value()}`;
-  }
-
-  isActive(): boolean {
-    return this.tabs?.value === this.value();
-  }
-
-  onClick(): void {
-    if (this.tabs) {
-      this.tabs.setValue(this.value());
-    }
-  }
+  readonly disabled = input<boolean>(false);
 }

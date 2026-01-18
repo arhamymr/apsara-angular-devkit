@@ -1,19 +1,22 @@
-import { Component, input, output, inject, effect } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TabsComponent } from './tabs.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-tabs-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatTabsModule],
   template: `
-    <div class="flex border-b border-separator gap-1" role="tablist">
+    <nav mat-tab-nav-bar
+      class="flex border-b border-border"
+      [tabPanel]="tabPanel"
+      [animationDuration]="animationDuration()">
       <ng-content></ng-content>
-    </div>
-  `
+    </nav>
+    <mat-tab-nav-panel #tabPanel id="tabs-panel" class="block"></mat-tab-nav-panel>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabsListComponent {
-  readonly value = input.required<string>();
-
-  private tabs = inject(TabsComponent, { optional: true });
+  readonly animationDuration = input<'300ms' | '150ms'>('300ms');
 }

@@ -1,19 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SidebarComponent } from './sidebar.component';
+import { MatIconModule } from '@angular/material/icon';
+import { ButtonComponent, TabsShowcaseComponent } from '@apsara/ui';
 import { ButtonShowcaseComponent } from './button-showcase.component';
 import { CardShowcaseComponent } from './card-showcase.component';
 import { InputShowcaseComponent } from './input-showcase.component';
-import { TabsShowcaseComponent } from './tabs-showcase.component';
 
-interface SidebarItem {
-  label: string;
-  route: string;
-}
-
-interface SidebarCategory {
-  name: string;
-  items: SidebarItem[];
+interface ComponentSection {
+  id: string;
+  title: string;
+  icon: string;
 }
 
 @Component({
@@ -21,138 +17,168 @@ interface SidebarCategory {
   standalone: true,
   imports: [
     CommonModule,
-    SidebarComponent,
+    MatIconModule,
+    ButtonComponent,
+    TabsShowcaseComponent,
     ButtonShowcaseComponent,
     CardShowcaseComponent,
-    InputShowcaseComponent,
-    TabsShowcaseComponent
+    InputShowcaseComponent
   ],
   template: `
-    <div class="layout">
-      <app-sidebar [categories]="categories" />
-
-      <main class="content">
-        <div class="page-container">
-          <header class="page-header">
-            <h1>Components</h1>
-            <p>A collection of reusable UI components built with Angular signals</p>
-          </header>
-
-          <app-button-showcase />
-          <app-card-showcase />
-          <app-input-showcase />
-          <app-tabs-showcase />
+    <div class="flex min-h-[calc(100vh-64px)]">
+      <aside class="w-[280px] bg-secondary border-r border-border flex flex-col sticky top-16 h-[calc(100vh-64px)] overflow-y-auto">
+        <div class="p-6 border-b border-border">
+          <h2 class="font-semibold text-foreground">Components</h2>
+          <p class="text-xs text-dimmed mt-1">UI Library v1.0.0</p>
         </div>
+
+        <nav class="flex-1 p-4 flex flex-col gap-1">
+          @for (section of sections; track section.id) {
+            <button
+              class="flex items-center gap-3 px-3 py-2.5 rounded-lg border-none bg-transparent cursor-pointer text-left transition-all duration-200 text-dimmed text-sm font-medium"
+              [class.bg-primary]="activeSection() === section.id"
+              [class.text-white]="activeSection() === section.id"
+              [class.hover:bg-accent]="activeSection() !== section.id"
+              (click)="setActiveSection(section.id)">
+              <mat-icon class="w-6 text-center">{{ section.icon }}</mat-icon>
+              <span>{{ section.title }}</span>
+            </button>
+          }
+        </nav>
+      </aside>
+
+      <main class="flex-1 p-12 max-w-[900px]">
+        @switch (activeSection()) {
+          @case ('button') {
+            <section class="mb-16 scroll-m-20">
+              <h1 class="text-[32px] font-bold text-foreground mb-2 pb-4 border-b border-border">Button</h1>
+              <p class="text-lg text-dimmed my-4 leading-relaxed">Interactive button component with multiple variants, sizes, and states.</p>
+
+              <div class="bg-primary/10 border-l-4 border-primary p-5 rounded-r-lg my-6 text-primary">
+                <strong>Import:</strong> <code class="bg-primary/20 px-2 py-0.5 rounded text-sm">import &#123; ButtonComponent &#125; from '@apsara/ui';</code>
+              </div>
+
+              <h2 class="text-2xl font-semibold text-foreground mt-10 mb-4">Examples</h2>
+              <app-button-showcase />
+
+              <h2 class="text-2xl font-semibold text-foreground mt-10 mb-4">Variants</h2>
+              <p class="text-dimmed my-4">Choose from different visual styles.</p>
+              <div class="flex flex-wrap gap-3 my-4">
+                <app-button variant="primary" label="Primary" />
+                <app-button variant="secondary" label="Secondary" />
+                <app-button variant="tertiary" label="Tertiary" />
+                <app-button variant="danger" label="Danger" />
+                <app-button variant="outline" label="Outline" />
+                <app-button variant="plain" label="Plain" />
+              </div>
+
+              <h2 class="text-2xl font-semibold text-foreground mt-10 mb-4">Sizes</h2>
+              <p class="text-dimmed my-4">Choose from different button sizes.</p>
+              <div class="flex items-center gap-3 my-4 flex-wrap">
+                <app-button size="xs" label="Extra Small" />
+                <app-button size="sm" label="Small" />
+                <app-button size="md" label="Medium" />
+                <app-button size="lg" label="Large" />
+              </div>
+
+              <h2 class="text-2xl font-semibold text-foreground mt-10 mb-4">Rounded</h2>
+              <p class="text-dimmed my-4">Control the border radius.</p>
+              <div class="flex items-center gap-3 my-4 flex-wrap">
+                <app-button rounded="none" label="None" />
+                <app-button rounded="sm" label="Small" />
+                <app-button rounded="md" label="Medium" />
+                <app-button rounded="lg" label="Large" />
+                <app-button rounded="full" label="Full" />
+              </div>
+
+              <h2 class="text-2xl font-semibold text-foreground mt-10 mb-4">States</h2>
+              <div class="flex items-center gap-3 my-4 flex-wrap">
+                <app-button label="Default" />
+                <app-button label="Loading" [loading]="true" />
+                <app-button label="Disabled" [disabled]="true" />
+                <app-button label="Block" [block]="true" class="w-full max-w-xs" />
+              </div>
+            </section>
+          }
+
+          @case ('card') {
+            <section class="mb-16 scroll-m-20">
+              <h1 class="text-[32px] font-bold text-foreground mb-2 pb-4 border-b border-border">Card</h1>
+              <p class="text-lg text-dimmed my-4 leading-relaxed">Container component for grouping related content.</p>
+
+              <div class="bg-primary/10 border-l-4 border-primary p-5 rounded-r-lg my-6 text-primary">
+                <strong>Import:</strong> <code class="bg-primary/20 px-2 py-0.5 rounded text-sm">import &#123; CardComponent &#125; from '@apsara/ui';</code>
+              </div>
+
+              <h2 class="text-2xl font-semibold text-foreground mt-10 mb-4">Examples</h2>
+              <app-card-showcase />
+            </section>
+          }
+
+          @case ('input') {
+            <section class="mb-16 scroll-m-20">
+              <h1 class="text-[32px] font-bold text-foreground mb-2 pb-4 border-b border-border">Input</h1>
+              <p class="text-lg text-dimmed my-4 leading-relaxed">Form input component with validation and styling.</p>
+
+              <div class="bg-primary/10 border-l-4 border-primary p-5 rounded-r-lg my-6 text-primary">
+                <strong>Import:</strong> <code class="bg-primary/20 px-2 py-0.5 rounded text-sm">import &#123; InputComponent, FieldComponent, FieldLabelComponent &#125; from '@apsara/ui';</code>
+              </div>
+
+              <h2 class="text-2xl font-semibold text-foreground mt-10 mb-4">Examples</h2>
+              <app-input-showcase />
+            </section>
+          }
+
+          @case ('tabs') {
+            <section class="mb-16 scroll-m-20">
+              <h1 class="text-[32px] font-bold text-foreground mb-2 pb-4 border-b border-border">Tabs</h1>
+              <p class="text-lg text-dimmed my-4 leading-relaxed">Navigation tabs component for organizing content into sections.</p>
+
+              <div class="bg-primary/10 border-l-4 border-primary p-5 rounded-r-lg my-6 text-primary">
+                <strong>Import:</strong> <code class="bg-primary/20 px-2 py-0.5 rounded text-sm">import &#123; TabsComponent, TabsListComponent, TabsItemComponent, TabsPanelComponent &#125; from '@apsara/ui';</code>
+              </div>
+
+              <h2 class="text-2xl font-semibold text-foreground mt-10 mb-4">Examples</h2>
+              <app-tabs-showcase />
+
+              <h2 class="text-2xl font-semibold text-foreground mt-10 mb-4">Usage</h2>
+              <pre class="bg-tertiary text-foreground p-5 rounded-lg overflow-x-auto text-sm leading-relaxed my-4"><code>&lt;app-tabs [defaultValue]="'tab1'"&gt;
+  &lt;app-tabs-list&gt;
+    &lt;app-tabs-item value="tab1"&gt;Tab 1&lt;/app-tabs-item&gt;
+    &lt;app-tabs-item value="tab2"&gt;Tab 2&lt;/app-tabs-item&gt;
+  &lt;/app-tabs-list&gt;
+
+  &lt;app-tabs-panel value="tab1"&gt;
+    Content for tab 1
+  &lt;/app-tabs-panel&gt;
+
+  &lt;app-tabs-panel value="tab2"&gt;
+    Content for tab 2
+  &lt;/app-tabs-panel&gt;
+&lt;/app-tabs&gt;</code></pre>
+            </section>
+          }
+        }
       </main>
     </div>
   `,
   styles: [`
-    .layout {
-      display: flex;
-      min-height: calc(100vh - 64px);
-    }
-
-    .content {
-      flex: 1;
-      overflow-y: auto;
-    }
-
-    .page-container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 32px 40px;
-    }
-
-    .page-header {
-      margin-bottom: 40px;
-    }
-
-    .page-header h1 {
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--color-text-primary);
-      margin: 0 0 8px;
-    }
-
-    .page-header p {
-      font-size: 16px;
-      color: var(--color-text-secondary);
-      margin: 0;
-    }
-
-    @media (max-width: 768px) {
-      .page-container {
-        padding: 24px 16px;
-      }
+    :host {
+      display: block;
     }
   `]
 })
 export class ComponentsShowcaseComponent {
-  categories: SidebarCategory[] = [
-    {
-      name: 'Prologue',
-      items: [
-        { label: 'Introduction', route: '/docs/introduction' },
-        { label: 'Installation', route: '/docs/installation' },
-        { label: 'Design Approach', route: '/docs/design-approach' },
-        { label: 'Customization', route: '/docs/customization' }
-      ]
-    },
-    {
-      name: 'Components',
-      items: [
-        { label: 'Accordion', route: '/docs/accordion' },
-        { label: 'Alert', route: '/docs/alert' },
-        { label: 'Alert dialog', route: '/docs/alert-dialog' },
-        { label: 'Autocomplete', route: '/docs/autocomplete' },
-        { label: 'Avatar', route: '/docs/avatar' },
-        { label: 'Badge', route: '/docs/badge' },
-        { label: 'Button', route: '/docs/button' },
-        { label: 'Card', route: '/docs/card' },
-        { label: 'Checkbox', route: '/docs/checkbox' },
-        { label: 'Chip', route: '/docs/chip' },
-        { label: 'Collapsible', route: '/docs/collapsible' },
-        { label: 'Combobox', route: '/docs/combobox' },
-        { label: 'Command', route: '/docs/command' },
-        { label: 'Dialog', route: '/docs/dialog' },
-        { label: 'Divider', route: '/docs/divider' },
-        { label: 'Field', route: '/docs/field' },
-        { label: 'Fieldset', route: '/docs/fieldset' },
-        { label: 'Form', route: '/docs/form' },
-        { label: 'Heading', route: '/docs/heading' },
-        { label: 'Icon box', route: '/docs/icon-box' },
-        { label: 'Input', route: '/docs/input' },
-        { label: 'Input group', route: '/docs/input-group' },
-        { label: 'Item', route: '/docs/item' },
-        { label: 'Kbd', route: '/docs/kbd' },
-        { label: 'Label', route: '/docs/label' },
-        { label: 'Menu', route: '/docs/menu' },
-        { label: 'Menubar', route: '/docs/menubar' },
-        { label: 'Meter', route: '/docs/meter' },
-        { label: 'Number field', route: '/docs/number-field' },
-        { label: 'Pagination', route: '/docs/pagination' },
-        { label: 'Popover', route: '/docs/popover' },
-        { label: 'Preview card', route: '/docs/preview-card' },
-        { label: 'Progress', route: '/docs/progress' },
-        { label: 'Radio', route: '/docs/radio' },
-        { label: 'Scroll area', route: '/docs/scroll-area' },
-        { label: 'Select', route: '/docs/select' },
-        { label: 'Separator', route: '/docs/separator' },
-        { label: 'Sidebar', route: '/docs/sidebar' },
-        { label: 'Slider', route: '/docs/slider' },
-        { label: 'Spinner', route: '/docs/spinner' },
-        { label: 'Stack', route: '/docs/stack' },
-        { label: 'Switch', route: '/docs/switch' },
-        { label: 'Table', route: '/docs/table' },
-        { label: 'Tabs', route: '/docs/tabs' },
-        { label: 'Text', route: '/docs/text' },
-        { label: 'Textarea', route: '/docs/textarea' },
-        { label: 'Toast', route: '/docs/toast' },
-        { label: 'Toggle', route: '/docs/toggle' },
-        { label: 'Toggle group', route: '/docs/toggle-group' },
-        { label: 'Toolbar', route: '/docs/toolbar' },
-        { label: 'Tooltip', route: '/docs/tooltip' }
-      ]
-    }
+  activeSection = signal<string>('button');
+
+  sections: ComponentSection[] = [
+    { id: 'button', title: 'Button', icon: 'smart_button' },
+    { id: 'card', title: 'Card', icon: 'crop_square' },
+    { id: 'input', title: 'Input', icon: 'text_fields' },
+    { id: 'tabs', title: 'Tabs', icon: 'tab' }
   ];
+
+  setActiveSection(sectionId: string) {
+    this.activeSection.set(sectionId);
+  }
 }

@@ -29,7 +29,7 @@ import { InputComponent } from '@apsara/ui';
       </div>
       
       <app-tabs [defaultValue]="'account'" class="lg:w-6/12 w-full">
-        <app-tabs-list [value]="'account'">
+        <app-tabs-list>
           <app-tabs-item [value]="'account'">Account</app-tabs-item>
           <app-tabs-item [value]="'password'">Password</app-tabs-item>
         </app-tabs-list>
