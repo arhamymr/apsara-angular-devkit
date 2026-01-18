@@ -51,9 +51,12 @@ import { tabsShowcaseCode } from './tabs-showcase.code';
 
           @if (accountTab() === 'preview') {
             <div class="lg:w-6/12 w-full">
-              <app-tabs [defaultValue]="'account'" [tabs]="accountTabs">
+              <app-tabs
+                [options]="accountOptions"
+                [modelValue]="accountActiveTab()"
+                (changed)="onAccountTabChange($event)">
                 <div class="flex flex-col gap-4">
-                  @if (activeTab === 'account') {
+                  @if (accountActiveTab() === 'account') {
                     <div class="flex flex-col gap-4">
                       <div class="flex flex-col gap-1.5">
                         <label class="text-sm font-medium text-foreground">Name</label>
@@ -73,7 +76,7 @@ import { tabsShowcaseCode } from './tabs-showcase.code';
                       </div>
                     </div>
                   }
-                  @if (activeTab === 'password') {
+                  @if (accountActiveTab() === 'password') {
                     <div class="flex flex-col gap-4">
                       <div class="flex flex-col gap-1.5">
                         <label class="text-sm font-medium text-foreground">Password</label>
@@ -130,15 +133,18 @@ import { tabsShowcaseCode } from './tabs-showcase.code';
 
           @if (statesTab() === 'preview') {
             <div class="lg:w-6/12 w-full">
-              <app-tabs [defaultValue]="'tab1'" [tabs]="statesTabs">
+              <app-tabs
+                [options]="statesOptions"
+                [modelValue]="statesActiveTab()"
+                (changed)="onStatesTabChange($event)">
                 <div class="flex flex-col gap-4">
-                  @if (activeTab === 'tab1') {
+                  @if (statesActiveTab() === 'tab1') {
                     <p class="text-sm text-dimmed">This is the active tab content.</p>
                   }
-                  @if (activeTab === 'tab2') {
+                  @if (statesActiveTab() === 'tab2') {
                     <p class="text-sm text-dimmed">This is another tab content.</p>
                   }
-                  @if (activeTab === 'tab3') {
+                  @if (statesActiveTab() === 'tab3') {
                     <p class="text-sm text-dimmed">This tab is disabled.</p>
                   }
                 </div>
@@ -169,22 +175,28 @@ import { tabsShowcaseCode } from './tabs-showcase.code';
           </thead>
           <tbody>
             <tr>
-              <td class="p-3 border-b border-border text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">tabs</code></td>
-              <td class="p-3 border-b border-border text-foreground">Array of TabItem</td>
+              <td class="p-3 border-b border-border text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">options</code></td>
+              <td class="p-3 border-b border-border text-foreground">Array of TabOption</td>
               <td class="p-3 border-b border-border text-foreground">[]</td>
-              <td class="p-3 border-b border-border text-foreground">Array of tab items with value, label, and disabled</td>
+              <td class="p-3 border-b border-border text-foreground">Array of tab options with value, label, and disabled</td>
             </tr>
             <tr>
-              <td class="p-3 border-b border-border text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">defaultValue</code></td>
+              <td class="p-3 border-b border-border text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">modelValue</code></td>
               <td class="p-3 border-b border-border text-foreground">string</td>
               <td class="p-3 border-b border-border text-foreground">''</td>
-              <td class="p-3 border-b border-border text-foreground">Default active tab value</td>
+              <td class="p-3 border-b border-border text-foreground">Currently selected tab value</td>
             </tr>
             <tr>
-              <td class="p-3 border-b border-border text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">animationDuration</code></td>
-              <td class="p-3 border-b border-border text-foreground">'300ms' | '150ms'</td>
-              <td class="p-3 border-b border-border text-foreground">'300ms'</td>
-              <td class="p-3 border-b border-border text-foreground">Animation duration</td>
+              <td class="p-3 border-b border-border text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">ariaLabel</code></td>
+              <td class="p-3 border-b border-border text-foreground">string</td>
+              <td class="p-3 border-b border-border text-foreground">'Tab options'</td>
+              <td class="p-3 border-b border-border text-foreground">Accessibility label</td>
+            </tr>
+            <tr>
+              <td class="p-3 border-b border-border text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">changed</code></td>
+              <td class="p-3 border-b border-border text-foreground">EventEmitter&lt;string&gt;</td>
+              <td class="p-3 border-b border-border text-foreground">-</td>
+              <td class="p-3 border-b border-border text-foreground">Emits when tab selection changes</td>
             </tr>
           </tbody>
         </table>
@@ -195,14 +207,15 @@ import { tabsShowcaseCode } from './tabs-showcase.code';
 export class TabsShowcaseComponent {
   accountTab = signal<'preview' | 'code'>('preview');
   statesTab = signal<'preview' | 'code'>('preview');
-  activeTab = 'account';
+  accountActiveTab = signal<string>('account');
+  statesActiveTab = signal<string>('tab1');
 
-  accountTabs = [
+  accountOptions = [
     { value: 'account', label: 'Account' },
     { value: 'password', label: 'Password' }
   ];
 
-  statesTabs = [
+  statesOptions = [
     { value: 'tab1', label: 'Active Tab' },
     { value: 'tab2', label: 'Another Tab' },
     { value: 'tab3', label: 'Disabled', disabled: true }
@@ -221,6 +234,14 @@ export class TabsShowcaseComponent {
 
   setStatesTab(tab: 'preview' | 'code') {
     this.statesTab.set(tab);
+  }
+
+  onAccountTabChange(value: string) {
+    this.accountActiveTab.set(value);
+  }
+
+  onStatesTabChange(value: string) {
+    this.statesActiveTab.set(value);
   }
 
   tabsShowcaseCode = tabsShowcaseCode;

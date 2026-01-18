@@ -1,11 +1,12 @@
 import { Component, input, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '@apsara/ui';
+import { IconComponent } from '@apsara/ui';
 
 @Component({
   selector: 'app-code-snippet',
   standalone: true,
-  imports: [CommonModule, ButtonComponent],
+  imports: [CommonModule, ButtonComponent, IconComponent],
   template: `
     <div class="code-snippet">
       <pre class="code-content"><code>{{ code() }}</code></pre>
@@ -14,7 +15,11 @@ import { ButtonComponent } from '@apsara/ui';
         class="copy-btn"
         [attr.aria-label]="copied() ? 'Copied' : 'Copy code'">
         <app-button size="icon" [variant]="copied() ? 'primary' : 'plain'">
-          <span slot="">@if (copied()) { check } @else { content_copy }</span>
+          @if (copied()) {
+            <app-icon name="check" size="sm" />
+          } @else {
+            <app-icon name="content_copy" size="sm" />
+          }
         </app-button>
       </button>
     </div>

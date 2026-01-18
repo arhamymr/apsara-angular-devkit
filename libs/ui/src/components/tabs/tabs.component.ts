@@ -1,7 +1,8 @@
-import { Component, input, ChangeDetectionStrategy, signal, output, effect } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { cn } from '../../lib/cn';
 
-interface TabItem {
+interface TabOption {
   value: string;
   label: string;
   disabled?: boolean;
@@ -14,7 +15,7 @@ interface TabItem {
   template: `
     <div class="flex flex-col">
       <div class="flex border-b border-[var(--border)]" role="tablist">
-        @for (tab of tabs(); track tab.value) {
+        @for (option of options(); track option.value) {
           <button
             type="button"
             role="tab"
@@ -23,10 +24,10 @@ interface TabItem {
                    text-[var(--dimmed)] border-transparent
                    data-[active]:text-[var(--primary)] data-[active]:border-[var(--primary)]
                    disabled:cursor-not-allowed disabled:opacity-50"
-            [attr.data-active]="activeTab() === tab.value || ''"
-            [disabled]="tab.disabled"
-            (click)="setActiveTab(tab.value)">
-            {{ tab.label }}
+            [attr.data-active]="modelValue() === option.value || ''"
+            [disabled]="option.disabled"
+            (click)="onSelect(option.value)">
+            {{ option.label }}
           </button>
         }
       </div>
@@ -38,23 +39,14 @@ interface TabItem {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabsComponent {
-  readonly defaultValue = input<string>('');
-  readonly animationDuration = input<'300ms' | '150ms'>('300ms');
-  readonly tabs = input.required<Array<TabItem>>();
+  readonly options = input.required<Array<TabOption>>();
+  readonly modelValue = input<string>('');
+  readonly ariaLabel = input<string>('Tab options');
+  readonly changed = output<string>();
 
-  activeTab = signal<string>('');
-
-  constructor() {
-    effect(() => {
-      const defaultVal = this.defaultValue();
-      const tabsList = this.tabs();
-      if (defaultVal && tabsList.length > 0) {
-        this.activeTab.set(defaultVal);
-      }
-    });
+  onSelect(value: string): void {
+    this.changed.emit(value);
   }
 
-  setActiveTab(value: string) {
-    this.activeTab.set(value);
-  }
+  cn = cn;
 }
