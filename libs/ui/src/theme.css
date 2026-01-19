@@ -15,7 +15,7 @@
 
 :root {
   --background: oklch(1 0 0);
-  --foreground: oklch(0.2036 0.0029 247.97);
+  --foreground: oklch(13.297% 0.00206 197.316);
   --muted: oklch(0.5076 0.0103 248.03);
   --dimmed: oklch(0.6971 0.009 247.96);
   --border: oklch(0.915 0.0024 247.85);
@@ -80,7 +80,7 @@
 
   --accent: oklch(0.22 0 0);
 
-  --card: oklch(0.20 0 0);
+  --card: oklch(20.904% 0.00002 271.152);
   --card-border: oklch(0.28 0 0);
 
   --input: oklch(0.22 0 0);

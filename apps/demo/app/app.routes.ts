@@ -1,12 +1,24 @@
 import { Routes } from '@angular/router';
-import { HomeComponent, DocsComponent } from './features';
+import { HomeComponent, DocsOverviewComponent, DocsLayoutComponent } from './features';
 import { NotFoundComponent } from './features/home/not-found.component';
 import { ComponentsOverviewComponent } from './features/components/components-overview.component';
 import { ComponentDocLayoutComponent } from './features/components/component-doc-layout.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'docs', component: DocsComponent },
+  { path: 'docs', component: DocsOverviewComponent },
+    {
+    path: 'docs',
+    component: DocsLayoutComponent,
+    children: [
+      { path: 'getting-started', loadComponent: () => import('./features/docs/getting-started.component').then(m => m.GettingStartedComponent) },
+      { path: 'theming', loadComponent: () => import('./features/docs/theming.component').then(m => m.ThemingComponent) },
+      { path: 'cli', loadComponent: () => import('./features/docs/cli.component').then(m => m.CliComponent) },
+      { path: 'guides', loadComponent: () => import('./features/docs/guides.component').then(m => m.GuidesComponent) },
+      { path: 'icons', loadComponent: () => import('./features/docs/icons.component').then(m => m.IconsComponent) },
+      { path: 'resources', loadComponent: () => import('./features/docs/resources.component').then(m => m.ResourcesComponent) }
+    ]
+  },
   { path: 'components', component: ComponentsOverviewComponent },
   {
     path: 'components',

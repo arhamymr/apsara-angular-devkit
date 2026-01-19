@@ -1,18 +1,25 @@
-import { Component, input, signal, effect } from '@angular/core';
+import { Component, input, signal, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '@apsara/ui';
 import { IconComponent } from '@apsara/ui';
+import { HighlightService } from '../../services/highlight.service';
 
 @Component({
   selector: 'app-code-snippet',
   standalone: true,
   imports: [CommonModule, ButtonComponent, IconComponent],
   template: `
-    <div class="code-snippet">
-      <pre class="code-content"><code>{{ code() }}</code></pre>
+    <div class="relative bg-[var(--popover,#f5f5f5)] border border-[var(--border,#e0e0e0)] rounded-lg overflow-hidden my-4">
+      @if (isLoading()) {
+        <pre class="m-0 p-4 overflow-x-auto text-[color:var(--foreground-variant,#999)]">Loading...</pre>
+      } @else if (highlightedCode()) {
+        <pre class="m-0 p-4 overflow-x-auto" [innerHTML]="highlightedCode()"></pre>
+      } @else {
+        <pre class="m-0 p-4 overflow-x-auto"><code class="font-mono text-sm text-[color:var(--foreground)] leading-[1.6] whitespace-pre">{{ code() }}</code></pre>
+      }
       <button
         (click)="copyCode()"
-        class="copy-btn"
+        class="absolute top-2 right-2 bg-transparent border-none cursor-pointer p-1 rounded-md transition-colors duration-200 hover:bg-[var(--accent,#f5f5f5)]"
         [attr.aria-label]="copied() ? 'Copied' : 'Copy code'">
         <app-button size="icon" [variant]="copied() ? 'primary' : 'plain'">
           @if (copied()) {
@@ -23,69 +30,32 @@ import { IconComponent } from '@apsara/ui';
         </app-button>
       </button>
     </div>
-  `,
-  styles: [`
-    .code-snippet {
-      position: relative;
-      background: var(--popover);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      margin: 16px 0;
-    }
-
-    .code-content {
-      margin: 0;
-      padding: 16px;
-      overflow-x: auto;
-    }
-
-    code {
-      font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
-      font-size: 14px;
-      color: var(--foreground);
-      line-height: 1.6;
-      white-space: pre;
-    }
-
-    .copy-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-      border-radius: var(--radius);
-      transition: background-color 0.2s;
-    }
-
-    .copy-btn:hover {
-      background-color: var(--accent);
-    }
-
-    :host ::ng-deep {
-      .keyword { color: #569cd6; }
-      .string { color: #ce9178; }
-      .number { color: #b5cea8; }
-      .comment { color: #6a9955; }
-      .type { color: #0; }
-      .function { color: #dcdcaa; }
-      .variable { color: #9cdcfe; }
-      .operator { color: #d4d4d4; }
-      .tag { color: #569cd6; }
-      .attr-name { color: #9cdcfe; }
-      .attr-value { color: #ce9178; }
-    }
-  `]
+  `
 })
 export class CodeSnippetComponent {
   readonly code = input<string>('');
   readonly language = input<string>('typescript');
 
+  private highlightService = inject(HighlightService);
+
+  highlightedCode = signal<string>('');
+  isLoading = signal(false);
   copied = signal(false);
 
   constructor() {
+    effect(async () => {
+      const code = this.code();
+      const lang = this.language();
+      if (code) {
+        this.isLoading.set(true);
+        try {
+          this.highlightedCode.set(await this.highlightService.highlight(code, lang));
+        } finally {
+          this.isLoading.set(false);
+        }
+      }
+    });
+
     effect(() => {
       if (this.copied()) {
         setTimeout(() => {

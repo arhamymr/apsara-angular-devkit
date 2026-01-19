@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
 
 interface ComponentItem {
   id: string;
@@ -17,35 +18,60 @@ interface ComponentCategory {
 @Component({
   selector: 'app-component-doc-layout',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, RouterOutlet, MatIconModule],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, MatIconModule, FormsModule],
   template: `
-    <div class="components-layout">
-      <aside class="sidebar">
-        <nav class="sidebar-nav">
-          <a routerLink="/components" class="back-link">
-            <mat-icon>arrow_back</mat-icon>
+    <div class="flex min-h-[calc(100vh-72px)]">
+      <aside class="w-[280px] flex-shrink-0 bg-background border-r border-border overflow-y-auto sticky top-[72px] h-[calc(100vh-72px)]">
+        <nav class="py-6 px-0">
+          <a routerLink="/components" class="flex items-center gap-2 py-3 px-6 text-[color:var(--foreground-variant,#666)] no-underline text-sm mb-4 hover:text-[color:var(--primary,#005cbb)] transition-colors duration-150">
+            <mat-icon class="!text-[18px] !w-[18px] !h-[18px]">arrow_back</mat-icon>
             <span>Back to Overview</span>
           </a>
-          @for (category of categories; track category.name) {
-            <div class="nav-category">
-              <h3 class="nav-category-title">{{ category.name }}</h3>
-              <ul class="nav-list">
-                @for (item of category.items; track item.id) {
-                  <li>
-                    <a [routerLink]="'/components/' + item.id" 
-                       routerLinkActive="active"
-                       class="nav-link">
-                      <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
-                      <span>{{ item.title }}</span>
-                    </a>
-                  </li>
-                }
-              </ul>
+          <div class="px-6 mb-6">
+            <div class="relative">
+              <mat-icon class="!text-[18px] !w-[18px] !h-[18px] absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--foreground-variant,#999)]">search</mat-icon>
+              <input 
+                type="text" 
+                [ngModel]="searchQuery()"
+                (ngModelChange)="searchQuery.set($event)" 
+                placeholder="Search components..."
+                class="w-full pl-9 pr-4 py-2 text-sm border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-150"
+              />
+              @if (searchQuery()) {
+                <button (click)="searchQuery.set('')" class="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 hover:bg-[var(--surface-variant,#f5f5f5)] rounded-full transition-colors">
+                  <mat-icon class="!text-[14px] !w-[14px] !h-[14px] text-[color:var(--foreground-variant,#999)]">close</mat-icon>
+                </button>
+              }
             </div>
+          </div>
+          @if (searchQuery() && filteredCategories().length === 0) {
+            <div class="px-6 text-center">
+              <mat-icon class="!text-[48px] !w-[48px] !h-[48px] text-[color:var(--foreground-variant,#ccc)] mb-3">search_off</mat-icon>
+              <p class="text-sm text-[color:var(--foreground-variant,#666)]">No components found</p>
+              <p class="text-xs text-[color:var(--foreground-variant,#999)] mt-1">Try a different search term</p>
+            </div>
+          } @else {
+            @for (category of filteredCategories(); track category.name) {
+              <div class="mb-6">
+                <h3 class="text-xs font-semibold uppercase tracking-wide text-[color:var(--foreground-variant,#666)] px-6 mb-3">{{ category.name }}</h3>
+                <ul class="list-none p-0 m-0">
+                  @for (item of category.items; track item.id) {
+                    <li>
+                      <a [routerLink]="'/components/' + item.id" 
+                          routerLinkActive="bg-card text-primary"
+                          class="flex items-center gap-3 py-2.5 px-6 text-[color:var(--foreground,#1a1b1f)] no-underline text-sm transition-all duration-150 border-l-2 border-transparent hover:bg-primary/10">
+                        <mat-icon class="!text-[20px] !w-[20px] !h-[20px] text-[color:var(--foreground-variant,#666)]">{{ item.icon }}</mat-icon>
+                        <span>{{ item.title }}</span>
+                      </a>
+                    </li>
+                  }
+                </ul>
+              </div>
+            }
           }
         </nav>
       </aside>
-      <main class="content">
+      <main class="flex-1 p-8 min-w-0 bg-[var(--background,#fafafa)]">
         <router-outlet></router-outlet>
       </main>
     </div>
@@ -54,111 +80,11 @@ interface ComponentCategory {
     :host {
       display: block;
     }
-
-    .components-layout {
-      display: flex;
-      min-height: calc(100vh - 72px);
-    }
-
-    .sidebar {
-      width: 280px;
-      flex-shrink: 0;
-      background: var(--surface, #fff);
-      border-right: 1px solid var(--border, #e0e0e0);
-      overflow-y: auto;
-      position: sticky;
-      top: 72px;
-      height: calc(100vh - 72px);
-    }
-
-    .sidebar-nav {
-      padding: 1.5rem 0;
-    }
-
-    .back-link {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      color: var(--foreground-variant, #666);
-      text-decoration: none;
-      font-size: 0.875rem;
-      margin-bottom: 1rem;
-      transition: color 0.15s ease;
-    }
-
-    .back-link:hover {
-      color: var(--primary, #005cbb);
-    }
-
-    .back-link mat-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
-    }
-
-    .nav-category {
-      margin-bottom: 1.5rem;
-    }
-
-    .nav-category-title {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--foreground-variant, #666);
-      padding: 0 1.5rem;
-      margin: 0 0 0.75rem;
-    }
-
-    .nav-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .nav-link {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.625rem 1.5rem;
-      color: var(--foreground, #1a1b1f);
-      text-decoration: none;
-      font-size: 0.875rem;
-      transition: all 0.15s ease;
-      border-left: 2px solid transparent;
-    }
-
-    .nav-link:hover {
-      background: var(--surface-variant, #f5f5f5);
-    }
-
-    .nav-link.active {
-      background: var(--primary-container, #e3f2fd);
-      color: var(--primary, #005cbb);
-      border-left-color: var(--primary, #005cbb);
-    }
-
-    .nav-icon {
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
-      color: var(--foreground-variant, #666);
-    }
-
-    .nav-link.active .nav-icon {
-      color: var(--primary, #005cbb);
-    }
-
-    .content {
-      flex: 1;
-      padding: 2rem;
-      min-width: 0;
-      background: var(--background, #fafafa);
-    }
   `]
 })
 export class ComponentDocLayoutComponent {
+  searchQuery = signal('');
+
   categories = [
     {
       name: 'Alert',
@@ -235,4 +161,18 @@ export class ComponentDocLayoutComponent {
       ]
     }
   ];
+
+  filteredCategories = computed(() => {
+    const query = this.searchQuery().toLowerCase().trim();
+    if (!query) return this.categories;
+
+    return this.categories
+      .map(category => ({
+        ...category,
+        items: category.items.filter(
+          item => item.title.toLowerCase().includes(query) || item.id.toLowerCase().includes(query)
+        )
+      }))
+      .filter(category => category.items.length > 0);
+  });
 }
