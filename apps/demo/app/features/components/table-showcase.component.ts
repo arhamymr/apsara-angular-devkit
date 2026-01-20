@@ -146,14 +146,14 @@ interface User {
       <div class="mt-8">
         <h3 class="text-lg font-semibold text-foreground mb-4">Content Projection Selectors</h3>
         <ng-template #selectorsHeader>
-          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Element</th>
-          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Selector</th>
-          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Description</th>
+          <th class="text-left p-3 bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Element</th>
+          <th class="text-left p-3 bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Selector</th>
+          <th class="text-left p-3 bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Description</th>
         </ng-template>
         <ng-template #selectorsCell let-selector>
-          <td class="p-3 border-b border-border text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">{{ selector.element }}</code></td>
-          <td class="p-3 border-b border-border text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">{{ selector.selector }}</code></td>
-          <td class="p-3 border-b border-border text-foreground">{{ selector.description }}</td>
+          <td class="p-3 text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">{{ selector.element }}</code></td>
+          <td class="p-3 text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">{{ selector.selector }}</code></td>
+          <td class="p-3 text-foreground">{{ selector.description }}</td>
         </ng-template>
         <app-table [rows]="selectorData()" [tableHeaderTemplate]="selectorsHeader" [tableCellTemplate]="selectorsCell" />
       </div>
@@ -161,14 +161,14 @@ interface User {
       <div class="mt-8">
         <h3 class="text-lg font-semibold text-foreground mb-4">Props</h3>
         <ng-template #propsHeader>
-          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Prop</th>
-          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Type</th>
-          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Description</th>
+          <th class="text-left p-3 bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Prop</th>
+          <th class="text-left p-3 bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Type</th>
+          <th class="text-left p-3 bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Description</th>
         </ng-template>
         <ng-template #propsCell let-prop>
-          <td class="p-3 border-b border-border text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">{{ prop.name }}</code></td>
-          <td class="p-3 border-b border-border text-foreground text-dimmed">{{ prop.type }}</td>
-          <td class="p-3 border-b border-border text-foreground">{{ prop.description }}</td>
+          <td class="p-3 text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">{{ prop.name }}</code></td>
+          <td class="p-3 text-foreground">{{ prop.type }}</td>
+          <td class="p-3 text-foreground">{{ prop.description }}</td>
         </ng-template>
         <app-table [rows]="propsData()" [tableHeaderTemplate]="propsHeader" [tableCellTemplate]="propsCell" />
       </div>

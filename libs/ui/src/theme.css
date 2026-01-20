@@ -11,6 +11,7 @@
   --color-danger: var(--danger);
   --color-danger-foreground: var(--danger-foreground);
   --color-danger-border: var(--danger-border);
+  --color-border: var(--border);
 }
 
 :root {

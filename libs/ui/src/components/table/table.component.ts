@@ -14,10 +14,10 @@ import { cn } from '../../lib/cn';
             @if (tableHeaderTemplate()) {
               <ng-container *ngTemplateOutlet="tableHeaderTemplate()" />
             } @else {
-              <th class="text-left p-3 border-b border-[var(--border)] bg-[var(--tertiary)] font-semibold text-[var(--dimmed)] text-xs uppercase tracking-wide">Prop</th>
-              <th class="text-left p-3 border-b border-[var(--border)] bg-[var(--tertiary)] font-semibold text-[var(--dimmed)] text-xs uppercase tracking-wide">Type</th>
-              <th class="text-left p-3 border-b border-[var(--border)] bg-[var(--tertiary)] font-semibold text-[var(--dimmed)] text-xs uppercase tracking-wide">Default</th>
-              <th class="text-left p-3 border-b border-[var(--border)] bg-[var(--tertiary)] font-semibold text-[var(--dimmed)] text-xs uppercase tracking-wide">Description</th>
+              <th class="text-left p-3 bg-[var(--tertiary)] font-semibold text-[var(--dimmed)] text-xs uppercase tracking-wide">Prop</th>
+              <th class="text-left p-3 bg-[var(--tertiary)] font-semibold text-[var(--dimmed)] text-xs uppercase tracking-wide">Type</th>
+              <th class="text-left p-3 bg-[var(--tertiary)] font-semibold text-[var(--dimmed)] text-xs uppercase tracking-wide">Default</th>
+              <th class="text-left p-3 bg-[var(--tertiary)] font-semibold text-[var(--dimmed)] text-xs uppercase tracking-wide">Description</th>
             }
           </tr>
         </thead>
@@ -27,7 +27,7 @@ import { cn } from '../../lib/cn';
               @if (tableCellTemplate()) {
                 <ng-container *ngTemplateOutlet="tableCellTemplate(); context: { $implicit: row, index: $index }" />
               } @else {
-                <td class="p-3 border-b border-[var(--border)] text-[var(--foreground)]">{{ row }}</td>
+                <td class="p-3 text-[var(--foreground)]">{{ row }}</td>
               }
             </tr>
           }

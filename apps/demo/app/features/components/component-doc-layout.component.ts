@@ -21,7 +21,7 @@ interface ComponentCategory {
   imports: [RouterLink, RouterLinkActive, RouterOutlet, LucideAngularModule, FormsModule],
   template: `
     <div class="flex min-h-[calc(100vh-72px)]">
-      <aside class="w-[280px] flex-shrink-0 bg-background border-r border-border overflow-y-auto sticky top-[72px] h-[calc(100vh-72px)]">
+      <aside class="w-[280px] flex-shrink-0 bg-background border-r overflow-y-auto sticky top-[72px] h-[calc(100vh-72px)]">
         <nav class="py-6 px-0">
           <a routerLink="/components" class="flex items-center gap-2 py-3 px-6 text-[color:var(--foreground-variant,#666)] no-underline text-sm mb-4 hover:text-[color:var(--primary,#005cbb)] transition-colors duration-150">
             <lucide-angular [img]="ArrowLeft" class="!text-[18px] !w-[18px] !h-[18px]"></lucide-angular>
@@ -59,7 +59,7 @@ interface ComponentCategory {
                     <li>
                       <a [routerLink]="'/components/' + item.id" 
                           routerLinkActive="bg-card text-primary"
-                          class="flex items-center gap-3 py-2.5 px-6 text-[color:var(--foreground,#1a1b1f)] no-underline text-sm transition-all duration-150 border-l-2 border-transparent hover:bg-primary/10">
+                          class="flex items-center gap-3 py-2.5 px-6 text-[color:var(--foreground,#1a1b1f)] no-underline text-sm transition-all duration-150  hover:bg-primary/10">
                         <lucide-angular [img]="item.icon" class="!text-[20px] !w-[20px] !h-[20px] text-[color:var(--foreground-variant,#666)]"></lucide-angular>
                         <span>{{ item.title }}</span>
                       </a>

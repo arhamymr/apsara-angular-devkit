@@ -1,6 +1,12 @@
 @import "tailwindcss";
 @import "../../libs/ui/src/theme.css";
 
+@layer base {
+  *, ::backdrop {
+    border-color: var(--border);
+  }
+}
+
 :root {
   --shiki-color-text: var(--foreground);
   --shiki-color-background: var(--popover);

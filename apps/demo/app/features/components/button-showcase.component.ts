@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, CardComponent, TabsComponent, TableComponent } from '@apsara/ui';
+import { ButtonComponent, CardComponent, TabsComponent, TableComponent } from '@apsara/ui';
 import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-snippet.component';
 import { LucideAngularModule, Plus, ArrowRight, Download } from 'lucide-angular';
 
@@ -13,12 +13,8 @@ interface ButtonProp {
 @Component({
   selector: 'app-button-showcase',
   standalone: true,
-  imports: [CommonModule, ButtonComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, CardComponent, TabsComponent, TableComponent, LucideAngularModule, CodeSnippetComponent],
+  imports: [CommonModule, ButtonComponent, CardComponent, TabsComponent, TableComponent, LucideAngularModule, CodeSnippetComponent],
   template: `
-    <app-alert variant="warning" class="mb-6">
-      <app-alert-title>AI Generated Content</app-alert-title>
-      <app-alert-description>This component code may have been AI generated. Please review and verify before using in production.</app-alert-description>
-    </app-alert>
     <section id="button" class="mb-16 scroll-m-20">
       <div class="mb-6">
         <h2 class="text-2xl font-semibold text-foreground mb-2">Button</h2>
@@ -28,30 +24,21 @@ interface ButtonProp {
       <app-card>
         <app-tabs [options]="previewCodeOptions" [modelValue]="mainPreviewTab()" (changed)="mainPreviewTab.set($event)">
           @if (mainPreviewTab() === 'preview') {
-            <div class="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-4">
-              <div class="flex flex-col items-center gap-2 p-3">
+            <div class="flex gap-4">
+              <div class="flex flex-col gap-2 p-3">
                 <app-button label="Primary" variant="primary" />
-                <span class="text-xs text-dimmed">Primary</span>
               </div>
-              <div class="flex flex-col items-center gap-2 p-3">
+              <div class="flex flex-col gap-2 p-3">
                 <app-button label="Secondary" variant="secondary" />
-                <span class="text-xs text-dimmed">Secondary</span>
               </div>
-              <div class="flex flex-col items-center gap-2 p-3">
-                <app-button label="Tertiary" variant="tertiary" />
-                <span class="text-xs text-dimmed">Tertiary</span>
-              </div>
-              <div class="flex flex-col items-center gap-2 p-3">
+              <div class="flex flex-col gap-2 p-3">
                 <app-button label="Danger" variant="danger" />
-                <span class="text-xs text-dimmed">Danger</span>
               </div>
-              <div class="flex flex-col items-center gap-2 p-3">
+              <div class="flex flex-col gap-2 p-3">
                 <app-button label="Outline" variant="outline" />
-                <span class="text-xs text-dimmed">Outline</span>
               </div>
-              <div class="flex flex-col items-center gap-2 p-3">
+              <div class="flex flex-col gap-2 p-3">
                 <app-button label="Plain" variant="plain" />
-                <span class="text-xs text-dimmed">Plain</span>
               </div>
             </div>
           } @else {
@@ -136,14 +123,14 @@ interface ButtonProp {
       <div class="mt-8">
         <h3 class="text-lg font-semibold text-foreground mb-4">Props</h3>
         <ng-template #tableHeader>
-          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Prop</th>
-          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Type</th>
-          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Description</th>
+          <th class="text-left p-3 bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Prop</th>
+          <th class="text-left p-3 bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Type</th>
+          <th class="text-left p-3 bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Description</th>
         </ng-template>
         <ng-template #tableCell let-prop>
-          <td class="p-3 border-b border-border text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">{{ prop.name }}</code></td>
-          <td class="p-3 border-b border-border text-foreground text-dimmed">{{ prop.type }}</td>
-          <td class="p-3 border-b border-border text-foreground">{{ prop.description }}</td>
+          <td class="p-3 text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">{{ prop.name }}</code></td>
+          <td class="p-3 text-foreground">{{ prop.type }}</td>
+          <td class="p-3 text-foreground">{{ prop.description }}</td>
         </ng-template>
         <app-table [rows]="propsData()" [tableHeaderTemplate]="tableHeader" [tableCellTemplate]="tableCell" />
       </div>
@@ -175,11 +162,10 @@ export class ButtonShowcaseComponent {
   (clicked)="onClick($event)" />`;
 
   variantsCode = `<app-button label="Primary" variant="primary" />
-<app-button label="Secondary" variant="secondary" />
-<app-button label="Tertiary" variant="tertiary" />
-<app-button label="Danger" variant="danger" />
-<app-button label="Outline" variant="outline" />
-<app-button label="Plain" variant="plain" />`;
+ <app-button label="Secondary" variant="secondary" />
+ <app-button label="Danger" variant="danger" />
+ <app-button label="Outline" variant="outline" />
+ <app-button label="Plain" variant="plain" />`;
 
   sizesCode = `<app-button label="XS" size="xs" />
 <app-button label="SM" size="sm" />
@@ -205,7 +191,7 @@ export class ButtonShowcaseComponent {
 
   propsData = (): ButtonProp[] => [
     { name: 'label', type: 'string', description: 'Button text content' },
-    { name: 'variant', type: "'primary' | 'secondary' | 'tertiary' | 'danger' | 'outline' | 'plain'", description: 'Visual style variant' },
+    { name: 'variant', type: "'primary' | 'secondary' | 'danger' | 'outline' | 'plain'", description: 'Visual style variant' },
     { name: 'size', type: "'xs' | 'sm' | 'md' | 'lg'", description: 'Button size' },
     { name: 'disabled', type: 'boolean', description: 'Disables the button' },
     { name: 'loading', type: 'boolean', description: 'Shows loading spinner' },
