@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TreeComponent, TreeNode, CardComponent, TabsComponent, TableComponent } from '@apsara/ui';
+import { TreeComponent, TreeNode, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, CardComponent, TabsComponent, TableComponent } from '@apsara/ui';
 import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-snippet.component';
 
 interface TreeProp {
@@ -12,8 +12,12 @@ interface TreeProp {
 @Component({
   selector: 'app-tree-showcase',
   standalone: true,
-  imports: [CommonModule, TreeComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent],
+  imports: [CommonModule, TreeComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent],
   template: `
+    <app-alert variant="warning" class="mb-6">
+      <app-alert-title>AI Generated Content</app-alert-title>
+      <app-alert-description>This component code may have been AI generated. Please review and verify before using in production.</app-alert-description>
+    </app-alert>
     <section id="tree" class="mb-16 scroll-m-20">
       <div class="mb-6">
         <h2 class="text-2xl font-semibold text-foreground mb-2">Tree</h2>

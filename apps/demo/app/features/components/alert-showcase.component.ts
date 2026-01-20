@@ -16,6 +16,10 @@ interface AlertProp {
   standalone: true,
   imports: [CommonModule, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, AlertActionComponent, ButtonComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent],
   template: `
+    <app-alert variant="warning" class="mb-6">
+      <app-alert-title>AI Generated Content</app-alert-title>
+      <app-alert-description>This component code may have been AI generated. Please review and verify before using in production.</app-alert-description>
+    </app-alert>
     <section id="alert" class="mb-16 scroll-m-20">
       <div class="mb-6">
         <h2 class="text-2xl font-semibold text-foreground mb-2">Alert</h2>

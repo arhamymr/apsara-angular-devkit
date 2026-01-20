@@ -20,7 +20,7 @@ interface ComponentCategory {
   imports: [RouterLink, LucideAngularModule],
   template: `
     <div class="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <header class="text-center bg-[var(--surface)] border-b border-[var(--border)] px-8 py-16">
+      <header class="text-center bg-[var(--surface)] px-8 py-16">
         <h1 class="text-[2.5rem] font-medium mb-4 text-[var(--foreground)]">Components</h1>
         <p class="text-[1.125rem] text-[var(--dimmed)] max-w-[600px] mx-auto leading-relaxed">
           A comprehensive library of accessible, customizable, and performant UI components
@@ -130,12 +130,6 @@ export class ComponentsOverviewComponent {
 
   categories: ComponentCategory[] = [
     {
-      name: 'Alert',
-      items: [
-        { id: 'alert', title: 'Alert', icon: 'alertTriangle', description: 'Feedback and notifications' }
-      ]
-    },
-    {
       name: 'Form Controls',
       items: [
         { id: 'button', title: 'Button', icon: 'smartphone', description: 'Trigger actions and events' },
@@ -175,7 +169,8 @@ export class ComponentsOverviewComponent {
         { id: 'icon', title: 'Icon', icon: 'heart', description: 'Visual symbol representation' },
         { id: 'progress-bar', title: 'Progress Bar', icon: 'list', description: 'Linear progress indicator' },
         { id: 'spinner', title: 'Spinner', icon: 'refreshCw', description: 'Loading indicator' },
-        { id: 'sort-header', title: 'Sort Header', icon: 'list', description: 'Column sorting control' }
+        { id: 'sort-header', title: 'Sort Header', icon: 'list', description: 'Column sorting control' },
+        { id: 'alert', title: 'Alert', icon: 'alertTriangle', description: 'Feedback and notifications' }
       ]
     },
     {
