@@ -5,39 +5,33 @@ import { cn } from '../../lib/cn';
 import { LucideAngularModule, LoaderCircle } from 'lucide-angular';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'destructive' | 'outline' | 'plain' | 'danger';
-export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'icon' | 'xs-icon';
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'icon';
 
 const buttonVariants = cva(
   [
-    'relative font-medium select-none inline-flex justify-center items-center gap-2.5 transition-colors cursor-pointer rounded-md',
-    'after:absolute after:inset-0 after:bg-black/5 after:opacity-0 hover:after:opacity-100 active:after:opacity-100 data-popup-open:after:opacity-100 after:transition-opacity after:rounded-md',
-    'focus:outline-0 focus-visible:outline-2 focus-visible:outline-offset-2',
-    'disabled:opacity-70 disabled:pointer-events-none data-disabled:opacity-70 data-disabled:pointer-events-none',
-    'ring ring-border inset-shadow-2xs inset-shadow-white/15 shadow-sm',
+    'inline-flex items-center justify-center font-medium rounded-xl transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none',
   ],
   {
     variants: {
       variant: {
         primary: [
-          'bg-primary text-primary-foreground',
-          'ring-primary-border outline-primary',
+          'bg-primary',
+          'ring ring-border inset-shadow-2xs inset-shadow-white/50',
         ],
         secondary: [
           'bg-secondary text-secondary-foreground',
-          'ring-border',
+          'ring ring-border inset-shadow-2xs inset-shadow-white/15',
         ],
         destructive: [
           'bg-destructive text-destructive-foreground',
-        ],
-        danger: [
-          'bg-destructive text-destructive-foreground',
+           'ring ring-border inset-shadow-2xs inset-shadow-white/50',
         ],
         outline: [
-          'bg-transparent text-foreground',
-          'ring-border',
+          'bg-transparent text-primary',
+          'ring-primary-border',
         ],
         plain: [
-          'bg-transparent text-foreground',
+          'bg-transparent text-primary',
           'ring-0 shadow-none',
         ],
       },
@@ -47,7 +41,6 @@ const buttonVariants = cva(
         'md': 'h-[38px] px-4 text-sm *:[svg]:size-4',
         'lg': 'h-[46px] px-[22px] text-sm *:[svg]:size-5',
         'icon': 'h-10 w-10 *:[svg]:size-5',
-        'xs-icon': 'h-8 w-8 *:[svg]:size-4',
       },
       block: {
         true: 'w-full',
@@ -120,7 +113,6 @@ export class ButtonComponent {
       'md': 'size-4',
       'lg': 'size-5',
       'icon': 'size-5',
-      'xs-icon': 'size-4',
     };
     return sizeMap[this.size()];
   }

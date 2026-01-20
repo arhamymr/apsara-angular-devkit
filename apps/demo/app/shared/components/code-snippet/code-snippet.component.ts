@@ -17,18 +17,18 @@ import { HighlightService } from '../../services/highlight.service';
       } @else {
         <pre class="m-0 p-4 overflow-x-auto"><code class="font-mono text-sm text-foreground leading-[1.6] whitespace-pre">{{ code() }}</code></pre>
       }
-      <button
+      <app-button
         (click)="copyCode()"
-        class="absolute top-2 right-2 bg-transparent border-none cursor-pointer p-1 rounded-md transition-colors duration-200 hover:bg-muted"
+        variant="plain"
+        size="icon"
+        class="absolute top-0 right-0 p-1"
         [attr.aria-label]="copied() ? 'Copied' : 'Copy code'">
-        <app-button size="icon" [variant]="copied() ? 'primary' : 'plain'">
-          @if (copied()) {
+        @if (copied()) {
             <lucide-angular [img]="Check" [size]="16" />
           } @else {
             <lucide-angular [img]="Copy" [size]="16" />
           }
-        </app-button>
-      </button>
+      </app-button>
     </div>
   `
 })

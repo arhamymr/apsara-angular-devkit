@@ -37,7 +37,7 @@ import { LucideAngularModule, Sun, Moon } from 'lucide-angular';
 
           <app-button
             variant="plain"
-            size="xs-icon"
+            size="icon"
             class="ml-2"
             (clicked)="themeService.toggle()">
             @if (themeService.theme() === 'dark') {

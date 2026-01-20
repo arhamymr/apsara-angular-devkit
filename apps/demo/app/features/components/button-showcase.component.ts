@@ -32,7 +32,7 @@ interface ButtonProp {
                 <app-button label="Secondary" variant="secondary" />
               </div>
               <div class="flex flex-col gap-2 p-3">
-                <app-button label="Destructive" variant="destructive" />
+                <app-button label="Danger" variant="danger" />
               </div>
               <div class="flex flex-col gap-2 p-3">
                 <app-button label="Outline" variant="outline" />
@@ -68,6 +68,9 @@ interface ButtonProp {
                 <app-button label="SM" size="sm" />
                 <app-button label="MD" size="md" />
                 <app-button label="LG" size="lg" />
+                <app-button size="icon" variant="primary">
+                  <lucide-angular [img]="Plus" />
+                </app-button>
               </div>
             } @else {
               <app-code-snippet [code]="sizesCode" language="html" />
@@ -170,16 +173,13 @@ export class ButtonShowcaseComponent {
   sizesCode = `<app-button label="XS" size="xs" />
 <app-button label="SM" size="sm" />
 <app-button label="MD" size="md" />
-<app-button label="LG" size="lg" />`;
-
-  statesCode = `<app-button label="Default" />
-<app-button label="Disabled" [disabled]="true" />
-<app-button label="Loading" [loading]="true" />
-<app-button label="Block" [block]="true" />`;
-
-  iconsCode = `<app-button label="Add" variant="primary">
+<app-button label="LG" size="lg" />
+<app-button variant="primary">
   <lucide-angular [img]="Plus" />
 </app-button>
+                <app-button size="icon" variant="primary">
+                  <lucide-angular [img]="Plus" />
+                </app-button>
 
 <app-button label="Next" variant="primary">
   <lucide-angular [img]="ArrowRight" />
@@ -191,8 +191,8 @@ export class ButtonShowcaseComponent {
 
   propsData = (): ButtonProp[] => [
     { name: 'label', type: 'string', description: 'Button text content' },
-    { name: 'variant', type: "'primary' | 'secondary' | 'danger' | 'outline' | 'plain'", description: 'Visual style variant' },
-    { name: 'size', type: "'xs' | 'sm' | 'md' | 'lg'", description: 'Button size' },
+    { name: 'variant', type: "'primary' | 'secondary' | 'destructive' | 'danger' | 'outline' | 'plain'", description: 'Visual style variant' },
+    { name: 'size', type: "'xs' | 'sm' | 'md' | 'lg' | 'icon'", description: 'Button size' },
     { name: 'disabled', type: 'boolean', description: 'Disables the button' },
     { name: 'loading', type: 'boolean', description: 'Shows loading spinner' },
     { name: 'block', type: 'boolean', description: 'Makes button full width' },
