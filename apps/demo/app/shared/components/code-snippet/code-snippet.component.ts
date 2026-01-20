@@ -1,19 +1,19 @@
-import { Component, input, signal, effect, inject } from '@angular/core';
+import { Component, input, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '@apsara/ui';
-import { IconComponent } from '@apsara/ui';
+import { LucideAngularModule, Check, Copy } from 'lucide-angular';
 import { HighlightService } from '../../services/highlight.service';
 
 @Component({
   selector: 'app-code-snippet',
   standalone: true,
-  imports: [CommonModule, ButtonComponent, IconComponent],
+  imports: [CommonModule, ButtonComponent, LucideAngularModule],
   template: `
-    <div class="relative bg-[var(--popover,#f5f5f5)] border border-[var(--border,#e0e0e0)] rounded-lg overflow-hidden my-4">
+    <div class="relative bg-[var(--popover,#0d1117)] border border-[var(--border,#30363d)] rounded-lg overflow-hidden my-4">
       @if (isLoading()) {
         <pre class="m-0 p-4 overflow-x-auto text-[color:var(--foreground-variant,#999)]">Loading...</pre>
       } @else if (highlightedCode()) {
-        <pre class="m-0 p-4 overflow-x-auto" [innerHTML]="highlightedCode()"></pre>
+        <pre class="m-0 p-4 overflow-x-auto bg-[var(--popover,#0d1117)] text-[color:var(--shiki-color-text,#c9d1d9)]" [innerHTML]="highlightedCode()"></pre>
       } @else {
         <pre class="m-0 p-4 overflow-x-auto"><code class="font-mono text-sm text-[color:var(--foreground)] leading-[1.6] whitespace-pre">{{ code() }}</code></pre>
       }
@@ -23,9 +23,9 @@ import { HighlightService } from '../../services/highlight.service';
         [attr.aria-label]="copied() ? 'Copied' : 'Copy code'">
         <app-button size="icon" [variant]="copied() ? 'primary' : 'plain'">
           @if (copied()) {
-            <app-icon name="check" size="sm" />
+            <lucide-angular [img]="Check" [size]="16" />
           } @else {
-            <app-icon name="content_copy" size="sm" />
+            <lucide-angular [img]="Copy" [size]="16" />
           }
         </app-button>
       </button>
@@ -35,14 +35,14 @@ import { HighlightService } from '../../services/highlight.service';
 export class CodeSnippetComponent {
   readonly code = input<string>('');
   readonly language = input<string>('typescript');
-
-  private highlightService = inject(HighlightService);
+  Check = Check;
+  Copy = Copy;
 
   highlightedCode = signal<string>('');
   isLoading = signal(false);
   copied = signal(false);
 
-  constructor() {
+  constructor(private highlightService: HighlightService) {
     effect(async () => {
       const code = this.code();
       const lang = this.language();

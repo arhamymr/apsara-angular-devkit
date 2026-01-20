@@ -1,5 +1,4 @@
 import { Injectable, signal } from '@angular/core';
-import { codeToHtml } from 'shiki';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +9,16 @@ export class HighlightService {
   readonly theme = this._theme.asReadonly();
 
   async highlight(code: string, lang: string): Promise<string> {
-    return codeToHtml(code, {
-      lang,
-      theme: this._theme()
-    });
+    return `<pre class="code-block"><code>${this.escapeHtml(code)}</code></pre>`;
+  }
+
+  private escapeHtml(text: string): string {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   }
 
   setTheme(theme: string): void {

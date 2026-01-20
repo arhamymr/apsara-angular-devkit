@@ -1,12 +1,12 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
+import { LucideAngularModule, ArrowLeft, Search, X, SearchX, AlertTriangle, Zap, FileText, Heading, Square, CheckSquare, Radio, ToggleLeft, TextSelect, List, Calendar, Clock, Tag, Menu, PanelLeft, AppWindow, ChevronRight, ChevronDown, GitBranch, Smile, Loader, RotateCw, ArrowUpDown, Minus, Grid, Info, Bell, ArrowDownToLine, Box } from 'lucide-angular';
 import { FormsModule } from '@angular/forms';
 
 interface ComponentItem {
   id: string;
   title: string;
-  icon: string;
+  icon: any;
   description?: string;
 }
 
@@ -18,18 +18,18 @@ interface ComponentCategory {
 @Component({
   selector: 'app-component-doc-layout',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, RouterOutlet, MatIconModule, FormsModule],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, LucideAngularModule, FormsModule],
   template: `
     <div class="flex min-h-[calc(100vh-72px)]">
       <aside class="w-[280px] flex-shrink-0 bg-background border-r border-border overflow-y-auto sticky top-[72px] h-[calc(100vh-72px)]">
         <nav class="py-6 px-0">
           <a routerLink="/components" class="flex items-center gap-2 py-3 px-6 text-[color:var(--foreground-variant,#666)] no-underline text-sm mb-4 hover:text-[color:var(--primary,#005cbb)] transition-colors duration-150">
-            <mat-icon class="!text-[18px] !w-[18px] !h-[18px]">arrow_back</mat-icon>
+            <lucide-angular [img]="ArrowLeft" class="!text-[18px] !w-[18px] !h-[18px]"></lucide-angular>
             <span>Back to Overview</span>
           </a>
           <div class="px-6 mb-6">
             <div class="relative">
-              <mat-icon class="!text-[18px] !w-[18px] !h-[18px] absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--foreground-variant,#999)]">search</mat-icon>
+              <lucide-angular [img]="Search" class="!text-[18px] !w-[18px] !h-[18px] absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--foreground-variant,#999)]"></lucide-angular>
               <input 
                 type="text" 
                 [ngModel]="searchQuery()"
@@ -39,14 +39,14 @@ interface ComponentCategory {
               />
               @if (searchQuery()) {
                 <button (click)="searchQuery.set('')" class="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 hover:bg-[var(--surface-variant,#f5f5f5)] rounded-full transition-colors">
-                  <mat-icon class="!text-[14px] !w-[14px] !h-[14px] text-[color:var(--foreground-variant,#999)]">close</mat-icon>
+                  <lucide-angular [img]="X" class="!text-[14px] !w-[14px] !h-[14px] text-[color:var(--foreground-variant,#999)]"></lucide-angular>
                 </button>
               }
             </div>
           </div>
           @if (searchQuery() && filteredCategories().length === 0) {
             <div class="px-6 text-center">
-              <mat-icon class="!text-[48px] !w-[48px] !h-[48px] text-[color:var(--foreground-variant,#ccc)] mb-3">search_off</mat-icon>
+              <lucide-angular [img]="SearchX" class="!text-[48px] !w-[48px] !h-[48px] text-[color:var(--foreground-variant,#ccc)] mb-3"></lucide-angular>
               <p class="text-sm text-[color:var(--foreground-variant,#666)]">No components found</p>
               <p class="text-xs text-[color:var(--foreground-variant,#999)] mt-1">Try a different search term</p>
             </div>
@@ -60,7 +60,7 @@ interface ComponentCategory {
                       <a [routerLink]="'/components/' + item.id" 
                           routerLinkActive="bg-card text-primary"
                           class="flex items-center gap-3 py-2.5 px-6 text-[color:var(--foreground,#1a1b1f)] no-underline text-sm transition-all duration-150 border-l-2 border-transparent hover:bg-primary/10">
-                        <mat-icon class="!text-[20px] !w-[20px] !h-[20px] text-[color:var(--foreground-variant,#666)]">{{ item.icon }}</mat-icon>
+                        <lucide-angular [img]="item.icon" class="!text-[20px] !w-[20px] !h-[20px] text-[color:var(--foreground-variant,#666)]"></lucide-angular>
                         <span>{{ item.title }}</span>
                       </a>
                     </li>
@@ -83,81 +83,115 @@ interface ComponentCategory {
   `]
 })
 export class ComponentDocLayoutComponent {
+  readonly ArrowLeft = ArrowLeft;
+  readonly Search = Search;
+  readonly X = X;
+  readonly SearchX = SearchX;
+  readonly AlertTriangle = AlertTriangle;
+  readonly Zap = Zap;
+  readonly FileText = FileText;
+  readonly Heading = Heading;
+  readonly Square = Square;
+  readonly CheckSquare = CheckSquare;
+  readonly Radio = Radio;
+  readonly ToggleLeft = ToggleLeft;
+  readonly TextSelect = TextSelect;
+  readonly List = List;
+  readonly Calendar = Calendar;
+  readonly Clock = Clock;
+  readonly Tag = Tag;
+  readonly Menu = Menu;
+  readonly PanelLeft = PanelLeft;
+  readonly AppWindow = AppWindow;
+  readonly ChevronRight = ChevronRight;
+  readonly ChevronDown = ChevronDown;
+  readonly GitBranch = GitBranch;
+  readonly Smile = Smile;
+  readonly Loader = Loader;
+  readonly RotateCw = RotateCw;
+  readonly ArrowUpDown = ArrowUpDown;
+  readonly Minus = Minus;
+  readonly Grid = Grid;
+  readonly Info = Info;
+  readonly Bell = Bell;
+  readonly ArrowDownToLine = ArrowDownToLine;
+  readonly Box = Box;
+
   searchQuery = signal('');
 
   categories = [
     {
       name: 'Alert',
       items: [
-        { id: 'alert', title: 'Alert', icon: 'warning' },
-        { id: 'alert-action', title: 'Alert Action', icon: 'bolt' },
-        { id: 'alert-description', title: 'Alert Description', icon: 'notes' },
-        { id: 'alert-title', title: 'Alert Title', icon: 'title' }
+        { id: 'alert', title: 'Alert', icon: AlertTriangle },
+        { id: 'alert-action', title: 'Alert Action', icon: Zap },
+        { id: 'alert-description', title: 'Alert Description', icon: FileText },
+        { id: 'alert-title', title: 'Alert Title', icon: Heading }
       ]
     },
     {
       name: 'Form Controls',
       items: [
-        { id: 'button', title: 'Button', icon: 'smart_button' },
-        { id: 'checkbox', title: 'Checkbox', icon: 'check_box' },
-        { id: 'radio', title: 'Radio', icon: 'radio_button_checked' },
-        { id: 'slide-toggle', title: 'Slide Toggle', icon: 'toggle_on' },
-        { id: 'button-toggle', title: 'Button Toggle', icon: 'toggle_button' },
-        { id: 'input', title: 'Input', icon: 'text_fields' },
-        { id: 'select', title: 'Select', icon: 'list' },
-        { id: 'autocomplete', title: 'Autocomplete', icon: 'autocomplete' },
-        { id: 'datepicker', title: 'Datepicker', icon: 'calendar_today' },
-        { id: 'timepicker', title: 'Timepicker', icon: 'schedule' },
-        { id: 'slider', title: 'Slider', icon: 'linear_scale' },
-        { id: 'chips', title: 'Chips', icon: 'label' }
+        { id: 'button', title: 'Button', icon: Square },
+        { id: 'checkbox', title: 'Checkbox', icon: CheckSquare },
+        { id: 'radio', title: 'Radio', icon: Radio },
+        { id: 'slide-toggle', title: 'Slide Toggle', icon: ToggleLeft },
+        { id: 'button-toggle', title: 'Button Toggle', icon: ToggleLeft },
+        { id: 'input', title: 'Input', icon: TextSelect },
+        { id: 'select', title: 'Select', icon: List },
+        { id: 'autocomplete', title: 'Autocomplete', icon: Search },
+        { id: 'datepicker', title: 'Datepicker', icon: Calendar },
+        { id: 'timepicker', title: 'Timepicker', icon: Clock },
+        { id: 'slider', title: 'Slider', icon: ArrowUpDown },
+        { id: 'chips', title: 'Chips', icon: Tag }
       ]
     },
     {
       name: 'Navigation',
       items: [
-        { id: 'menu', title: 'Menu', icon: 'menu' },
-        { id: 'sidenav', title: 'Sidenav', icon: 'vertical_split' },
-        { id: 'toolbar', title: 'Toolbar', icon: 'toolbar' },
-        { id: 'tabs', title: 'Tabs', icon: 'tab' },
-        { id: 'list', title: 'List', icon: 'list' },
-        { id: 'paginator', title: 'Paginator', icon: 'last_page' },
-        { id: 'stepper', title: 'Stepper', icon: 'linear_scale' },
-        { id: 'expansion-panel', title: 'Expansion Panel', icon: 'expand_more' }
+        { id: 'menu', title: 'Menu', icon: Menu },
+        { id: 'sidenav', title: 'Sidenav', icon: PanelLeft },
+        { id: 'toolbar', title: 'Toolbar', icon: AppWindow },
+        { id: 'tabs', title: 'Tabs', icon: Square },
+        { id: 'list', title: 'List', icon: List },
+        { id: 'paginator', title: 'Paginator', icon: ChevronRight },
+        { id: 'stepper', title: 'Stepper', icon: ArrowUpDown },
+        { id: 'expansion-panel', title: 'Expansion Panel', icon: ChevronDown }
       ]
     },
     {
       name: 'Data Display',
       items: [
-        { id: 'card', title: 'Card', icon: 'crop_square' },
-        { id: 'table', title: 'Table', icon: 'table_chart' },
-        { id: 'tree', title: 'Tree', icon: 'account_tree' },
-        { id: 'badge', title: 'Badge', icon: 'local_offer' },
-        { id: 'icon', title: 'Icon', icon: 'insert_emoticon' },
-        { id: 'progress-bar', title: 'Progress Bar', icon: 'progress_bar' },
-        { id: 'spinner', title: 'Spinner', icon: 'refresh' },
-        { id: 'sort-header', title: 'Sort Header', icon: 'sort' }
+        { id: 'card', title: 'Card', icon: Square },
+        { id: 'table', title: 'Table', icon: Grid },
+        { id: 'tree', title: 'Tree', icon: GitBranch },
+        { id: 'badge', title: 'Badge', icon: Tag },
+        { id: 'icon', title: 'Icon', icon: Smile },
+        { id: 'progress-bar', title: 'Progress Bar', icon: Loader },
+        { id: 'spinner', title: 'Spinner', icon: RotateCw },
+        { id: 'sort-header', title: 'Sort Header', icon: ArrowUpDown }
       ]
     },
     {
       name: 'Layout',
       items: [
-        { id: 'divider', title: 'Divider', icon: 'horizontal_rule' },
-        { id: 'grid-list', title: 'Grid List', icon: 'grid_on' }
+        { id: 'divider', title: 'Divider', icon: Minus },
+        { id: 'grid-list', title: 'Grid List', icon: Grid }
       ]
     },
     {
       name: 'Overlay',
       items: [
-        { id: 'dialog', title: 'Dialog', icon: 'picture_in_picture_alt' },
-        { id: 'tooltip', title: 'Tooltip', icon: 'info' },
-        { id: 'snackbar', title: 'Snackbar', icon: 'notifications' },
-        { id: 'bottom-sheet', title: 'Bottom Sheet', icon: 'vertical_align_bottom' }
+        { id: 'dialog', title: 'Dialog', icon: Box },
+        { id: 'tooltip', title: 'Tooltip', icon: Info },
+        { id: 'snackbar', title: 'Snackbar', icon: Bell },
+        { id: 'bottom-sheet', title: 'Bottom Sheet', icon: ArrowDownToLine }
       ]
     },
     {
       name: 'Utility',
       items: [
-        { id: 'ripples', title: 'Ripples', icon: 'blur_on' }
+        { id: 'ripples', title: 'Ripples', icon: Loader }
       ]
     }
   ];

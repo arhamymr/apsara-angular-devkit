@@ -1,6 +1,6 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { IconComponent } from '@apsara/ui';
+import { LucideAngularModule, ArrowLeft, Search, X, BellOff, Rocket, Palette, Terminal, Zap, Book, ExternalLink } from 'lucide-angular';
 import { FormsModule } from '@angular/forms';
 
 interface DocSection {
@@ -12,18 +12,18 @@ interface DocSection {
 @Component({
   selector: 'app-docs-layout',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, RouterOutlet, IconComponent, FormsModule],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, LucideAngularModule, FormsModule],
   template: `
     <div class="flex min-h-[calc(100vh-64px)]">
       <aside class="w-[280px] flex-shrink-0 bg-background border-r border-border overflow-y-auto sticky top-16 h-[calc(100vh-64px)]">
         <nav class="py-6 px-0">
           <a routerLink="/docs" class="flex items-center gap-2 py-3 px-6 text-[color:var(--foreground-variant,#666)] no-underline text-sm mb-4 hover:text-[color:var(--primary,#005cbb)] transition-colors duration-150">
-            <app-icon name="arrow_back" class="!text-[18px] !w-[18px] !h-[18px]" />
+            <lucide-angular [img]="ArrowLeft" class="!text-[18px] !w-[18px] !h-[18px]" />
             <span>Back to Overview</span>
           </a>
           <div class="px-6 mb-6">
             <div class="relative">
-              <app-icon name="search" class="!text-[18px] !w-[18px] !h-[18px] absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--foreground-variant,#999)]" />
+              <lucide-angular [img]="Search" class="!text-[18px] !w-[18px] !h-[18px] absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--foreground-variant,#999)]" />
               <input 
                 type="text" 
                 [ngModel]="searchQuery()"
@@ -33,14 +33,14 @@ interface DocSection {
               />
               @if (searchQuery()) {
                 <button (click)="searchQuery.set('')" class="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 hover:bg-[var(--surface-variant,#f5f5f5)] rounded-full transition-colors">
-                  <app-icon name="close" class="!text-[14px] !w-[14px] !h-[14px] text-[color:var(--foreground-variant,#999)]" />
+                  <lucide-angular [img]="X" class="!text-[14px] !w-[14px] !h-[14px] text-[color:var(--foreground-variant,#999)]" />
                 </button>
               }
             </div>
           </div>
           @if (searchQuery() && filteredSections().length === 0) {
             <div class="px-6 text-center">
-              <app-icon name="search_off" class="!text-[48px] !w-[48px] !h-[48px] text-[color:var(--foreground-variant,#ccc)] mb-3" />
+              <lucide-angular [img]="BellOff" class="!text-[48px] !w-[48px] !h-[48px] text-[color:var(--foreground-variant,#ccc)] mb-3" />
               <p class="text-sm text-[color:var(--foreground-variant,#666)]">No sections found</p>
               <p class="text-xs text-[color:var(--foreground-variant,#999)] mt-1">Try a different search term</p>
             </div>
@@ -51,7 +51,7 @@ interface DocSection {
                   <a [routerLink]="'/docs/' + section.id" 
                       routerLinkActive="bg-card text-primary"
                       class="flex items-center gap-3 py-2.5 px-6 text-[color:var(--foreground,#1a1b1f)] no-underline text-sm transition-all duration-150 border-l-2 border-transparent hover:bg-primary/10">
-                    <app-icon [name]="section.icon" class="!text-[20px] !w-[20px] !h-[20px] text-[color:var(--foreground-variant,#666)]" />
+                    <lucide-angular [img]="getIcon(section.icon)" class="!text-[20px] !w-[20px] !h-[20px] text-[color:var(--foreground-variant,#666)]" />
                     <span>{{ section.title }}</span>
                   </a>
                 </li>
@@ -72,16 +72,38 @@ interface DocSection {
   `]
 })
 export class DocsLayoutComponent {
+  ArrowLeft = ArrowLeft;
+  Search = Search;
+  X = X;
+  BellOff = BellOff;
+  Rocket = Rocket;
+  Palette = Palette;
+  Terminal = Terminal;
+  Zap = Zap;
+  Book = Book;
+  ExternalLink = ExternalLink;
   searchQuery = signal('');
 
   sections: DocSection[] = [
-    { id: 'getting-started', title: 'Getting Started', icon: 'rocket_launch' },
+    { id: 'getting-started', title: 'Getting Started', icon: 'rocket' },
     { id: 'theming', title: 'Theming', icon: 'palette' },
     { id: 'cli', title: 'CLI Commands', icon: 'terminal' },
-    { id: 'icons', title: 'Icons', icon: 'emoji_symbols' },
-    { id: 'guides', title: 'Guides', icon: 'menu_book' },
-    { id: 'resources', title: 'Resources', icon: 'link' }
+    { id: 'icons', title: 'Icons', icon: 'zap' },
+    { id: 'guides', title: 'Guides', icon: 'book' },
+    { id: 'resources', title: 'Resources', icon: 'externalLink' }
   ];
+
+  getIcon(name: string) {
+    const iconMap: Record<string, any> = {
+      'rocket': Rocket,
+      'palette': Palette,
+      'terminal': Terminal,
+      'zap': Zap,
+      'book': Book,
+      'externalLink': ExternalLink,
+    };
+    return iconMap[name] || Zap;
+  }
 
   filteredSections = computed(() => {
     const query = this.searchQuery().toLowerCase().trim();

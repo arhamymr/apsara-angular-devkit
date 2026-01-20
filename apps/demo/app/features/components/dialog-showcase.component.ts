@@ -1,25 +1,50 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DialogComponent, DialogResult } from '@apsara/ui';
-import { ButtonComponent } from '@apsara/ui';
+import { DialogComponent, ButtonComponent, CardComponent, TabsComponent, TableComponent } from '@apsara/ui';
+import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-snippet.component';
+
+interface DialogProp {
+  name: string;
+  type: string;
+  description: string;
+}
 
 @Component({
   selector: 'app-dialog-showcase',
   standalone: true,
-  imports: [CommonModule, DialogComponent, ButtonComponent],
+  imports: [CommonModule, DialogComponent, ButtonComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent],
   template: `
-    <div class="ai-review-banner">
-      <span class="ai-review-icon">⚠️</span>
-      <span class="ai-review-text">AI-Generated Component - Pending Review</span>
-    </div>
-    <div class="space-y-6">
-      <div class="space-y-4">
-        <h3 class="text-lg font-medium">Dialog Examples</h3>
-        <div class="flex flex-wrap gap-3">
-          <app-button label="Open Simple Dialog" (clicked)="openDialog('simple')" />
-          <app-button label="Open Form Dialog" variant="secondary" (clicked)="openDialog('form')" />
-          <app-button label="Open Confirmation" variant="danger" (clicked)="openDialog('confirm')" />
-        </div>
+    <section id="dialog" class="mb-16 scroll-m-20">
+      <div class="mb-6">
+        <h2 class="text-2xl font-semibold text-foreground mb-2">Dialog</h2>
+        <p class="text-dimmed">A modal dialog component for focused interactions</p>
+      </div>
+
+      <app-card>
+        <app-tabs [options]="previewCodeOptions" [modelValue]="basicTab()" (changed)="basicTab.set($event)">
+          @if (basicTab() === 'preview') {
+            <div class="p-6">
+              <div class="flex flex-wrap gap-3">
+                <app-button label="Open Simple Dialog" (clicked)="openDialog('simple')" />
+                <app-button label="Open Form Dialog" variant="secondary" (clicked)="openDialog('form')" />
+                <app-button label="Open Confirmation" variant="danger" (clicked)="openDialog('confirm')" />
+              </div>
+            </div>
+          } @else {
+            <app-code-snippet [code]="basicCode" language="html" />
+          }
+        </app-tabs>
+      </app-card>
+
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold text-foreground mb-4">Installation</h3>
+        <app-code-snippet [code]="installCode" language="bash" />
+      </div>
+
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold text-foreground mb-4">Usage</h3>
+        <app-code-snippet [code]="importCode" language="typescript" />
+        <app-code-snippet [code]="usageCode" language="html" />
       </div>
 
       <app-dialog
@@ -65,37 +90,30 @@ import { ButtonComponent } from '@apsara/ui';
         </div>
       </app-dialog>
 
-      <div class="p-4 bg-blue-50 rounded-lg">
-        <p class="text-sm text-blue-600">
-          <strong>Last action:</strong> {{ lastAction() || 'None' }}
-        </p>
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold text-foreground mb-4">Props</h3>
+        <ng-template #tableHeader>
+          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Prop</th>
+          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Type</th>
+          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Description</th>
+        </ng-template>
+        <ng-template #tableCell let-prop>
+          <td class="p-3 border-b border-border text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">{{ prop.name }}</code></td>
+          <td class="p-3 border-b border-border text-foreground text-dimmed">{{ prop.type }}</td>
+          <td class="p-3 border-b border-border text-foreground">{{ prop.description }}</td>
+        </ng-template>
+        <app-table [rows]="propsData()" [tableHeaderTemplate]="tableHeader" [tableCellTemplate]="tableCell" />
       </div>
-    </div>
-  `,
-  styles: [`
-    .ai-review-banner {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 1rem 1.5rem;
-      background: #fef3c7;
-      border: 1px solid #f59e0b;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-    }
-
-    .ai-review-icon {
-      font-size: 1.25rem;
-    }
-
-    .ai-review-text {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: #92400e;
-    }
-  `]
+    </section>
+  `
 })
 export class DialogShowcaseComponent {
+  previewCodeOptions = [
+    { value: 'preview', label: 'Preview' },
+    { value: 'code', label: 'Code' }
+  ];
+
+  basicTab = signal<string>('preview');
   dialogs = signal<{ [key: string]: () => boolean }>({
     simple: () => false,
     form: () => false,
@@ -103,11 +121,37 @@ export class DialogShowcaseComponent {
   });
   lastAction = signal<string>('');
 
+  installCode = `npm install @apsara/ui/dialog`;
+
+  importCode = `import { DialogComponent } from '@apsara/ui/dialog';`;
+
+  usageCode = `<app-dialog
+  [isOpen]="isOpen"
+  title="Dialog Title"
+  (closed)="onClose()">
+  Dialog content goes here
+</app-dialog>`;
+
+  basicCode = `<app-button label="Open Dialog" (clicked)="openDialog()" />
+
+<app-dialog
+  [isOpen]="dialogs()['simple']()"
+  title="Simple Dialog"
+  (closed)="onDialogClose('simple', $event)">
+  <p class="text-sm text-gray-600">Dialog content here.</p>
+</app-dialog>`;
+
+  propsData = (): DialogProp[] => [
+    { name: 'isOpen', type: 'boolean', description: 'Controls dialog visibility' },
+    { name: 'title', type: 'string', description: 'Dialog title' },
+    { name: 'closed', type: 'EventEmitter<DialogResult>', description: 'Emitted when dialog closes' }
+  ];
+
   openDialog(key: string): void {
     this.dialogs.update(d => ({ ...d, [key]: () => true }));
   }
 
-  onDialogClose(key: string, result: DialogResult): void {
+  onDialogClose(key: string, result: { action: string }): void {
     this.dialogs.update(d => ({ ...d, [key]: () => false }));
     this.lastAction.set(`${result.action} (${key})`);
   }

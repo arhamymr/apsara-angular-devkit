@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [RouterLink],
   template: `
     <footer class="border-t border-[var(--border)] bg-[var(--surface)] py-6">
       <div class="max-w-[1400px] mx-auto px-4 text-center sm:text-left">

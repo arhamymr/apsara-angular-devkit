@@ -2,11 +2,12 @@ import { Component, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkMenuModule } from '@angular/cdk/menu';
 import { cn } from '../../lib/cn';
+import { LucideAngularModule, X } from 'lucide-angular';
 
 @Component({
   selector: 'app-chips',
   standalone: true,
-  imports: [CommonModule, CdkMenuModule],
+  imports: [CommonModule, CdkMenuModule, LucideAngularModule],
   template: `
     <div class="flex flex-wrap gap-2">
       @for (chip of modelValue(); track chip.value) {
@@ -20,7 +21,7 @@ import { cn } from '../../lib/cn';
               class="p-0.5 rounded-full hover:bg-gray-200"
               (click)="onRemove(chip)"
               aria-label="Remove {{ chip.label }}">
-              <i class="material-icons text-xs">close</i>
+              <lucide-angular [img]="X" [size]="14" />
             </button>
           }
         </div>
@@ -38,6 +39,7 @@ import { cn } from '../../lib/cn';
   `
 })
 export class ChipsComponent {
+  X = X;
   private _modelValue = signal<Array<{ value: string; label: string; disabled?: boolean }>>([]);
   
   modelValue = input<Array<{ value: string; label: string; disabled?: boolean }>>([]);

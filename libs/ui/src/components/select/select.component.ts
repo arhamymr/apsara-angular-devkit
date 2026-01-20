@@ -2,6 +2,7 @@ import { Component, input, output, signal, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { cn } from '../../lib/cn';
+import { LucideAngularModule, ChevronDown, Check, Menu, Search, X } from 'lucide-angular';
 
 export interface SelectOption {
   value: string;
@@ -14,7 +15,7 @@ export interface SelectOption {
 @Component({
   selector: 'app-select',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LucideAngularModule],
   template: `
     <div class="relative">
       <button
@@ -31,7 +32,7 @@ export interface SelectOption {
         @if (selectedLabel()) {
           <span>{{ selectedLabel() }}</span>
         }
-        <i class="material-icons text-sm transition-transform" [class.rotate-180]="isOpen()">expand_more</i>
+        <lucide-angular [img]="ChevronDown" [size]="18" class="transition-transform" [class.rotate-180]="isOpen()" />
       </button>
       @if (isOpen()) {
         <div
@@ -50,11 +51,11 @@ export interface SelectOption {
               [attr.aria-selected]="modelValue() === option.value"
               (click)="onSelect(option)">
               @if (option.icon) {
-                <i class="material-icons text-sm">{{ option.icon }}</i>
+                <lucide-angular [img]="getIcon(option.icon)" [size]="18" />
               }
               <span>{{ option.label }}</span>
               @if (modelValue() === option.value) {
-                <i class="material-icons text-sm ml-auto">check</i>
+                <lucide-angular [img]="Check" [size]="18" class="ml-auto" />
               }
             </button>
           }
@@ -67,6 +68,8 @@ export interface SelectOption {
   `
 })
 export class SelectComponent implements ControlValueAccessor {
+  ChevronDown = ChevronDown;
+  Check = Check;
   options = input<SelectOption[]>([]);
   placeholder = input<string>('Select an option');
   ariaLabel = input<string>('');
@@ -142,4 +145,18 @@ export class SelectComponent implements ControlValueAccessor {
   }
 
   cn = cn;
+
+  getIcon(name: string) {
+    const iconMap: Record<string, any> = {
+      'chevron-down': ChevronDown,
+      'chevron_down': ChevronDown,
+      'expand_more': ChevronDown,
+      'check': Check,
+      'menu': Menu,
+      'search': Search,
+      'arrow_drop_down': ChevronDown,
+      'close': X,
+    };
+    return iconMap[name] || ChevronDown;
+  }
 }

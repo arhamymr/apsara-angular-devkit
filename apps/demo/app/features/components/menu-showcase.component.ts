@@ -1,64 +1,91 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuComponent } from '@apsara/ui';
+import { MenuComponent, CardComponent, TabsComponent, TableComponent } from '@apsara/ui';
+import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-snippet.component';
+
+interface MenuProp {
+  name: string;
+  type: string;
+  description: string;
+}
 
 @Component({
   selector: 'app-menu-showcase',
   standalone: true,
-  imports: [CommonModule, MenuComponent],
+  imports: [CommonModule, MenuComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent],
   template: `
-    <div class="ai-review-banner">
-      <span class="ai-review-icon">⚠️</span>
-      <span class="ai-review-text">AI-Generated Component - Pending Review</span>
-    </div>
-    <div class="space-y-6">
-      <div class="space-y-4">
-        <h3 class="text-lg font-medium">Dropdown Menu</h3>
-        <app-menu
-          [label]="'File'"
-          [icon]="'description'"
-          [items]="fileMenuItems"
-          (itemClicked)="onMenuClick($event)" />
-        <app-menu
-          [label]="'Edit'"
-          [items]="editMenuItems"
-          (itemClicked)="onMenuClick($event)" />
-        <app-menu
-          [label]="'Help'"
-          [items]="helpMenuItems"
-          (itemClicked)="onMenuClick($event)" />
+    <section id="menu" class="mb-16 scroll-m-20">
+      <div class="mb-6">
+        <h2 class="text-2xl font-semibold text-foreground mb-2">Menu</h2>
+        <p class="text-dimmed">A dropdown menu component for navigation and actions</p>
       </div>
-      <div class="p-4 bg-blue-50 rounded-lg">
-        <p class="text-sm text-blue-600">
-          <strong>Last clicked:</strong> {{ lastClicked() || 'None' }}
-        </p>
+
+      <app-card>
+        <app-tabs [options]="previewCodeOptions" [modelValue]="basicTab()" (changed)="basicTab.set($event)">
+          @if (basicTab() === 'preview') {
+            <div class="p-6">
+              <div class="flex flex-wrap gap-4">
+                <app-menu
+                  [label]="'File'"
+                  [icon]="'description'"
+                  [items]="fileMenuItems"
+                  (itemClicked)="onMenuClick($event)" />
+                <app-menu
+                  [label]="'Edit'"
+                  [items]="editMenuItems"
+                  (itemClicked)="onMenuClick($event)" />
+                <app-menu
+                  [label]="'Help'"
+                  [items]="helpMenuItems"
+                  (itemClicked)="onMenuClick($event)" />
+              </div>
+              <div class="p-4 bg-blue-50 rounded-lg mt-4">
+                <p class="text-sm text-blue-600">
+                  <strong>Last clicked:</strong> {{ lastClicked() || 'None' }}
+                </p>
+              </div>
+            </div>
+          } @else {
+            <app-code-snippet [code]="basicCode" language="html" />
+          }
+        </app-tabs>
+      </app-card>
+
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold text-foreground mb-4">Installation</h3>
+        <app-code-snippet [code]="installCode" language="bash" />
       </div>
-    </div>
-  `,
-  styles: [`
-    .ai-review-banner {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 1rem 1.5rem;
-      background: #fef3c7;
-      border: 1px solid #f59e0b;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-    }
 
-    .ai-review-icon {
-      font-size: 1.25rem;
-    }
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold text-foreground mb-4">Usage</h3>
+        <app-code-snippet [code]="importCode" language="typescript" />
+        <app-code-snippet [code]="usageCode" language="html" />
+      </div>
 
-    .ai-review-text {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: #92400e;
-    }
-  `]
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold text-foreground mb-4">Props</h3>
+        <ng-template #tableHeader>
+          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Prop</th>
+          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Type</th>
+          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Description</th>
+        </ng-template>
+        <ng-template #tableCell let-prop>
+          <td class="p-3 border-b border-border text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">{{ prop.name }}</code></td>
+          <td class="p-3 border-b border-border text-foreground text-dimmed">{{ prop.type }}</td>
+          <td class="p-3 border-b border-border text-foreground">{{ prop.description }}</td>
+        </ng-template>
+        <app-table [rows]="propsData()" [tableHeaderTemplate]="tableHeader" [tableCellTemplate]="tableCell" />
+      </div>
+    </section>
+  `
 })
 export class MenuShowcaseComponent {
+  previewCodeOptions = [
+    { value: 'preview', label: 'Preview' },
+    { value: 'code', label: 'Code' }
+  ];
+
+  basicTab = signal<string>('preview');
   lastClicked = signal<string>('');
 
   fileMenuItems = [
@@ -85,6 +112,32 @@ export class MenuShowcaseComponent {
     { label: 'Documentation', icon: 'menu_book' },
     { divider: true },
     { label: 'About', icon: 'info' }
+  ];
+
+  installCode = `npm install @apsara/ui/menu`;
+
+  importCode = `import { MenuComponent } from '@apsara/ui/menu';`;
+
+  usageCode = `<app-menu
+  [label]="'File'"
+  [items]="menuItems"
+  (itemClicked)="onItemClick($event)" />`;
+
+  basicCode = `<app-menu
+  [label]="'File'"
+  [icon]="'description'"
+  [items]="fileMenuItems"
+  (itemClicked)="onMenuClick($event)" />
+<app-menu
+  [label]="'Edit'"
+  [items]="editMenuItems"
+  (itemClicked)="onMenuClick($event)" />`;
+
+  propsData = (): MenuProp[] => [
+    { name: 'label', type: 'string', description: 'Menu button label' },
+    { name: 'icon', type: 'string', description: 'Icon name for the button' },
+    { name: 'items', type: 'MenuItem[]', description: 'Array of menu items' },
+    { name: 'itemClicked', type: 'EventEmitter<string>', description: 'Emitted when menu item is clicked' }
   ];
 
   onMenuClick(value: unknown): void {

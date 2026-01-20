@@ -9,7 +9,6 @@ export * from './components/progress-bar';
 export * from './components/spinner';
 export * from './components/checkbox';
 export * from './components/radio';
-export * from './components/icon';
 export * from './components/toolbar';
 export * from './components/list';
 export { ListItemComponent } from './components/list/list-item.component';

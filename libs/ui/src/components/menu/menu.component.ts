@@ -1,12 +1,13 @@
-import { Component, input, output, inject, signal, TemplateRef } from '@angular/core';
+import { Component, input, output, signal, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkMenuModule, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { cn } from '../../lib/cn';
+import { LucideAngularModule, ChevronDown, Menu, Search, Plus, Pencil, Trash2, Settings } from 'lucide-angular';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule, CdkMenuModule, CdkMenuTrigger, CdkMenuItem],
+  imports: [CommonModule, CdkMenuModule, CdkMenuTrigger, CdkMenuItem, LucideAngularModule],
   template: `
     @if (trigger()) {
       <button
@@ -17,12 +18,12 @@ import { cn } from '../../lib/cn';
         (cdkMenuOpened)="onMenuOpen()"
         (cdkMenuClosed)="onMenuClose()">
         @if (icon()) {
-          <i class="material-icons text-sm">{{ icon() }}</i>
+          <lucide-angular [img]="getIcon(icon())" [size]="18" />
         }
         @if (label()) {
           <span class="text-sm">{{ label() }}</span>
         }
-        <i class="material-icons text-sm">arrow_drop_down</i>
+        <lucide-angular [img]="ChevronDown" [size]="18" />
       </button>
     }
     <ng-template #menu>
@@ -41,7 +42,7 @@ import { cn } from '../../lib/cn';
               [cdkMenuItemDisabled]="item.disabled"
               (click)="onItemClick(item)">
               @if (item.icon) {
-                <i class="material-icons text-sm">{{ item.icon }}</i>
+                <lucide-angular [img]="getIcon(item.icon)" [size]="18" />
               }
               <span>{{ item.label }}</span>
               @if (item.shortcut) {
@@ -55,6 +56,7 @@ import { cn } from '../../lib/cn';
   `
 })
 export class MenuComponent {
+  ChevronDown = ChevronDown;
   items = input<Array<{ label?: string; icon?: string; disabled?: boolean; divider?: boolean; shortcut?: string; value?: unknown }>>([]);
   label = input<string>('');
   icon = input<string>('');
@@ -71,4 +73,19 @@ export class MenuComponent {
   }
 
   cn = cn;
+
+  getIcon(name: string) {
+    const iconMap: Record<string, any> = {
+      'chevron-down': ChevronDown,
+      'chevron_down': ChevronDown,
+      'arrow_drop_down': ChevronDown,
+      'menu': Menu,
+      'search': Search,
+      'plus': Plus,
+      'edit': Pencil,
+      'delete': Trash2,
+      'settings': Settings,
+    };
+    return iconMap[name] || ChevronDown;
+  }
 }

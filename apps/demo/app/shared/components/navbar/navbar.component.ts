@@ -1,12 +1,13 @@
-import { Component, inject } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
+import { Component } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ThemeService } from '../../../core/services';
-import { IconComponent, ButtonComponent } from '@apsara/ui';
+import { ButtonComponent } from '@apsara/ui';
+import { LucideAngularModule, Sun, Moon } from 'lucide-angular';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, RouterLinkActive, NgOptimizedImage, IconComponent, ButtonComponent],
+  imports: [RouterLink, RouterLinkActive, NgOptimizedImage, ButtonComponent, LucideAngularModule],
   template: `
     <nav class="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border)] bg-[var(--background)] px-4">
       <div class="max-w-[1400px] mx-auto flex items-center justify-between h-16">
@@ -36,13 +37,13 @@ import { IconComponent, ButtonComponent } from '@apsara/ui';
 
           <app-button
             variant="plain"
-            size="icon"
+            size="xs-icon"
             class="ml-2"
             (clicked)="themeService.toggle()">
             @if (themeService.theme() === 'dark') {
-              <app-icon name="light_mode" />
+              <lucide-angular [img]="Sun" [size]="16" />
             } @else {
-              <app-icon name="dark_mode" />
+              <lucide-angular [img]="Moon" [size]="16" />
             }
           </app-button>
         </div>
@@ -51,5 +52,11 @@ import { IconComponent, ButtonComponent } from '@apsara/ui';
   `
 })
 export class NavbarComponent {
-  themeService = inject(ThemeService);
+  themeService: ThemeService;
+  Sun = Sun;
+  Moon = Moon;
+
+  constructor(themeService: ThemeService) {
+    this.themeService = themeService;
+  }
 }

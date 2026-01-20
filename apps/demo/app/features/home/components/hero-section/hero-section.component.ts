@@ -26,10 +26,10 @@ import { ButtonComponent, BadgeComponent } from '@apsara/ui';
       </div>
 
       <div class="flex flex-wrap justify-center gap-3 mt-12">
-        <app-badge label="Angular 19+" />
-        <app-badge label="Standalone" />
-        <app-badge label="Signals" />
-        <app-badge label="Material" />
+        <app-badge variant="default">Angular 19+</app-badge>
+        <app-badge variant="secondary">Standalone</app-badge>
+        <app-badge variant="default">Signals</app-badge>
+        <app-badge variant="secondary">Material</app-badge>
       </div>
     </section>
   `

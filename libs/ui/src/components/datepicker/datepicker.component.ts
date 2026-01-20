@@ -1,11 +1,12 @@
 import { Component, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cn } from '../../lib/cn';
+import { LucideAngularModule, Calendar, ChevronLeft, ChevronRight } from 'lucide-angular';
 
 @Component({
   selector: 'app-datepicker',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   template: `
     <div class="relative">
       <div class="relative">
@@ -24,7 +25,7 @@ import { cn } from '../../lib/cn';
           class="absolute right-2 top-1/2 -translate-y-1/2 p-1"
           (click)="onToggle()"
           [disabled]="disabled()">
-          <i class="material-icons text-sm text-gray-400">calendar_today</i>
+          <lucide-angular [img]="Calendar" [size]="18" class="text-gray-400" />
         </button>
       </div>
       @if (isOpen()) {
@@ -33,7 +34,7 @@ import { cn } from '../../lib/cn';
             <button
               class="p-1 rounded hover:bg-gray-100"
               (click)="onPreviousMonth()">
-              <i class="material-icons text-sm">chevron_left</i>
+              <lucide-angular [img]="ChevronLeft" [size]="18" />
             </button>
             <span class="font-medium text-gray-900">
               {{ currentMonth() }}
@@ -41,7 +42,7 @@ import { cn } from '../../lib/cn';
             <button
               class="p-1 rounded hover:bg-gray-100"
               (click)="onNextMonth()">
-              <i class="material-icons text-sm">chevron_right</i>
+              <lucide-angular [img]="ChevronRight" [size]="18" />
             </button>
           </div>
           <div class="grid grid-cols-7 gap-1 text-center text-xs text-gray-500 mb-2">
@@ -71,6 +72,9 @@ import { cn } from '../../lib/cn';
   `
 })
 export class DatepickerComponent {
+  Calendar = Calendar;
+  ChevronLeft = ChevronLeft;
+  ChevronRight = ChevronRight;
   placeholder = input<string>('Select date');
   disabled = input<boolean>(false);
   minDate = input<Date | null>(null);

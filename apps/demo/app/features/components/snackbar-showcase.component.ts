@@ -1,26 +1,51 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SnackbarComponent } from '@apsara/ui';
-import { ButtonComponent } from '@apsara/ui';
+import { SnackbarComponent, ButtonComponent, CardComponent, TabsComponent, TableComponent } from '@apsara/ui';
+import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-snippet.component';
+
+interface SnackbarProp {
+  name: string;
+  type: string;
+  description: string;
+}
 
 @Component({
   selector: 'app-snackbar-showcase',
   standalone: true,
-  imports: [CommonModule, SnackbarComponent, ButtonComponent],
+  imports: [CommonModule, SnackbarComponent, ButtonComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent],
   template: `
-    <div class="ai-review-banner">
-      <span class="ai-review-icon">⚠️</span>
-      <span class="ai-review-text">AI-Generated Component - Pending Review</span>
-    </div>
-    <div class="space-y-6">
-      <div class="space-y-4">
-        <h3 class="text-lg font-medium">Snackbar Examples</h3>
-        <div class="flex flex-wrap gap-3">
-          <app-button label="Show Success" (clicked)="showSnackbar('success')" />
-          <app-button label="Show Error" variant="danger" (clicked)="showSnackbar('error')" />
-          <app-button label="Show Info" variant="secondary" (clicked)="showSnackbar('info')" />
-          <app-button label="Show with Action" variant="tertiary" (clicked)="showSnackbar('action')" />
-        </div>
+    <section id="snackbar" class="mb-16 scroll-m-20">
+      <div class="mb-6">
+        <h2 class="text-2xl font-semibold text-foreground mb-2">Snackbar</h2>
+        <p class="text-dimmed">A snackbar component for displaying brief notifications</p>
+      </div>
+
+      <app-card>
+        <app-tabs [options]="previewCodeOptions" [modelValue]="basicTab()" (changed)="basicTab.set($event)">
+          @if (basicTab() === 'preview') {
+            <div class="p-6">
+              <div class="flex flex-wrap gap-3">
+                <app-button label="Show Success" (clicked)="showSnackbar('success')" />
+                <app-button label="Show Error" variant="danger" (clicked)="showSnackbar('error')" />
+                <app-button label="Show Info" variant="secondary" (clicked)="showSnackbar('info')" />
+                <app-button label="Show with Action" variant="tertiary" (clicked)="showSnackbar('action')" />
+              </div>
+            </div>
+          } @else {
+            <app-code-snippet [code]="basicCode" language="html" />
+          }
+        </app-tabs>
+      </app-card>
+
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold text-foreground mb-4">Installation</h3>
+        <app-code-snippet [code]="installCode" language="bash" />
+      </div>
+
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold text-foreground mb-4">Usage</h3>
+        <app-code-snippet [code]="importCode" language="typescript" />
+        <app-code-snippet [code]="usageCode" language="html" />
       </div>
 
       <app-snackbar
@@ -32,37 +57,71 @@ import { ButtonComponent } from '@apsara/ui';
         [duration]="4000"
         (closed)="onSnackbarClose()"
         (actionClicked)="onActionClick()" />
-    </div>
-  `,
-  styles: [`
-    .ai-review-banner {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 1rem 1.5rem;
-      background: #fef3c7;
-      border: 1px solid #f59e0b;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-    }
 
-    .ai-review-icon {
-      font-size: 1.25rem;
-    }
-
-    .ai-review-text {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: #92400e;
-    }
-  `]
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold text-foreground mb-4">Props</h3>
+        <ng-template #tableHeader>
+          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Prop</th>
+          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Type</th>
+          <th class="text-left p-3 border-b border-border bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Description</th>
+        </ng-template>
+        <ng-template #tableCell let-prop>
+          <td class="p-3 border-b border-border text-foreground"><code class="bg-tertiary px-1.5 py-0.5 rounded text-xs">{{ prop.name }}</code></td>
+          <td class="p-3 border-b border-border text-foreground text-dimmed">{{ prop.type }}</td>
+          <td class="p-3 border-b border-border text-foreground">{{ prop.description }}</td>
+        </ng-template>
+        <app-table [rows]="propsData()" [tableHeaderTemplate]="tableHeader" [tableCellTemplate]="tableCell" />
+      </div>
+    </section>
+  `
 })
 export class SnackbarShowcaseComponent {
+  previewCodeOptions = [
+    { value: 'preview', label: 'Preview' },
+    { value: 'code', label: 'Code' }
+  ];
+
+  basicTab = signal<string>('preview');
   snackbarOpen = signal(false);
   snackbarTitle = signal('');
   snackbarMessage = signal('');
   snackbarIcon = signal('');
   snackbarAction = signal('');
+
+  installCode = `npm install @apsara/ui/snackbar`;
+
+  importCode = `import { SnackbarComponent } from '@apsara/ui/snackbar';`;
+
+  usageCode = `<app-snackbar
+  [isOpen]="isOpen"
+  [title]="'Success'"
+  [message]="'Changes saved'"
+  [duration]="4000"
+  (closed)="onClose()" />`;
+
+  basicCode = `<app-button label="Show Success" (clicked)="showSnackbar('success')" />
+<app-button label="Show Error" variant="danger" (clicked)="showSnackbar('error')" />
+<app-button label="Show Info" variant="secondary" (clicked)="showSnackbar('info')" />
+
+<app-snackbar
+  [isOpen]="snackbarOpen()"
+  [title]="snackbarTitle()"
+  [message]="snackbarMessage()"
+  [icon]="snackbarIcon()"
+  [action]="snackbarAction()"
+  [duration]="4000"
+  (closed)="onSnackbarClose()" />`;
+
+  propsData = (): SnackbarProp[] => [
+    { name: 'isOpen', type: 'boolean', description: 'Controls snackbar visibility' },
+    { name: 'title', type: 'string', description: 'Snackbar title' },
+    { name: 'message', type: 'string', description: 'Snackbar message' },
+    { name: 'icon', type: 'string', description: 'Icon name' },
+    { name: 'action', type: 'string', description: 'Action button text' },
+    { name: 'duration', type: 'number', description: 'Display duration in ms' },
+    { name: 'closed', type: 'EventEmitter<void>', description: 'Emitted when snackbar closes' },
+    { name: 'actionClicked', type: 'EventEmitter<void>', description: 'Emitted when action is clicked' }
+  ];
 
   showSnackbar(type: string): void {
     switch (type) {
