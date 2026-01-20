@@ -12,7 +12,7 @@ import { cn } from '../../lib/cn';
       class="flex items-center justify-between px-4 py-3 border-t"
       [class]="cn('gap-4', className())">
       <div class="flex items-center gap-2">
-        <span class="text-sm" style="color: var(--dimmed)">
+        <span class="text-sm text-dimmed">
           {{ startItem() }}-{{ endItem() }} of {{ totalItems() }}
         </span>
       </div>
@@ -25,7 +25,7 @@ import { cn } from '../../lib/cn';
           aria-label="Previous page">
           <span slot="">chevron_left</span>
         </app-button>
-        <span class="text-sm" style="color: var(--dimmed)">
+        <span class="text-sm text-dimmed">
           Page {{ currentPage() }} of {{ totalPages() }}
         </span>
         <app-button

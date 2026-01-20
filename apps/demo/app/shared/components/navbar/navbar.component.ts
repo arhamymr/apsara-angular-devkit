@@ -9,7 +9,7 @@ import { LucideAngularModule, Sun, Moon } from 'lucide-angular';
   selector: 'app-navbar',
   imports: [RouterLink, RouterLinkActive, NgOptimizedImage, ButtonComponent, LucideAngularModule],
   template: `
-    <nav class="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border)] bg-[var(--background)] px-4">
+    <nav class="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background px-4">
       <div class="max-w-[1400px] mx-auto flex items-center justify-between h-16">
         <div class="flex items-center gap-3">
           <a routerLink="/" class="flex items-center">
@@ -20,18 +20,18 @@ import { LucideAngularModule, Sun, Moon } from 'lucide-angular';
               alt="Logo"
               class="h-5 w-auto">
           </a>
-          <span class="bg-[oklch(0.55_0.2_250/0.1)] text-[var(--primary)] text-[11px] font-semibold px-2 py-1 rounded-sm">
+          <span class="bg-[oklch(0.55_0.2_250/0.1)] text-primary text-[11px] font-semibold px-2 py-1 rounded-sm">
             v0 (alpha)
           </span>
         </div>
 
         <div class="flex items-center gap-1">
-          <a routerLink="/components" routerLinkActive="bg-[var(--accent)] text-[var(--foreground)]" [routerLinkActiveOptions]="{exact: false}"
-             class="text-[var(--foreground)] no-underline px-4 py-2 rounded-md text-sm font-medium transition-colors hover:bg-[var(--accent)]">
+          <a routerLink="/components" routerLinkActive="bg-accent text-foreground" [routerLinkActiveOptions]="{exact: false}"
+             class="text-foreground no-underline px-4 py-2 rounded-md text-sm font-medium transition-colors hover:bg-accent">
             Components
           </a>
-          <a routerLink="/docs" routerLinkActive="bg-[var(--accent)] text-[var(--foreground)]"
-             class="text-[var(--foreground)] no-underline px-4 py-2 rounded-md text-sm font-medium transition-colors hover:bg-[var(--accent)]">
+          <a routerLink="/docs" routerLinkActive="bg-accent text-foreground"
+             class="text-foreground no-underline px-4 py-2 rounded-md text-sm font-medium transition-colors hover:bg-accent">
             Docs
           </a>
 

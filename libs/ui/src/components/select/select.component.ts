@@ -20,14 +20,13 @@ export interface SelectOption {
     <div class="relative">
       <button
         type="button"
-        class="w-full flex items-center justify-between px-3 py-2 rounded-lg border"
-        style="background-color: var(--card); border-color: var(--border); color: var(--foreground)"
+        class="w-full flex items-center justify-between px-3 py-2 rounded-lg border bg-card text-foreground border-border"
         [disabled]="isDisabled()"
         (click)="onToggle()"
         [attr.aria-expanded]="isOpen()"
         [attr.aria-labelledby]="ariaLabelledBy()">
         @if (placeholder() && !selectedLabel()) {
-          <span style="color: var(--dimmed)">{{ placeholder() }}</span>
+          <span class="text-dimmed">{{ placeholder() }}</span>
         }
         @if (selectedLabel()) {
           <span>{{ selectedLabel() }}</span>
@@ -36,16 +35,14 @@ export interface SelectOption {
       </button>
       @if (isOpen()) {
         <div
-          class="absolute z-50 w-full mt-1 py-1 rounded-lg shadow-lg border overflow-auto"
-          style="background-color: var(--card); border-color: var(--border); max-height: 240px"
+          class="absolute z-50 w-full mt-1 py-1 rounded-lg shadow-lg border overflow-auto bg-card border-border max-h-[240px]"
           role="listbox"
           [attr.aria-label]="ariaLabel()">
           @for (option of filteredOptions; track option.value) {
             <button
               type="button"
-              class="w-full flex items-center gap-3 px-3 py-2 text-sm"
-              style="color: var(--foreground)"
-              [style.background-color]="modelValue() === option.value ? 'var(--accent)' : 'transparent'"
+              class="w-full flex items-center gap-3 px-3 py-2 text-sm text-foreground"
+              [class.bg-accent]="modelValue() === option.value"
               [disabled]="option.disabled"
               role="option"
               [attr.aria-selected]="modelValue() === option.value"
@@ -60,7 +57,7 @@ export interface SelectOption {
             </button>
           }
           @if (filteredOptions.length === 0) {
-            <div class="px-3 py-2 text-sm" style="color: var(--dimmed)">{{ noResultsText() }}</div>
+            <div class="px-3 py-2 text-sm text-dimmed">{{ noResultsText() }}</div>
           }
         </div>
       }

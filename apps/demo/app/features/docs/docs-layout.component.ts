@@ -17,7 +17,7 @@ interface DocSection {
     <div class="flex min-h-[calc(100vh-64px)]">
       <aside class="w-[280px] flex-shrink-0 bg-background border-r border-border overflow-y-auto sticky top-16 h-[calc(100vh-64px)]">
         <nav class="py-6 px-0">
-          <a routerLink="/docs" class="flex items-center gap-2 py-3 px-6 text-[color:var(--foreground-variant,#666)] no-underline text-sm mb-4 hover:text-[color:var(--primary,#005cbb)] transition-colors duration-150">
+          <a routerLink="/docs" class="flex items-center gap-2 py-3 px-6 text-[color:var(--foreground-variant,#666)] no-underline text-sm mb-4 hover:text-primary transition-colors duration-150">
             <lucide-angular [img]="ArrowLeft" class="!text-[18px] !w-[18px] !h-[18px]" />
             <span>Back to Overview</span>
           </a>
@@ -32,7 +32,7 @@ interface DocSection {
                 class="w-full pl-9 pr-4 py-2 text-sm border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-150"
               />
               @if (searchQuery()) {
-                <button (click)="searchQuery.set('')" class="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 hover:bg-[var(--surface-variant,#f5f5f5)] rounded-full transition-colors">
+                <button (click)="searchQuery.set('')" class="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 hover:bg-surface-variant rounded-full transition-colors">
                   <lucide-angular [img]="X" class="!text-[14px] !w-[14px] !h-[14px] text-[color:var(--foreground-variant,#999)]" />
                 </button>
               }
@@ -60,7 +60,7 @@ interface DocSection {
           }
         </nav>
       </aside>
-      <main class="flex-1 p-8 min-w-0 bg-[var(--background,#fafafa)]">
+      <main class="flex-1 p-8 min-w-0 bg-background">
         <router-outlet></router-outlet>
       </main>
     </div>

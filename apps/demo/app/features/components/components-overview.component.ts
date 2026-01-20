@@ -19,10 +19,10 @@ interface ComponentCategory {
   standalone: true,
   imports: [RouterLink, LucideAngularModule],
   template: `
-    <div class="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <header class="text-center bg-[var(--surface)] px-8 py-16">
-        <h1 class="text-[2.5rem] font-medium mb-4 text-[var(--foreground)]">Components</h1>
-        <p class="text-[1.125rem] text-[var(--dimmed)] max-w-[600px] mx-auto leading-relaxed">
+    <div class="min-h-screen bg-background text-foreground">
+      <header class="text-center bg-surface px-8 py-16">
+        <h1 class="text-[2.5rem] font-medium mb-4 text-foreground">Components</h1>
+        <p class="text-[1.125rem] text-dimmed max-w-[600px] mx-auto leading-relaxed">
           A comprehensive library of accessible, customizable, and performant UI components
         </p>
       </header>
@@ -30,24 +30,24 @@ interface ComponentCategory {
       <main class="max-w-[1400px] mx-auto pt-16">
         @for (category of categories; track category.name) {
           <section class="mb-14">
-            <h2 class="text-[1.25rem] font-medium text-[var(--foreground)] mb-6 pb-3 border-b border-[var(--border)]">
+            <h2 class="text-[1.25rem] font-medium text-foreground mb-6 pb-3 border-b border-border">
               {{ category.name }}
             </h2>
             <div class="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4">
               @for (item of category.items; track item.id) {
                 <a
                   [routerLink]="'/components/' + item.id"
-                  class="group flex items-start gap-4 p-5 bg-[var(--card)] border border-[var(--card-border)] rounded-xl no-underline text-inherit transition-all duration-200 hover:border-[var(--primary)] hover:shadow-lg hover:-translate-y-0.5">
-                  <div class="flex items-center justify-center size-12 bg-[var(--accent)] rounded-xl flex-shrink-0">
-                    <lucide-angular [img]="getIcon(item.icon)" class="text-[var(--primary)]" />
+                  class="group flex items-start gap-4 p-5 bg-card border border-card rounded-xl no-underline text-inherit transition-all duration-200 hover:border-primary hover:shadow-lg hover:-translate-y-0.5">
+                  <div class="flex items-center justify-center size-12 bg-accent rounded-xl flex-shrink-0">
+                    <lucide-angular [img]="getIcon(item.icon)" class="text-primary" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <h3 class="text-base font-medium mb-0.5 text-[var(--foreground)]">{{ item.title }}</h3>
+                    <h3 class="text-base font-medium mb-0.5 text-foreground">{{ item.title }}</h3>
                     @if (item.description) {
-                      <p class="text-sm text-[var(--dimmed)] leading-relaxed m-0">{{ item.description }}</p>
+                      <p class="text-sm text-dimmed leading-relaxed m-0">{{ item.description }}</p>
                     }
                   </div>
-                  <lucide-angular [img]="ArrowRight" class="text-[var(--dimmed)] text-xs self-center opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
+                  <lucide-angular [img]="ArrowRight" class="text-dimmed text-xs self-center opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
                 </a>
               }
             </div>

@@ -48,12 +48,12 @@ interface ShowcaseItem {
     <section class="py-20 px-6 max-w-[1400] mx-auto">
       <div class="text-center mb-12">
         <div class="mb-4">
-          <span class="inline-flex items-center px-3.5 py-1.5 bg-[var(--accent)] text-[var(--accent-foreground)] text-xs font-medium rounded-full">
+          <span class="inline-flex items-center px-3.5 py-1.5 bg-accent text-accent-foreground text-xs font-medium rounded-full">
             Components
           </span>
         </div>
-        <h2 class="text-4xl text-[var(--foreground)] mb-4 tracking-tight">Beautiful, accessible components</h2>
-        <p class="text-lg text-[var(--dimmed)] max-w-xl mx-auto leading-relaxed">
+        <h2 class="text-4xl text-foreground mb-4 tracking-tight">Beautiful, accessible components</h2>
+        <p class="text-lg text-dimmed max-w-xl mx-auto leading-relaxed">
           Copy and paste components into your apps. Accessible, customizable, and open source.
         </p>
       </div>

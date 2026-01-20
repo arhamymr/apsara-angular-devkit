@@ -10,8 +10,7 @@ import { cn } from '../../lib/cn';
   template: `
     @if (isOpen()) {
       <div
-        class="fixed bottom-4 right-4 z-50 flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg border min-w-[300px] max-w-md"
-        style="background-color: var(--card); border-color: var(--border)"
+        class="fixed bottom-4 right-4 z-50 flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg border min-w-[300px] max-w-md bg-card border-border"
         role="alert"
         [attr.aria-live]="polite() ? 'polite' : 'assertive'">
         @if (icon()) {
@@ -19,10 +18,10 @@ import { cn } from '../../lib/cn';
         }
         <div class="flex-1">
           @if (title()) {
-            <p class="text-sm font-medium" style="color: var(--foreground)">{{ title() }}</p>
+            <p class="text-sm font-medium text-foreground">{{ title() }}</p>
           }
           @if (message()) {
-            <p class="text-sm" style="color: var(--dimmed)">{{ message() }}</p>
+            <p class="text-sm text-dimmed">{{ message() }}</p>
           }
         </div>
         @if (showClose()) {

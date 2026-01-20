@@ -23,7 +23,7 @@ interface ComponentCategory {
     <div class="flex min-h-[calc(100vh-72px)]">
       <aside class="w-[280px] flex-shrink-0 bg-background border-r overflow-y-auto sticky top-[72px] h-[calc(100vh-72px)]">
         <nav class="py-6 px-0">
-          <a routerLink="/components" class="flex items-center gap-2 py-3 px-6 text-[color:var(--foreground-variant,#666)] no-underline text-sm mb-4 hover:text-[color:var(--primary,#005cbb)] transition-colors duration-150">
+          <a routerLink="/components" class="flex items-center gap-2 py-3 px-6 text-[color:var(--foreground-variant,#666)] no-underline text-sm mb-4 hover:text-primary transition-colors duration-150">
             <lucide-angular [img]="ArrowLeft" class="!text-[18px] !w-[18px] !h-[18px]"></lucide-angular>
             <span>Back to Overview</span>
           </a>
@@ -38,7 +38,7 @@ interface ComponentCategory {
                 class="w-full pl-9 pr-4 py-2 text-sm border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-150"
               />
               @if (searchQuery()) {
-                <button (click)="searchQuery.set('')" class="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 hover:bg-[var(--surface-variant,#f5f5f5)] rounded-full transition-colors">
+                <button (click)="searchQuery.set('')" class="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 hover:bg-surface-variant rounded-full transition-colors">
                   <lucide-angular [img]="X" class="!text-[14px] !w-[14px] !h-[14px] text-[color:var(--foreground-variant,#999)]"></lucide-angular>
                 </button>
               }
@@ -57,9 +57,9 @@ interface ComponentCategory {
                 <ul class="list-none p-0 m-0">
                   @for (item of category.items; track item.id) {
                     <li>
-                      <a [routerLink]="'/components/' + item.id" 
+                      <a [routerLink]="'/components/' + item.id"
                           routerLinkActive="bg-card text-primary"
-                          class="flex items-center gap-3 py-2.5 px-6 text-[color:var(--foreground,#1a1b1f)] no-underline text-sm transition-all duration-150  hover:bg-primary/10">
+                          class="flex items-center gap-3 py-2.5 px-6 text-[color:var(--foreground,#1a1b1f)] no-underline text-sm transition-all duration-150 hover:bg-primary/10">
                         <lucide-angular [img]="item.icon" class="!text-[20px] !w-[20px] !h-[20px] text-[color:var(--foreground-variant,#666)]"></lucide-angular>
                         <span>{{ item.title }}</span>
                       </a>
@@ -71,7 +71,7 @@ interface ComponentCategory {
           }
         </nav>
       </aside>
-      <main class="flex-1 p-8 min-w-0 bg-[var(--background,#fafafa)]">
+      <main class="flex-1 p-8 min-w-0 bg-background">
         <router-outlet></router-outlet>
       </main>
     </div>

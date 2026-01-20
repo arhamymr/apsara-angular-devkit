@@ -12,9 +12,8 @@ import { LucideAngularModule, ChevronDown, Menu, Search, Plus, Pencil, Trash2, S
     @if (trigger()) {
       <button
         [cdkMenuTriggerFor]="menu"
-        class="flex items-center gap-2 px-3 py-2 rounded-lg border border-[var(--border)]
-               hover:bg-[var(--accent)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]"
-        style="background-color: var(--card); color: var(--foreground)"
+        class="flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-card text-foreground
+               hover:bg-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         (cdkMenuOpened)="onMenuOpen()"
         (cdkMenuClosed)="onMenuClose()">
         @if (icon()) {
@@ -28,16 +27,14 @@ import { LucideAngularModule, ChevronDown, Menu, Search, Plus, Pencil, Trash2, S
     }
     <ng-template #menu>
       <div
-        class="py-1 rounded-lg shadow-lg border min-w-[200px]"
-        style="background-color: var(--card); border-color: var(--border)"
+        class="py-1 rounded-lg shadow-lg border min-w-[200px] bg-card border-border"
         cdkMenu>
         @for (item of items(); track item.label) {
           @if (item.divider) {
-            <div class="h-px my-1" role="separator" style="background-color: var(--border)"></div>
+            <div class="h-px my-1 bg-border" role="separator"></div>
           } @else {
             <button
-              class="w-full flex items-center gap-3 px-3 py-2 text-sm"
-              style="color: var(--foreground)"
+              class="w-full flex items-center gap-3 px-3 py-2 text-sm text-foreground"
               cdkMenuItem
               [cdkMenuItemDisabled]="item.disabled"
               (click)="onItemClick(item)">
@@ -46,7 +43,7 @@ import { LucideAngularModule, ChevronDown, Menu, Search, Plus, Pencil, Trash2, S
               }
               <span>{{ item.label }}</span>
               @if (item.shortcut) {
-                <span class="ml-auto text-xs" style="color: var(--dimmed)">{{ item.shortcut }}</span>
+                <span class="ml-auto text-xs text-dimmed">{{ item.shortcut }}</span>
               }
             </button>
           }

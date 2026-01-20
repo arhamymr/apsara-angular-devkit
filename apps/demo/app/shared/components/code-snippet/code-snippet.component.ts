@@ -9,17 +9,17 @@ import { HighlightService } from '../../services/highlight.service';
   standalone: true,
   imports: [CommonModule, ButtonComponent, LucideAngularModule],
   template: `
-    <div class="relative bg-[var(--popover,#0d1117)] border border-[var(--border,#30363d)] rounded-lg overflow-hidden my-4">
+    <div class="relative bg-popover border border-border rounded-lg overflow-hidden my-4">
       @if (isLoading()) {
         <pre class="m-0 p-4 overflow-x-auto text-[color:var(--foreground-variant,#999)]">Loading...</pre>
       } @else if (highlightedCode()) {
-        <pre class="m-0 p-4 overflow-x-auto bg-[var(--popover,#0d1117)] text-[color:var(--shiki-color-text,#c9d1d9)]" [innerHTML]="highlightedCode()"></pre>
+        <pre class="m-0 p-4 overflow-x-auto bg-popover text-[color:var(--shiki-color-text,#c9d1d9)]" [innerHTML]="highlightedCode()"></pre>
       } @else {
-        <pre class="m-0 p-4 overflow-x-auto"><code class="font-mono text-sm text-[color:var(--foreground)] leading-[1.6] whitespace-pre">{{ code() }}</code></pre>
+        <pre class="m-0 p-4 overflow-x-auto"><code class="font-mono text-sm text-foreground leading-[1.6] whitespace-pre">{{ code() }}</code></pre>
       }
       <button
         (click)="copyCode()"
-        class="absolute top-2 right-2 bg-transparent border-none cursor-pointer p-1 rounded-md transition-colors duration-200 hover:bg-[var(--accent,#f5f5f5)]"
+        class="absolute top-2 right-2 bg-transparent border-none cursor-pointer p-1 rounded-md transition-colors duration-200 hover:bg-surface-variant"
         [attr.aria-label]="copied() ? 'Copied' : 'Copy code'">
         <app-button size="icon" [variant]="copied() ? 'primary' : 'plain'">
           @if (copied()) {

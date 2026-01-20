@@ -16,20 +16,23 @@ import { cn } from '../../lib/cn';
             <div class="flex flex-col items-center">
               <div
                 class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium"
-                [style.background-color]="getCurrentStep() >= $index ? 'var(--primary)' : 'var(--tertiary)'"
-                [style.color]="getCurrentStep() >= $index ? 'var(--primary-foreground)' : 'var(--dimmed)'">
+                [class.bg-primary]="getCurrentStep() >= $index"
+                [class.bg-tertiary]="getCurrentStep() < $index"
+                [class.text-primary-foreground]="getCurrentStep() >= $index"
+                [class.text-dimmed]="getCurrentStep() < $index">
                 @if (getCurrentStep() > $index) {
                   <i class="material-icons text-sm">check</i>
                 } @else {
                   {{ $index + 1 }}
                 }
               </div>
-              <span class="text-xs mt-1" style="color: var(--dimmed)">{{ step }}</span>
+              <span class="text-xs mt-1 text-dimmed">{{ step }}</span>
             </div>
             @if ($index < steps().length - 1) {
               <div
                 class="w-12 h-0.5 mx-2"
-                [style.background-color]="getCurrentStep() > $index ? 'var(--primary)' : 'var(--tertiary)'"></div>
+                [class.bg-primary]="getCurrentStep() > $index"
+                [class.bg-tertiary]="getCurrentStep() <= $index"></div>
             }
           </div>
         }

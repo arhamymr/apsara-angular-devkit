@@ -7,27 +7,27 @@ import { cn } from '../../lib/cn';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div [class]="cn('overflow-x-auto border border-[var(--border)] rounded-lg', $class())">
+    <div [class]="cn('overflow-x-auto border rounded-lg', $class())">
       <table class="w-full text-sm">
-        <thead class="bg-[var(--tertiary)]">
+        <thead class="bg-tertiary">
           <tr>
             @if (tableHeaderTemplate()) {
               <ng-container *ngTemplateOutlet="tableHeaderTemplate()" />
             } @else {
-              <th class="text-left p-3 bg-[var(--tertiary)] font-semibold text-[var(--dimmed)] text-xs uppercase tracking-wide">Prop</th>
-              <th class="text-left p-3 bg-[var(--tertiary)] font-semibold text-[var(--dimmed)] text-xs uppercase tracking-wide">Type</th>
-              <th class="text-left p-3 bg-[var(--tertiary)] font-semibold text-[var(--dimmed)] text-xs uppercase tracking-wide">Default</th>
-              <th class="text-left p-3 bg-[var(--tertiary)] font-semibold text-[var(--dimmed)] text-xs uppercase tracking-wide">Description</th>
+              <th class="text-left p-3 bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Prop</th>
+              <th class="text-left p-3 bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Type</th>
+              <th class="text-left p-3 bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Default</th>
+              <th class="text-left p-3 bg-tertiary font-semibold text-dimmed text-xs uppercase tracking-wide">Description</th>
             }
           </tr>
         </thead>
-        <tbody class="divide-y divide-[var(--border)]">
+        <tbody class="divide-y divide-border">
           @for (row of rows(); track $index) {
-            <tr class="hover:bg-[var(--tertiary)]">
+            <tr class="hover:bg-tertiary">
               @if (tableCellTemplate()) {
                 <ng-container *ngTemplateOutlet="tableCellTemplate(); context: { $implicit: row, index: $index }" />
               } @else {
-                <td class="p-3 text-[var(--foreground)]">{{ row }}</td>
+                <td class="p-3 text-foreground">{{ row }}</td>
               }
             </tr>
           }

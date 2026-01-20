@@ -32,12 +32,12 @@ export interface DialogResult {
           (click)="onBackdropClick()"
           aria-hidden="true"></div>
         <div
-          class="relative bg-[var(--card)] rounded-lg shadow-xl max-h-[90vh] overflow-auto"
+          class="relative bg-card rounded-lg shadow-xl max-h-[90vh] overflow-auto"
           [style.max-width]="width()"
           [style.width]="fullWidth() ? '100%' : width()">
           @if (title()) {
-            <div class="flex items-center justify-between px-6 py-4 border-b border-[var(--border)]">
-              <h2 id="dialog-title" class="text-lg font-semibold text-[var(--foreground)]">{{ title() }}</h2>
+            <div class="flex items-center justify-between px-6 py-4 border-b border-border">
+              <h2 id="dialog-title" class="text-lg font-semibold text-foreground">{{ title() }}</h2>
               <app-button
                 variant="plain"
                 size="icon"
@@ -51,7 +51,7 @@ export interface DialogResult {
             <ng-content />
           </div>
           @if (showActions()) {
-            <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-[var(--border)]">
+            <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-border">
               <ng-content select="[dialog-actions]" />
             </div>
           }

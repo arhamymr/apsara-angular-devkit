@@ -13,29 +13,29 @@ const buttonVariants = cva(
     'after:absolute after:inset-0 after:bg-black/5 after:opacity-0 hover:after:opacity-100 active:after:opacity-100 data-popup-open:after:opacity-100 after:transition-opacity',
     'focus:outline-0 focus-visible:outline-2 focus-visible:outline-offset-2',
     'disabled:opacity-70 disabled:pointer-events-none data-disabled:opacity-70 data-disabled:pointer-events-none',
-    'ring ring-[var(--border)] inset-shadow-2xs inset-shadow-white/15 shadow-sm',
+    'ring ring-border inset-shadow-2xs inset-shadow-white/15 shadow-sm',
   ],
   {
     variants: {
       variant: {
         primary: [
-          'bg-primary text-primary-foreground **:[svg]:[color:var(--primary-foreground)]',
+          'bg-primary text-primary-foreground',
           'ring-primary-border outline-primary',
         ],
         secondary: [
-          'bg-secondary text-secondary-foreground **:[svg]:[color:var(--secondary-foreground)]',
+          'bg-secondary text-secondary-foreground',
           'ring-secondary-border outline-secondary',
         ],
         danger: [
-          'bg-danger text-danger-foreground **:[svg]:[color:var(--danger-foreground)]',
+          'bg-danger text-danger-foreground',
           'ring-danger-border outline-danger',
         ],
         outline: [
-          'bg-transparent text-[var(--foreground)] **:[svg]:[color:var(--foreground)]',
-          'ring-[var(--border)]',
+          'bg-transparent text-foreground',
+          'ring-border',
         ],
         plain: [
-          'bg-transparent text-[var(--foreground)] **:[svg]:[color:var(--foreground)]',
+          'bg-transparent text-foreground',
           'ring-0 shadow-none',
         ],
       },

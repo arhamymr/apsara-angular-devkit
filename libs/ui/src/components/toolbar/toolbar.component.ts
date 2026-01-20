@@ -47,18 +47,18 @@ export class ToolbarComponent {
 
   colorClass(): string {
     const colors: Record<string, string> = {
-      primary: 'bg-[var(--primary)] text-[var(--primary-foreground)]',
-      surface: 'bg-[var(--card)] text-[var(--foreground)] border-[var(--border)]',
-      transparent: 'bg-transparent text-[var(--foreground)]',
+      primary: 'bg-primary text-primary-foreground',
+      surface: 'bg-card text-foreground border-border',
+      transparent: 'bg-transparent text-foreground',
     };
     return colors[this.variant()] || colors['surface'];
   }
 
   titleColorClass(): string {
     const colors: Record<string, string> = {
-      primary: 'text-[var(--primary-foreground)]',
-      surface: 'text-[var(--foreground)]',
-      transparent: 'text-[var(--foreground)]',
+      primary: 'text-primary-foreground',
+      surface: 'text-foreground',
+      transparent: 'text-foreground',
     };
     return colors[this.variant()] || colors['surface'];
   }

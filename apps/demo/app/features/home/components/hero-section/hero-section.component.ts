@@ -7,7 +7,7 @@ import { ButtonComponent, BadgeComponent } from '@apsara/ui';
   standalone: true,
   imports: [ButtonComponent, BadgeComponent],
   template: `
-    <section class="w-full px-6 py-20 text-center text-[var(--foreground)] border border-[var(--border)] rounded-[var(--radius-xl)] mx-auto">
+    <section class="w-full px-6 py-20 text-center text-foreground border border-border rounded-xl mx-auto">
       <div class="w-full">
         <h1 class="text-4xl md:text-5xl mb-4 leading-tight">Apsara Components UI</h1>
         <p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90 mb-8 leading-relaxed">
