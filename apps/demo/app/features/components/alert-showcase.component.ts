@@ -271,7 +271,3 @@ export class AlertShowcaseComponent {
     { component: 'AlertAction', name: '-', type: '-', description: 'Action container for buttons' }
   ];
 }
-
-export class AlertActionShowcaseComponent extends AlertShowcaseComponent {}
-export class AlertDescriptionShowcaseComponent extends AlertShowcaseComponent {}
-export class AlertTitleShowcaseComponent extends AlertShowcaseComponent {}

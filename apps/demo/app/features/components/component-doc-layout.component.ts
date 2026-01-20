@@ -121,15 +121,6 @@ export class ComponentDocLayoutComponent {
 
   categories = [
     {
-      name: 'Alert',
-      items: [
-        { id: 'alert', title: 'Alert', icon: AlertTriangle },
-        { id: 'alert-action', title: 'Alert Action', icon: Zap },
-        { id: 'alert-description', title: 'Alert Description', icon: FileText },
-        { id: 'alert-title', title: 'Alert Title', icon: Heading }
-      ]
-    },
-    {
       name: 'Form Controls',
       items: [
         { id: 'button', title: 'Button', icon: Square },
@@ -169,7 +160,8 @@ export class ComponentDocLayoutComponent {
         { id: 'icon', title: 'Icon', icon: Smile },
         { id: 'progress-bar', title: 'Progress Bar', icon: Loader },
         { id: 'spinner', title: 'Spinner', icon: RotateCw },
-        { id: 'sort-header', title: 'Sort Header', icon: ArrowUpDown }
+        { id: 'sort-header', title: 'Sort Header', icon: ArrowUpDown },
+        { id: 'alert', title: 'Alert', icon: AlertTriangle }
       ]
     },
     {

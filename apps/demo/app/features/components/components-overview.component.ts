@@ -132,10 +132,7 @@ export class ComponentsOverviewComponent {
     {
       name: 'Alert',
       items: [
-        { id: 'alert', title: 'Alert', icon: 'alertTriangle', description: 'Feedback and notifications' },
-        { id: 'alert-action', title: 'Alert Action', icon: 'zap', description: 'Action button for alerts' },
-        { id: 'alert-description', title: 'Alert Description', icon: 'fileText', description: 'Description text for alerts' },
-        { id: 'alert-title', title: 'Alert Title', icon: 'type', description: 'Title text for alerts' }
+        { id: 'alert', title: 'Alert', icon: 'alertTriangle', description: 'Feedback and notifications' }
       ]
     },
     {

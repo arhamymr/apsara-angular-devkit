@@ -1,7 +1,4 @@
 export { AlertShowcaseComponent } from './alert-showcase.component';
-export { AlertActionShowcaseComponent } from './alert-showcase.component';
-export { AlertDescriptionShowcaseComponent } from './alert-showcase.component';
-export { AlertTitleShowcaseComponent } from './alert-showcase.component';
 export { AutocompleteShowcaseComponent } from './autocomplete-showcase.component';
 export { BadgeShowcaseComponent } from './badge-showcase.component';
 export { BottomSheetShowcaseComponent } from './bottom-sheet-showcase.component';
