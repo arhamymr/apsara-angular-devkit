@@ -9,10 +9,10 @@ export function initCommand(): Command {
   const command = new Command('init');
 
   command
-    .description('Initialize a new Angular project with apsara-ui')
+    .description('Initialize a new Angular project with aether-ui')
     .action(async () => {
       try {
-        logger.info('Welcome to apsara-ui! 🚀');
+        logger.info('Welcome to aether-ui! 🚀');
 
         const answers = await inquirer.prompt([
           {
@@ -77,7 +77,7 @@ export function initCommand(): Command {
         if (answers.boilerplate === 'minimal-with-lucide') {
           logger.info(`  Your project includes Lucide Angular icons! Check app.component.html for examples.`);
         } else {
-          logger.info(`  npx apsara-ui add button input card`);
+          logger.info(`  npx aether-ui add button input card`);
         }
 
       } catch (error) {

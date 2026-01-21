@@ -19,14 +19,14 @@ export function addCommand(): Command {
         const componentsPath = getComponentsPath(import.meta.url);
 
         if (!fs.existsSync(uiPath)) {
-          logger.error('src/app/ui directory not found. Run "npx apsara-ui init" first.');
+          logger.error('src/app/ui directory not found. Run "npx aether-ui init" first.');
           process.exit(1);
         }
 
         const availableComponents = getAvailableComponents(componentsPath);
 
         if (!Array.isArray(components) || components.length === 0) {
-          logger.error('No components specified. Usage: npx apsara-ui add button input card');
+          logger.error('No components specified. Usage: npx aether-ui add button input card');
           process.exit(1);
         }
 

@@ -1,10 +1,10 @@
 {
-  "name": "apsara-ui",
+  "name": "aether-ui",
   "version": "1.0.0",
   "description": "shadcn-style UI component installer for Angular",
   "type": "module",
   "bin": {
-    "apsara-ui": "./dist/main.js"
+    "aether-ui": "./dist/main.js"
   },
   "files": [
     "dist",
@@ -31,13 +31,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/arhamymr/apsara-angular-devkit.git",
+    "url": "https://github.com/arhamymr/aether-ui.git",
     "directory": "libs/cli"
   },
   "bugs": {
-    "url": "https://github.com/arhamymr/apsara-angular-devkit/issues"
+    "url": "https://github.com/arhamymr/aether-ui/issues"
   },
-  "homepage": "https://github.com/arhamymr/apsara-angular-devkit#readme",
+    "homepage": "https://github.com/arhamymr/aether-ui#readme",
   "engines": {
     "node": ">=18.0.0"
   },

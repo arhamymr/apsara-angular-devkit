@@ -1,4 +1,4 @@
-# Apsara UI
+# Aether UI
 
 shadcn-style UI components for Angular.
 
@@ -22,7 +22,7 @@ Import the theme CSS in your global styles file (e.g., `styles.css`):
 
 ```css
 @import "tailwindcss";
-@import "@apsara/ui/theme.css";
+@import "@aether/ui/theme.css";
 ```
 
 ### 3. Add Base Styles
@@ -64,7 +64,7 @@ Add the `dark` class to your HTML element:
 Import components in your Angular modules or standalone components:
 
 ```typescript
-import { ButtonComponent, CardComponent } from '@apsara/ui';
+import { ButtonComponent, CardComponent } from '@aether/ui';
 
 @Component({
   imports: [ButtonComponent, CardComponent],
@@ -111,7 +111,7 @@ Override any CSS variable in your global CSS to customize the theme:
 Use the `cn()` utility to merge Tailwind CSS classes:
 
 ```typescript
-import { cn } from '@apsara/ui';
+import { cn } from '@aether/ui';
 
 @Component({
   template: `

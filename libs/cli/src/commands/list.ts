@@ -23,7 +23,7 @@ export function listCommand(): Command {
       if (components.length === 0) {
         console.log('  No components found.');
         console.log();
-        logger.info('Make sure @apsara/ui package is installed.');
+        logger.info('Make sure @aether/ui package is installed.');
       } else {
         for (const component of components) {
           const description = componentDescriptions[component] || 'UI component';
@@ -31,7 +31,7 @@ export function listCommand(): Command {
         }
 
         console.log();
-        logger.info(`Usage: npx apsara-ui add ${components.slice(0, 3).join(' ')}`);
+        logger.info(`Usage: npx aether-ui add ${components.slice(0, 3).join(' ')}`);
       }
     });
 

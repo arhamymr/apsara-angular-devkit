@@ -1,4 +1,4 @@
-# apsara-angular-devkit
+# aether-ui
 
 A customizable UI component library and CLI for Angular. Copy components directly into your project with full customization control.
 
@@ -24,7 +24,7 @@ This is an Nx monorepo containing reusable Angular UI components, a CLI tool for
 
 ```bash
 # Initialize a new project (interactive)
-npx apsara-ui init
+npx aether-ui init
 
 # Navigate to project
 cd my-project
@@ -33,7 +33,7 @@ cd my-project
 pnpm install
 
 # Add components
-npx apsara-ui add button input card
+npx aether-ui add button input card
 
 # Start development server
 pnpm start
@@ -43,12 +43,12 @@ pnpm start
 
 ## CLI Commands
 
-### `npx apsara-ui init`
+### `npx aether-ui init`
 
-Initialize a new Angular project with apsara-ui.
+Initialize a new Angular project with aether-ui.
 
 ```bash
-npx apsara-ui init
+npx aether-ui init
 ```
 
 **Interactive prompts:**
@@ -60,33 +60,33 @@ npx apsara-ui init
 - Replaces `{{PROJECT_NAME}}` placeholder with your project name
 - Installs base components automatically (button, input, card)
 
-### `npx apsara-ui add <components...>`
+### `npx aether-ui add <components...>`
 
 Add components to your existing project.
 
 ```bash
 # Add single component
-npx apsara-ui add button
+npx aether-ui add button
 
 # Add multiple components
-npx apsara-ui add button input card
+npx aether-ui add button input card
 
 # Add all available components
-npx apsara-ui add button input card
+npx aether-ui add button input card
 ```
 
 **What it does:**
-- Copies component files from `@apsara/ui` to `src/app/ui/`
+- Copies component files from `@aether/ui` to `src/app/ui/`
 - Creates `src/app/ui/index.ts` with re-exports
 - Validates component names before copying
 - Skips components that already exist
 
-### `npx apsara-ui list`
+### `npx aether-ui list`
 
 List all available components.
 
 ```bash
-npx apsara-ui list
+npx aether-ui list
 ```
 
 **Output:**
@@ -97,7 +97,7 @@ Available components:
   card       - Container with multiple variants (elevated, outlined, tonal)
   input      - Form input with label, error handling, and icons
 
-Usage: npx apsara-ui add button card input
+Usage: npx aether-ui add button card input
 ```
 
 ---
@@ -268,7 +268,7 @@ import { listCommand } from './commands/list.js';
 const program = new Command();
 
 program
-  .name('apsara-ui')
+  .name('aether-ui')
   .description('shadcn-style UI component installer for Angular')
   .version('1.0.0');
 
@@ -389,7 +389,7 @@ npx nx test
 1. **Source Code Ownership**
    - Components are copied into user projects
    - Users fully own and can modify the code
-   - No npm dependency on @apsara/ui after installation
+   - No npm dependency on @aether/ui after installation
 
 2. **Minimal Dependencies**
    - Only Tailwind CSS for styling
