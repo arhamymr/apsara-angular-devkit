@@ -6,27 +6,31 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "angular-dev-starter": {
+    "demo": {
       "projectType": "application",
       "schematics": {},
-      "root": "",
-      "sourceRoot": "src",
+      "root": "apps/demo",
+      "sourceRoot": "apps/demo",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "src/main.ts",
-            "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist/apps/demo",
+            "index": "apps/demo/index.html",
+            "browser": "apps/demo/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "apps/demo/tsconfig.app.json",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "apps/demo/public"
               }
             ],
             "styles": [
-              "src/styles.css"
-            ]
+              "apps/demo/styles.css"
+            ],
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -56,16 +60,20 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular-dev-starter:build:production"
+              "buildTarget": "demo:build:production"
             },
             "development": {
-              "buildTarget": "angular-dev-starter:build:development"
+              "buildTarget": "demo:build:development"
             }
           },
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:unit-test"
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "polyfills": ["zone.js", "zone-testing"],
+            "tsConfig": "apps/demo/tsconfig.spec.json"
+          }
         }
       }
     }
