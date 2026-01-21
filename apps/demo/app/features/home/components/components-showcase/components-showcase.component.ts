@@ -22,7 +22,6 @@ interface ShowcaseItem {
   title: string;
   description: string;
   category: string;
-  span?: 'full' | 'half' | 'third';
 }
 
 @Component({
@@ -58,9 +57,9 @@ interface ShowcaseItem {
         </p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
         @for (item of showcaseItems(); track item.id) {
-          <div class="flex flex-col" [class]="getSpanClass(item.span)">
+          <div class="break-inside-avoid flex flex-col">
             @switch (item.id) {
               @case ('form') {
                 <app-form-showcase />
@@ -104,10 +103,11 @@ interface ShowcaseItem {
       </div>
 
       <div class="flex justify-center mt-12">
-        <app-button 
-          label="Browse Components" 
+        <app-button
           variant="outline"
-          (clicked)="navigateTo('/components')" />
+          (clicked)="navigateTo('/components')">
+          Browse Components
+      </app-button>
       </div>
     </section>
   `
@@ -116,7 +116,7 @@ export class ComponentsShowcaseComponent {
   private readonly router = inject(Router);
 
   showcaseItems = signal<ShowcaseItem[]>([
-    { id: 'form', title: 'Form', description: 'Complete form example', category: 'Forms', span: 'full' },
+    { id: 'form', title: 'Form', description: 'Complete form example', category: 'Forms', },
     { id: 'badges', title: 'Badges', description: 'Status indicators', category: 'Data Display' },
     { id: 'input-group', title: 'Input Group', description: 'Input with addons', category: 'Forms' },
     { id: 'buttons', title: 'Buttons', description: 'Multiple variants', category: 'Actions' },
@@ -129,19 +129,6 @@ export class ComponentsShowcaseComponent {
     { id: 'dialog', title: 'Dialog', description: 'Modal dialogs', category: 'Overlay' },
     { id: 'menu', title: 'Dropdown Menu', description: 'Context menus', category: 'Navigation' }
   ]);
-
-  getSpanClass(span?: string): string {
-    switch (span) {
-      case 'full':
-        return 'sm:col-span-2 lg:col-span-3';
-      case 'half':
-        return 'lg:col-span-2';
-      case 'third':
-        return 'lg:col-span-1';
-      default:
-        return '';
-    }
-  }
 
   navigateTo(path: string): void {
     this.router.navigate([path]);

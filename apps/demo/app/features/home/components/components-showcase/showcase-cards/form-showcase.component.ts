@@ -37,7 +37,7 @@ import { ButtonComponent, CardComponent, InputComponent, CheckboxComponent, Sele
             <app-checkbox label="Remember me" />
           </div>
           <div class="mt-2">
-            <app-button variant="primary">Continue</app-button>
+            <app-button variant="default">Continue</app-button>
           </div>
         </div>
     </app-card>

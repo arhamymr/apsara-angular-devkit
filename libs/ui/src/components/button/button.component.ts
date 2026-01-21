@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/cn';
 import { LucideAngularModule, LoaderCircle } from 'lucide-angular';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'destructive' | 'outline' | 'plain';
+export type ButtonVariant = 'default' | 'secondary' | 'destructive' | 'outline' | 'plain';
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'icon';
 
 const buttonVariants = cva(
@@ -14,10 +14,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-primary ring ring-border inset-shadow-2xs inset-shadow-white/50',
+        default: 'bg-primary ring ring-border inset-shadow-2xs inset-shadow-white/50',
         secondary: 'bg-secondary text-secondary-foreground ring ring-border inset-shadow-2xs inset-shadow-white/15',
         destructive: 'bg-destructive text-destructive-foreground ring ring-border inset-shadow-2xs inset-shadow-white/50',
-        outline: 'bg-transparent text-primary ring ring-primary-border',
+        outline: 'text-primary ring ring-1 ring-border',
         plain: 'bg-transparent text-primary ring-0 shadow-none',
       },
       size: {
@@ -32,7 +32,7 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: 'primary',
+      variant: 'default',
       size: 'md',
     },
   },
@@ -65,7 +65,7 @@ const buttonVariants = cva(
   `]
 })
 export class ButtonComponent {
-  readonly variant = input<ButtonVariant>('primary');
+  readonly variant = input<ButtonVariant>('default');
   readonly size = input<ButtonSize>('md');
   readonly disabled = input<boolean>(false);
   readonly loading = input<boolean>(false);

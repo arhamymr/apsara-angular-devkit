@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ButtonComponent, BadgeComponent } from '@apsara/ui';
+import { ButtonComponent } from '@apsara/ui';
 
 @Component({
   selector: 'app-hero-section',
   standalone: true,
-  imports: [ButtonComponent, BadgeComponent],
+  imports: [ButtonComponent],
   template: `
     <section class="w-full px-6 py-20 text-center text-foreground border border-border rounded-xl mx-auto">
       <div class="w-full">
@@ -25,13 +25,6 @@ import { ButtonComponent, BadgeComponent } from '@apsara/ui';
             Documentation
           </app-button>
         </div>
-      </div>
-
-      <div class="flex flex-wrap justify-center gap-3 mt-12">
-        <app-badge variant="default">Angular 19+</app-badge>
-        <app-badge variant="secondary">Standalone</app-badge>
-        <app-badge variant="default">Signals</app-badge>
-        <app-badge variant="secondary">Material</app-badge>
       </div>
     </section>
   `

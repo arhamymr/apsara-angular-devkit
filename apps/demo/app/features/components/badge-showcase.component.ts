@@ -79,7 +79,7 @@ interface BadgeProp {
             @if (buttonTab() === 'preview') {
               <div class="p-6">
                 <div class="flex items-center gap-2">
-                  <app-button label="Messages" variant="primary" size="sm" />
+                  <app-button label="Messages" variant="default" size="sm" />
                   <app-badge variant="destructive">5</app-badge>
                 </div>
               </div>
@@ -188,7 +188,7 @@ export class BadgeShowcaseComponent {
 <app-badge variant="outline">Outline</app-badge>`;
 
   buttonCode = `<div class="flex items-center gap-2">
-  <app-button label="Messages" variant="primary" size="sm" />
+  <app-button label="Messages" variant="default" size="sm" />
   <app-badge variant="destructive">5</app-badge>
 </div>`;
 

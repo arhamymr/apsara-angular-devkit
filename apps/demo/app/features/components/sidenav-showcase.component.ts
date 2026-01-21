@@ -33,7 +33,7 @@ interface SidenavProp {
                 <div class="p-4">
                   <app-button
                     label="Toggle Sidenav"
-                    variant="primary"
+                    variant="default"
                     (clicked)="toggleSidenav()" />
                 </div>
                 <app-sidenav

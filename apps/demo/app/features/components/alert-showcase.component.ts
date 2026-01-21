@@ -36,7 +36,7 @@ interface AlertProp {
                   <app-alert-title>Alert Title</app-alert-title>
                   <app-alert-description>Alert description goes here.</app-alert-description>
                   <app-alert-action>
-                    <app-button variant="primary" size="sm">Action</app-button>
+                    <app-button variant="default" size="sm">Action</app-button>
                   </app-alert-action>
                 </app-alert>
               </div>
@@ -46,7 +46,7 @@ interface AlertProp {
                   <app-alert-title>Payment failed</app-alert-title>
                   <app-alert-description>Check your card details and try again.</app-alert-description>
                   <app-alert-action>
-                    <app-button variant="primary" size="sm">Retry</app-button>
+                    <app-button variant="default" size="sm">Retry</app-button>
                   </app-alert-action>
                 </app-alert>
               </div>
@@ -56,7 +56,7 @@ interface AlertProp {
                   <app-alert-title>Success</app-alert-title>
                   <app-alert-description>Your changes have been saved successfully.</app-alert-description>
                   <app-alert-action>
-                    <app-button variant="primary" size="sm">View</app-button>
+                    <app-button variant="default" size="sm">View</app-button>
                   </app-alert-action>
                 </app-alert>
               </div>
@@ -207,7 +207,7 @@ export class AlertShowcaseComponent {
   <app-alert-title>Alert Title</app-alert-title>
   <app-alert-description>Alert description goes here.</app-alert-description>
   <app-alert-action>
-    <app-button variant="primary" size="sm">Action</app-button>
+    <app-button variant="default" size="sm">Action</app-button>
   </app-alert-action>
 </app-alert>
 
@@ -215,7 +215,7 @@ export class AlertShowcaseComponent {
   <app-alert-title>Payment failed</app-alert-title>
   <app-alert-description>Check your card details and try again.</app-alert-description>
   <app-alert-action>
-    <app-button variant="primary" size="sm">Retry</app-button>
+    <app-button variant="default" size="sm">Retry</app-button>
   </app-alert-action>
 </app-alert>
 
@@ -223,7 +223,7 @@ export class AlertShowcaseComponent {
   <app-alert-title>Success</app-alert-title>
   <app-alert-description>Your changes have been saved successfully.</app-alert-description>
   <app-alert-action>
-    <app-button variant="primary" size="sm">View</app-button>
+    <app-button variant="default" size="sm">View</app-button>
   </app-alert-action>
 </app-alert>
 

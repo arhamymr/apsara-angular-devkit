@@ -16,7 +16,7 @@ import { CardComponent, ButtonComponent } from '@apsara/ui';
         <div class="flex gap-3">
           <app-button variant="destructive" size="sm">Delete Account</app-button>
           <app-button variant="secondary" size="sm">Share</app-button>
-          <app-button variant="primary" size="sm">Edit Profile</app-button>
+          <app-button variant="default" size="sm">Edit Profile</app-button>
         </div>
       </div>
     </app-card>
