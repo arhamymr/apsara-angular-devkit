@@ -1,4 +1,4 @@
-<img src="https://assets.apsaradigital.com/aether-logo-white.png" alt="Aether UI Logo" width="200">
+<img src="https://assets.apsaradigital.com/aether-logo.png" alt="Aether UI Logo" width="200">
 
 # aether-ui (v0 Alpha)
 
