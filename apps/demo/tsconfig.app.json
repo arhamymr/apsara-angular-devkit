@@ -31,12 +31,12 @@
     }
   },
   "include": [
-    "*.ts",
     "app/**/*.ts"
   ],
   "exclude": [
     "node_modules",
     "dist",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "vitest.config.ts"
   ]
 }

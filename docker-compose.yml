@@ -1,14 +1,14 @@
 version: '3.8'
 
 services:
-  aether-ui:
+  demo:
     build: .
-    container_name: aether-ui-demo
+    container_name: apsara-demo
     ports:
-      - "8080:8080"
+      - "4200:4200"
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080"]
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:4200"]
       interval: 30s
       timeout: 10s
       retries: 3

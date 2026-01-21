@@ -1,21 +1,21 @@
 import { Component, input, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonComponent } from '@apsara/ui';
+import { ButtonComponent, CardComponent } from '@apsara/ui';
 import { LucideAngularModule, Check, Copy } from 'lucide-angular';
 import { HighlightService } from '../../services/highlight.service';
 
 @Component({
   selector: 'app-code-snippet',
   standalone: true,
-  imports: [CommonModule, ButtonComponent, LucideAngularModule],
+  imports: [CommonModule, ButtonComponent, CardComponent, LucideAngularModule],
   template: `
-    <div class="relative bg-popover border border-border rounded-lg overflow-hidden my-4">
+    <app-card padding="none" class="relative w-full my-4">
       @if (isLoading()) {
-        <pre class="m-0 p-4 overflow-x-auto text-[color:var(--foreground-variant,#999)]">Loading...</pre>
+        <pre class="p-4 overflow-x-auto text-[color:var(--foreground-variant,#999)]">Loading...</pre>
       } @else if (highlightedCode()) {
-        <pre class="m-0 p-4 overflow-x-auto bg-popover text-[color:var(--shiki-color-text,#c9d1d9)]" [innerHTML]="highlightedCode()"></pre>
+        <pre class="p-4 overflow-x-auto text-[color:var(--shiki-color-text,#c9d1d9)]" [innerHTML]="highlightedCode()"></pre>
       } @else {
-        <pre class="m-0 p-4 overflow-x-auto"><code class="font-mono text-sm text-foreground leading-[1.6] whitespace-pre">{{ code() }}</code></pre>
+        <pre class="p-4 overflow-x-auto"><code class="font-mono text-sm text-foreground leading-[1.6] whitespace-pre">{{ code() }}</code></pre>
       }
       <app-button
         (click)="copyCode()"
@@ -29,7 +29,7 @@ import { HighlightService } from '../../services/highlight.service';
             <lucide-angular [img]="Copy" [size]="16" />
           }
       </app-button>
-    </div>
+    </app-card>
   `
 })
 export class CodeSnippetComponent {
