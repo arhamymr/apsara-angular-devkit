@@ -8,10 +8,6 @@ import { ButtonComponent, CardComponent, InputComponent, CheckboxComponent, Sele
   imports: [CommonModule, ButtonComponent, CardComponent, InputComponent, CheckboxComponent, SelectComponent],
   template: `
     <app-card class="flex-1 flex flex-col h-full">
-      <div class="mb-6">
-        <h3 class="text-lg font-semibold text-foreground mb-1.5">Payment Form</h3>
-        <p class="text-sm text-muted-foreground">Form components with labels, descriptions, and validation</p>
-      </div>
         <div class="flex-1 flex flex-col gap-4">
           <div class="grid grid-cols-2 gap-3">
             <div class="flex flex-col gap-1.5">

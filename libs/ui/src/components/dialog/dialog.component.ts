@@ -32,7 +32,7 @@ export interface DialogResult {
           (click)="onBackdropClick()"
           aria-hidden="true"></div>
         <div
-          class="relative bg-card rounded-lg shadow-xl max-h-[90vh] overflow-auto"
+          class="relative bg-card rounded-lg shadow-xl max-h-[90vh] overflow-auto animate-in fade-in zoom-in-95 duration-200"
           [style.max-width]="width()"
           [style.width]="fullWidth() ? '100%' : width()">
           @if (title()) {

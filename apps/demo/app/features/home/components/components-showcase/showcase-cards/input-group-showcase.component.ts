@@ -11,7 +11,9 @@ import { LucideAngularModule, Search } from 'lucide-angular';
     <app-card class="flex-1 flex flex-col h-full">
       <div class="mb-6">
         <h3 class="text-lg font-semibold text-foreground mb-1.5">Input Group</h3>
-        <p class="text-sm text-muted-foreground">Input fields with prefix and suffix addons</p>
+        <p class="text-sm text-muted-foreground">
+          
+        </p>
       </div>
         <div class="flex-1 flex flex-col gap-4">
           <div class="flex items-center border border-border rounded-md bg-input overflow-hidden">

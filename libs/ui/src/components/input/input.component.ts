@@ -1,13 +1,19 @@
-import { Component, input, output, forwardRef } from '@angular/core';
+import { Component, input, output, forwardRef, contentChild, ContentChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { cn } from '../../lib/cn';
+import { LucideAngularModule } from 'lucide-angular';
 
-export type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
+export type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search' | 'date' | 'datetime-local' | 'time' | 'file';
 
-@Component({
+export type InputSize = 'sm' | 'md' | 'lg' | 'xl';
+
+export type InputRadius = 'none' | 'sm' | 'md' | 'lg' | 'full';
+
+  @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LucideAngularModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -16,174 +22,113 @@ export type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url'
     }
   ],
   template: `
-    <div class="input-wrapper" [class.disabled]="disabled()" [class.error]="!!error()">
+    <div [class]="cn('flex flex-col gap-1.5', isInline() && 'flex-row items-center gap-3', disabled() && 'opacity-60')">
       @if (label()) {
-        <label class="label">{{ label() }} @if (required()) { <span class="required">*</span> }</label>
+        <label [class]="cn('text-sm font-medium text-foreground flex items-center gap-1.5', isInline() && 'min-w-[120px] flex-shrink-0')">
+          {{ label() }}
+          @if (required()) { <span class="text-destructive">*</span> }
+          @if (badge()) { <span class="text-[11px] px-1.5 py-0.5 bg-accent rounded text-accent-foreground font-medium">{{ badge() }}</span> }
+        </label>
       }
 
-      <div class="input-container">
+      <div class="relative flex items-center w-full">
         @if (prefixIcon()) {
-          <span class="icon prefix">{{ prefixIcon() }}</span>
+          <span class="absolute left-1 flex items-center justify-center w-9 h-9 text-muted-foreground text-lg">{{ prefixIcon() }}</span>
         }
 
         <input
-          [type]="type()"
+          [type]="getInputType()"
           [placeholder]="placeholder()"
-          [value]="value()"
+          [value]="internalValue"
           [disabled]="disabled()"
-          [class.with-prefix]="!!prefixIcon()"
-          [class.with-suffix]="!!suffixIcon()"
+          [accept]="accept()"
+          [multiple]="multiple()"
+          [attr.aria-invalid]="!!error()"
           (input)="onInput($event)"
           (blur)="onBlur()"
-          (focus)="onFocus()" />
+          (focus)="onFocus()"
+          [class]="cn(
+            'w-full border-[1.5px] bg-input text-foreground transition-all box-border',
+            getSizeClasses(),
+            getRadiusClasses(),
+            'placeholder:text-muted-foreground',
+            'focus:outline-none focus:border-primary focus:ring-3 focus:ring-[oklch(0.55_0.2_250/0.1)]',
+            'disabled:bg-muted disabled:cursor-not-allowed disabled:opacity-60',
+            getInputType() === 'file' && 'px-3 py-2 cursor-pointer',
+            (getInputType() === 'date' || getInputType() === 'datetime-local' || getInputType() === 'time') && 'cursor-pointer',
+            !!prefixIcon() && 'pl-10',
+            isPassword() && 'pr-10',
+            !!error() && 'border-destructive focus:ring-[oklch(0.6098_0.244_28.41/0.1)]',
+            classes()
+          )" />
 
-        @if (suffixIcon()) {
-          <button type="button" class="icon suffix" (click)="onSuffixClick()">
-            {{ showPassword() ? 'Hide' : suffixIcon() }}
+        @if (isPassword() && internalValue) {
+          <button type="button" class="absolute right-1 bg-transparent border-0 cursor-pointer text-xs px-2 py-1 rounded hover:bg-accent transition-colors text-muted-foreground" (click)="togglePassword()">
+            {{ showPassword ? 'Hide' : 'Show' }}
           </button>
         }
       </div>
 
       @if (error()) {
-        <span class="error-text">{{ error() }}</span>
+        <span class="text-xs text-destructive">{{ error() }}</span>
       }
 
       @if (hint()) {
-        <span class="hint">{{ hint() }}</span>
+        <span class="text-xs text-muted-foreground">{{ hint() }}</span>
       }
     </div>
-  `,
-  styles: [`
-    .input-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      font-family: 'Inter', system-ui, sans-serif;
-    }
-
-    .label {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--foreground);
-    }
-
-    .required {
-      color: var(--danger);
-    }
-
-    .input-container {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px 14px;
-      font-size: 14px;
-      border: 1.5px solid var(--input-border);
-      border-radius: var(--radius);
-      background: var(--input);
-      color: var(--foreground);
-      transition: all 0.2s;
-      box-sizing: border-box;
-    }
-
-    input::placeholder {
-      color: var(--dimmed);
-    }
-
-    input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px oklch(0.55 0.2 250 / 0.1);
-    }
-
-    input:disabled {
-      background: var(--muted);
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
-
-    input.with-prefix {
-      padding-left: 40px;
-    }
-
-    input.with-suffix {
-      padding-right: 40px;
-    }
-
-    .icon {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      color: var(--dimmed);
-      font-size: 18px;
-    }
-
-    .icon.prefix {
-      left: 4px;
-    }
-
-    .icon.suffix {
-      right: 4px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: var(--radius-xs);
-    }
-
-    .icon.suffix:hover {
-      background: var(--accent);
-    }
-
-    .error-text {
-      font-size: 12px;
-      color: var(--danger);
-    }
-
-    .hint {
-      font-size: 12px;
-      color: var(--dimmed);
-    }
-
-    .input-wrapper.error input {
-      border-color: var(--danger);
-    }
-
-    .input-wrapper.error input:focus {
-      box-shadow: 0 0 0 3px oklch(0.6098 0.244 28.41 / 0.1);
-    }
-
-    .input-wrapper.disabled {
-      opacity: 0.6;
-    }
-  `]
+  `
 })
 export class InputComponent implements ControlValueAccessor {
   readonly label = input<string>('');
   readonly type = input<InputType>('text');
   readonly placeholder = input<string>('');
-  readonly value = input<string>('');
   readonly disabled = input<boolean>(false);
   readonly error = input<string>('');
   readonly hint = input<string>('');
   readonly required = input<boolean>(false);
   readonly prefixIcon = input<string>('');
-  readonly suffixIcon = input<string>('');
-  readonly showPassword = input<boolean>(false);
+  readonly accept = input<string>('');
+  readonly multiple = input<boolean>(false);
+  readonly orientation = input<'vertical' | 'inline'>('vertical');
+  readonly badge = input<string>('');
+  readonly size = input<InputSize>('md');
+  readonly radius = input<InputRadius>('md');
+  readonly classes = input<string>('');
 
-  readonly suffixClick = output<void>();
+  protected showPassword = false;
+
+  readonly fileChange = output<File[]>();
 
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};
+  protected internalValue = '';
+
+  cn = cn;
+
+  public getSizeClasses(): string {
+    const sizes: Record<InputSize, string> = {
+      sm: 'px-3 py-1.5 text-xs',
+      md: 'px-3.5 py-2.5 text-sm',
+      lg: 'px-4 py-3 text-base',
+      xl: 'px-5 py-3.5 text-lg'
+    };
+    return sizes[this.size()];
+  }
+
+  public getRadiusClasses(): string {
+    const radii: Record<InputRadius, string> = {
+      none: 'rounded-none',
+      sm: 'rounded-sm',
+      md: 'rounded-md',
+      lg: 'rounded-lg',
+      full: 'rounded-full'
+    };
+    return radii[this.radius()];
+  }
 
   writeValue(value: string): void {
+    this.internalValue = value ?? '';
   }
 
   registerOnChange(fn: (value: string) => void): void {
@@ -199,7 +144,14 @@ export class InputComponent implements ControlValueAccessor {
 
   onInput(event: Event): void {
     const input = event.target as HTMLInputElement;
-    this.onChange(input.value);
+    if (input.type === 'file') {
+      const files = Array.from(input.files || []);
+      this.fileChange.emit(files);
+      this.onChange('');
+    } else {
+      this.onChange(input.value);
+      this.internalValue = input.value;
+    }
   }
 
   onBlur(): void {
@@ -209,7 +161,22 @@ export class InputComponent implements ControlValueAccessor {
   onFocus(): void {
   }
 
-  onSuffixClick(): void {
-    this.suffixClick.emit();
+  isPassword(): boolean {
+    return this.type() === 'password';
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  getInputType(): string {
+    if (this.isPassword()) {
+      return this.showPassword ? 'text' : 'password';
+    }
+    return this.type();
+  }
+
+  isInline(): boolean {
+    return this.orientation() === 'inline';
   }
 }

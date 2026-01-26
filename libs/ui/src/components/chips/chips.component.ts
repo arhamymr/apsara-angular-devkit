@@ -12,13 +12,13 @@ import { LucideAngularModule, X } from 'lucide-angular';
     <div class="flex flex-wrap gap-2">
       @for (chip of modelValue(); track chip.value) {
         <div
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full
-                 text-sm text-gray-900"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-secondary rounded-full
+                 text-sm text-secondary-foreground"
           [class.opacity-50]="chip.disabled">
           <span>{{ chip.label }}</span>
           @if (!chip.disabled) {
             <button
-              class="p-0.5 rounded-full hover:bg-gray-200"
+              class="p-0.5 rounded-full hover:bg-secondary-foreground/10"
               (click)="onRemove(chip)"
               aria-label="Remove {{ chip.label }}">
               <lucide-angular [img]="X" [size]="14" />
@@ -30,8 +30,8 @@ import { LucideAngularModule, X } from 'lucide-angular';
         <input
           type="text"
           [placeholder]="placeholder()"
-          class="px-3 py-1.5 bg-gray-100 rounded-full text-sm
-                 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          class="px-3 py-1.5 bg-secondary rounded-full text-sm text-secondary-foreground
+                 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]"
           (keydown.enter)="onAdd($event)"
           (keydown.comma)="onAdd($event)" />
       }

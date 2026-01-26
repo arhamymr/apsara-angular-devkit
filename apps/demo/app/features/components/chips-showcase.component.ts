@@ -78,6 +78,23 @@ interface ChipProp {
       </div>
 
       <div class="mt-8">
+        <h3 class="text-lg font-semibold text-foreground mb-4">Disabled Chips</h3>
+        <app-card>
+          <app-tabs [options]="previewCodeOptions" [modelValue]="disabledTab()" (changed)="disabledTab.set($event)">
+            @if (disabledTab() === 'preview') {
+              <div class="p-6">
+                <app-chips
+                  [modelValue]="disabledTags()"
+                  [addable]="false" />
+              </div>
+            } @else {
+              <app-code-snippet [code]="disabledCode" language="html" />
+            }
+          </app-tabs>
+        </app-card>
+      </div>
+
+      <div class="mt-8">
         <h3 class="text-lg font-semibold text-foreground mb-4">Props</h3>
         <ng-template #tableHeader>
           <th class="text-left p-3 bg-muted font-semibold text-muted-foreground text-xs uppercase tracking-wide">Prop</th>
@@ -102,6 +119,7 @@ export class ChipsShowcaseComponent {
 
   basicTab = signal<string>('preview');
   removableTab = signal<string>('preview');
+  disabledTab = signal<string>('preview');
 
   tags = signal([
     { value: '1', label: 'JavaScript' },
@@ -112,6 +130,11 @@ export class ChipsShowcaseComponent {
   removableTags = signal([
     { value: '1', label: 'React' },
     { value: '2', label: 'Vue' }
+  ]);
+
+  disabledTags = signal([
+    { value: '1', label: 'Disabled Chip', disabled: true },
+    { value: '2', label: 'Another Disabled', disabled: true }
   ]);
 
   installCode = `npm install @apsara/ui/chips`;
@@ -135,8 +158,12 @@ export class ChipsShowcaseComponent {
   [addable]="false"
   (changed)="onRemovableTagsChange($event)" />`;
 
+  disabledCode = `<app-chips
+  [modelValue]="disabledTags()"
+  [addable]="false" />`;
+
   propsData = (): ChipProp[] => [
-    { name: 'modelValue', type: 'Array<{ value: string; label: string }>', description: 'Array of chip items' },
+    { name: 'modelValue', type: 'Array<{ value: string; label: string; disabled?: boolean }>', description: 'Array of chip items' },
     { name: 'addable', type: 'boolean', description: 'Allows adding new chips' },
     { name: 'placeholder', type: 'string', description: 'Placeholder text for input' },
     { name: 'changed', type: 'EventEmitter<Array>', description: 'Emitted when chips change' }
@@ -148,11 +175,11 @@ export class ChipsShowcaseComponent {
     return tags.map(t => t.label).join(', ');
   }
 
-  onTagsChange(tags: Array<{ value: string; label: string }>): void {
+  onTagsChange(tags: Array<{ value: string; label: string; disabled?: boolean }>): void {
     this.tags.set(tags);
   }
 
-  onRemovableTagsChange(tags: Array<{ value: string; label: string }>): void {
+  onRemovableTagsChange(tags: Array<{ value: string; label: string; disabled?: boolean }>): void {
     this.removableTags.set(tags);
   }
 }

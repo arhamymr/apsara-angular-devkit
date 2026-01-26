@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DialogComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, ButtonComponent, CardComponent, TabsComponent, TableComponent } from '@apsara/ui';
+import { DialogComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, ButtonComponent, CardComponent, TabsComponent, TableComponent, InputComponent } from '@apsara/ui';
 import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-snippet.component';
 
 interface DialogProp {
@@ -12,7 +12,7 @@ interface DialogProp {
 @Component({
   selector: 'app-dialog-showcase',
   standalone: true,
-  imports: [CommonModule, DialogComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, ButtonComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent],
+  imports: [CommonModule, DialogComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, ButtonComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent, InputComponent],
   template: `
     <app-alert variant="warning" class="mb-6">
       <app-alert-title>AI Generated Content</app-alert-title>
@@ -66,14 +66,8 @@ interface DialogProp {
         title="Form Dialog"
         (closed)="onDialogClose('form', $event)">
         <div class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Enter your name" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Enter your email" />
-          </div>
+          <app-input label="Name" placeholder="Enter your name" />
+          <app-input label="Email" type="email" placeholder="Enter your email" />
         </div>
         <div dialog-actions class="flex gap-3">
           <app-button variant="plain" (clicked)="onDialogClose('form', { action: 'cancel' })">Cancel</app-button>

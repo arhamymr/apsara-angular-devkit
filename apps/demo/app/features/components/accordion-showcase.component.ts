@@ -1,27 +1,27 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExpansionPanelComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, CardComponent, TabsComponent, TableComponent } from '@apsara/ui';
+import { AccordionComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, CardComponent, TabsComponent, TableComponent } from '@apsara/ui';
 import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-snippet.component';
 
-interface ExpansionPanelProp {
+interface AccordionProp {
   name: string;
   type: string;
   description: string;
 }
 
 @Component({
-  selector: 'app-expansion-panel-showcase',
+  selector: 'app-accordion-showcase',
   standalone: true,
-  imports: [CommonModule, ExpansionPanelComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent],
+  imports: [CommonModule, AccordionComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent],
   template: `
     <app-alert variant="warning" class="mb-6">
       <app-alert-title>AI Generated Content</app-alert-title>
       <app-alert-description>This component code may have been AI generated. Please review and verify before using in production.</app-alert-description>
     </app-alert>
-    <section id="expansion-panel" class="mb-16 scroll-m-20">
+    <section id="accordion" class="mb-16 scroll-m-20">
       <div class="mb-6">
-        <h2 class="text-2xl font-semibold text-foreground mb-2">Expansion Panel</h2>
-        <p class="text-muted-foreground">A collapsible panel component for showing/hiding content</p>
+        <h2 class="text-2xl font-semibold text-foreground mb-2">Accordion</h2>
+        <p class="text-muted-foreground">A vertically stacked set of interactive headings that each reveal a section of content.</p>
       </div>
 
       <app-card>
@@ -29,33 +29,33 @@ interface ExpansionPanelProp {
           @if (basicTab() === 'preview') {
             <div class="p-6">
               <div class="flex flex-col gap-4">
-                <app-expansion-panel
+                <app-accordion
                   title="Getting Started"
                   [isOpen]="panels()['getting-started']()"
                   (expanded)="togglePanel('getting-started', $event)">
-                  <p class="text-sm text-gray-600">
+                  <p class="text-sm text-muted-foreground">
                     Welcome to our application! This guide will help you get started quickly.
                     Learn about the basic features and how to navigate through the interface.
                   </p>
-                </app-expansion-panel>
-                <app-expansion-panel
+                </app-accordion>
+                <app-accordion
                   title="Configuration"
                   [isOpen]="panels()['configuration']()"
                   (expanded)="togglePanel('configuration', $event)">
-                  <p class="text-sm text-gray-600">
+                  <p class="text-sm text-muted-foreground">
                     Configure your application settings here. You can customize themes,
                     notifications, and user preferences to match your needs.
                   </p>
-                </app-expansion-panel>
-                <app-expansion-panel
+                </app-accordion>
+                <app-accordion
                   title="Advanced Settings"
                   [isOpen]="panels()['advanced']()"
                   (expanded)="togglePanel('advanced', $event)">
-                  <p class="text-sm text-gray-600">
+                  <p class="text-sm text-muted-foreground">
                     Advanced users can fine-tune performance settings, API configurations,
                     and integrate with external services using these options.
                   </p>
-                </app-expansion-panel>
+                </app-accordion>
               </div>
             </div>
           } @else {
@@ -92,7 +92,7 @@ interface ExpansionPanelProp {
     </section>
   `
 })
-export class ExpansionPanelShowcaseComponent {
+export class AccordionShowcaseComponent {
   previewCodeOptions = [
     { value: 'preview', label: 'Preview' },
     { value: 'code', label: 'Code' }
@@ -105,35 +105,35 @@ export class ExpansionPanelShowcaseComponent {
     'advanced': () => false
   });
 
-  installCode = `npm install @apsara/ui/expansion-panel`;
+  installCode = `npm install @apsara/ui/accordion`;
 
-  importCode = `import { ExpansionPanelComponent } from '@apsara/ui/expansion-panel';`;
+  importCode = `import { AccordionComponent } from '@apsara/ui/accordion';`;
 
-  usageCode = `<app-expansion-panel
+  usageCode = `<app-accordion
   title="Panel Title"
   [isOpen]="isOpen"
   (expanded)="onExpand($event)">
   Panel content goes here
-</app-expansion-panel>`;
+</app-accordion>`;
 
-  basicCode = `<app-expansion-panel
+  basicCode = `<app-accordion
   title="Getting Started"
   [isOpen]="panels()['getting-started']()"
   (expanded)="togglePanel('getting-started', $event)">
-  <p class="text-sm text-gray-600">Welcome content here.</p>
-</app-expansion-panel>
+  <p class="text-sm text-muted-foreground">Welcome content here.</p>
+</app-accordion>
 
-<app-expansion-panel
+<app-accordion
   title="Configuration"
   [isOpen]="panels()['configuration']()"
   (expanded)="togglePanel('configuration', $event)">
-  <p class="text-sm text-gray-600">Configuration content here.</p>
-</app-expansion-panel>`;
+  <p class="text-sm text-muted-foreground">Configuration content here.</p>
+</app-accordion>`;
 
-  propsData = (): ExpansionPanelProp[] => [
-    { name: 'title', type: 'string', description: 'Panel title' },
-    { name: 'isOpen', type: 'boolean', description: 'Whether panel is expanded' },
-    { name: 'expanded', type: 'EventEmitter<boolean>', description: 'Emitted when expansion state changes' }
+  propsData = (): AccordionProp[] => [
+    { name: 'title', type: 'string', description: 'Accordion title' },
+    { name: 'isOpen', type: 'boolean', description: 'Whether accordion is expanded' },
+    { name: 'expanded', type: 'output<boolean>', description: 'Emitted when expansion state changes' }
   ];
 
   togglePanel(key: string, expanded: boolean): void {

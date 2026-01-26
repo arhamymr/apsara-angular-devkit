@@ -125,8 +125,7 @@ export class ComponentsOverviewComponent {
         { id: 'tabs', title: 'Tabs', icon: Square, description: 'Tabbed navigation' },
         { id: 'list', title: 'List', icon: List, description: 'Vertical list of items' },
         { id: 'paginator', title: 'Paginator', icon: ChevronRight, description: 'Navigation controls for data' },
-        { id: 'stepper', title: 'Stepper', icon: ArrowUpDown, description: 'Progress through steps' },
-        { id: 'expansion-panel', title: 'Expansion Panel', icon: ChevronDown, description: 'Collapsible content panel' }
+        { id: 'stepper', title: 'Stepper', icon: ArrowUpDown, description: 'Progress through steps' }
       ]
     },
     {
@@ -139,7 +138,6 @@ export class ComponentsOverviewComponent {
         { id: 'icon', title: 'Icon', icon: Smile, description: 'Visual symbol representation' },
         { id: 'progress-bar', title: 'Progress Bar', icon: Loader, description: 'Linear progress indicator' },
         { id: 'spinner', title: 'Spinner', icon: RotateCw, description: 'Loading indicator' },
-        { id: 'sort-header', title: 'Sort Header', icon: ArrowUpDown, description: 'Column sorting control' },
         { id: 'alert', title: 'Alert', icon: AlertTriangle, description: 'Feedback and notifications' }
       ]
     },
@@ -155,7 +153,7 @@ export class ComponentsOverviewComponent {
       items: [
         { id: 'dialog', title: 'Dialog', icon: Box, description: 'Modal popup window' },
         { id: 'tooltip', title: 'Tooltip', icon: Info, description: 'Informational tooltip' },
-        { id: 'snackbar', title: 'Snackbar', icon: Bell, description: 'Brief notification' },
+        { id: 'sonner', title: 'Sonner', icon: Bell, description: 'An opinionated toast component for Angular' },
         { id: 'bottom-sheet', title: 'Bottom Sheet', icon: ArrowDownToLine, description: 'Slide-up panel' }
       ]
     },

@@ -35,40 +35,36 @@ interface User {
     <section id="table" class="mb-16 scroll-m-20">
       <div class="mb-6">
         <h2 class="text-2xl font-semibold text-foreground mb-2">Table</h2>
-        <p class="text-muted-foreground">Data table component with content projection for flexible layouts</p>
+        <p class="text-muted-foreground">Data table component with flexible template support</p>
       </div>
 
       <app-card>
         <app-tabs [options]="previewCodeOptions" [modelValue]="basicTab()" (changed)="basicTab.set($event)">
           @if (basicTab() === 'preview') {
             <div class="p-6">
-              <app-table [rows]="basicUsers()">
-                <th table-header-1 class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Name</th>
-                <th table-header-2 class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Email</th>
-                <th table-header-3 class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Role</th>
+              <ng-template #basicHeader>
+                <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Name</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Email</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Role</th>
+              </ng-template>
 
-                @for (user of basicUsers(); track user.id) {
-                  <ng-container table-cell-1>
-                    <span class="px-4 py-4 whitespace-nowrap text-sm text-foreground block">{{ user.name }}</span>
-                  </ng-container>
-                  <ng-container table-cell-2>
-                    <span class="px-4 py-4 whitespace-nowrap text-sm text-muted-foreground block">{{ user.email }}</span>
-                  </ng-container>
-                  <ng-container table-cell-3>
-                    <span class="px-4 py-4 whitespace-nowrap text-sm text-muted-foreground block">
-                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                        [class.bg-primary/10]="user.role === 'Admin'"
-                        [class.text-primary]="user.role === 'Admin'"
-                        [class.bg-muted]="user.role === 'User'"
-                        [class.text-muted-foreground]="user.role === 'User'"
-                        [class.bg-accent/10]="user.role === 'Editor'"
-                        [class.text-accent]="user.role === 'Editor'">
-                        {{ user.role }}
-                      </span>
-                    </span>
-                  </ng-container>
-                }
-              </app-table>
+              <ng-template #basicCell let-user>
+                <td class="px-4 py-4 whitespace-nowrap text-sm text-foreground">{{ user.name }}</td>
+                <td class="px-4 py-4 whitespace-nowrap text-sm text-muted-foreground">{{ user.email }}</td>
+                <td class="px-4 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                    [class.bg-primary/10]="user.role === 'Admin'"
+                    [class.text-primary]="user.role === 'Admin'"
+                    [class.bg-muted]="user.role === 'User'"
+                    [class.text-muted-foreground]="user.role === 'User'"
+                    [class.bg-accent/10]="user.role === 'Editor'"
+                    [class.text-accent]="user.role === 'Editor'">
+                    {{ user.role }}
+                  </span>
+                </td>
+              </ng-template>
+
+              <app-table [rows]="basicUsers()" [tableHeaderTemplate]="basicHeader" [tableCellTemplate]="basicCell" />
             </div>
           } @else {
             <app-code-snippet [code]="tableShowcaseCode.basicCode" language="html" />
@@ -93,69 +89,50 @@ interface User {
           <app-tabs [options]="previewCodeOptions" [modelValue]="actionsTab()" (changed)="actionsTab.set($event)">
             @if (actionsTab() === 'preview') {
               <div class="p-6">
-                <app-table [rows]="usersWithActions()">
-                  <th table-header-1 class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">User</th>
-                  <th table-header-2 class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
-                  <th table-header-3 class="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Actions</th>
+                <ng-template #actionsHeader>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">User</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
+                  <th class="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Actions</th>
+                </ng-template>
 
-                  @for (user of usersWithActions(); track user.id) {
-                    <ng-container table-cell-1>
-                      <div class="px-4 py-4">
-                        <div class="flex items-center">
-                          <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                            <span class="text-sm font-medium text-primary">{{ user.name.charAt(0) }}</span>
-                          </div>
-                          <div class="ml-4">
-                            <div class="text-sm font-medium text-foreground">{{ user.name }}</div>
-                            <div class="text-sm text-muted-foreground">{{ user.email }}</div>
-                          </div>
-                        </div>
+                <ng-template #actionsCell let-user>
+                  <td class="px-4 py-4">
+                    <div class="flex items-center">
+                      <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <span class="text-sm font-medium text-primary">{{ user.name.charAt(0) }}</span>
                       </div>
-                    </ng-container>
-                    <ng-container table-cell-2>
-                      <div class="px-4 py-4 whitespace-nowrap">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                          [class.bg-success/10]="user.status === 'Active'"
-                          [class.text-success]="user.status === 'Active'"
-                          [class.bg-warning/10]="user.status === 'Pending'"
-                          [class.text-warning]="user.status === 'Pending'"
-                          [class.bg-destructive/10]="user.status === 'Inactive'"
-                          [class.text-destructive]="user.status === 'Inactive'">
-                          {{ user.status }}
-                        </span>
+                      <div class="ml-4">
+                        <div class="text-sm font-medium text-foreground">{{ user.name }}</div>
+                        <div class="text-sm text-muted-foreground">{{ user.email }}</div>
                       </div>
-                    </ng-container>
-                    <ng-container table-cell-3>
-                      <div class="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <div class="flex items-center justify-end gap-2">
-                          <app-button label="Edit" size="sm" variant="plain" />
-                          <app-button label="Delete" size="sm" variant="plain" />
-                        </div>
-                      </div>
-                    </ng-container>
-                  }
-                </app-table>
+                    </div>
+                  </td>
+                  <td class="px-4 py-4 whitespace-nowrap">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                      [class.bg-success/10]="user.status === 'Active'"
+                      [class.text-success]="user.status === 'Active'"
+                      [class.bg-warning/10]="user.status === 'Pending'"
+                      [class.text-warning]="user.status === 'Pending'"
+                      [class.bg-destructive/10]="user.status === 'Inactive'"
+                      [class.text-destructive]="user.status === 'Inactive'">
+                      {{ user.status }}
+                    </span>
+                  </td>
+                  <td class="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <div class="flex items-center justify-end gap-2">
+                      <app-button label="Edit" size="sm" variant="plain" />
+                      <app-button label="Delete" size="sm" variant="plain" />
+                    </div>
+                  </td>
+                </ng-template>
+
+                <app-table [rows]="usersWithActions()" [tableHeaderTemplate]="actionsHeader" [tableCellTemplate]="actionsCell" />
               </div>
             } @else {
               <app-code-snippet [code]="tableShowcaseCode.actionsCode" language="html" />
             }
           </app-tabs>
         </app-card>
-      </div>
-
-      <div class="mt-8">
-        <h3 class="text-lg font-semibold text-foreground mb-4">Content Projection Selectors</h3>
-        <ng-template #selectorsHeader>
-          <th class="text-left p-3 bg-muted font-semibold text-muted-foreground text-xs uppercase tracking-wide">Element</th>
-          <th class="text-left p-3 bg-muted font-semibold text-muted-foreground text-xs uppercase tracking-wide">Selector</th>
-          <th class="text-left p-3 bg-muted font-semibold text-muted-foreground text-xs uppercase tracking-wide">Description</th>
-        </ng-template>
-        <ng-template #selectorsCell let-selector>
-          <td class="p-3 text-foreground"><code class="bg-muted px-1.5 py-0.5 rounded text-xs">{{ selector.element }}</code></td>
-          <td class="p-3 text-foreground"><code class="bg-muted px-1.5 py-0.5 rounded text-xs">{{ selector.selector }}</code></td>
-          <td class="p-3 text-foreground">{{ selector.description }}</td>
-        </ng-template>
-        <app-table [rows]="selectorData()" [tableHeaderTemplate]="selectorsHeader" [tableCellTemplate]="selectorsCell" />
       </div>
 
       <div class="mt-8">
@@ -176,6 +153,7 @@ interface User {
   `
 })
 export class TableShowcaseComponent {
+  tableShowcaseCode = tableShowcaseCode;
   previewCodeOptions = [
     { value: 'preview', label: 'Preview' },
     { value: 'code', label: 'Code' }
@@ -198,14 +176,15 @@ export class TableShowcaseComponent {
 
   installCode = `npm install @apsara/ui/table`;
 
-  selectorData = () => [
-    { element: 'Header Cell', selector: 'table-header-1 to table-header-5', description: 'Projected into header row cells (max 5)' },
-    { element: 'Body Cell', selector: 'table-cell-1 to table-cell-5', description: 'Projected into each row cells (max 5)' }
-  ];
+  propsData = signal([
+    { name: 'rows', type: 'any[]', description: 'Array of data to display' },
+    { name: 'tableHeaderTemplate', type: 'TemplateRef<void>', description: 'Template for the table header' },
+    { name: 'tableCellTemplate', type: 'TemplateRef<any>', description: 'Template for each table row' },
+    { name: '$class', type: 'string', description: 'Custom CSS classes for the table container' }
+  ]);
 
-  propsData = () => [
-    { name: 'rows', type: 'unknown[]', description: 'Array of data rows to render' }
-  ];
-
-  tableShowcaseCode = tableShowcaseCode;
+  selectorData = signal([
+    { element: 'th', selector: 'table-header-1...N', description: 'Projects content into table header columns' },
+    { element: 'tr', selector: 'table-cell-1...N', description: 'Projects content into table body columns' }
+  ]);
 }

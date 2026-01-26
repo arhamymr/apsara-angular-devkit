@@ -50,15 +50,13 @@ export const routes: Routes = [
       { path: 'table', loadComponent: () => import('./features/components/table-showcase.component').then(m => m.TableShowcaseComponent) },
       { path: 'tree', loadComponent: () => import('./features/components/tree-showcase.component').then(m => m.TreeShowcaseComponent) },
       { path: 'paginator', loadComponent: () => import('./features/components/paginator-showcase.component').then(m => m.PaginatorShowcaseComponent) },
-      { path: 'expansion-panel', loadComponent: () => import('./features/components/expansion-panel-showcase.component').then(m => m.ExpansionPanelShowcaseComponent) },
       { path: 'dialog', loadComponent: () => import('./features/components/dialog-showcase.component').then(m => m.DialogShowcaseComponent) },
       { path: 'tooltip', loadComponent: () => import('./features/components/tooltip-showcase.component').then(m => m.TooltipShowcaseComponent) },
-      { path: 'snackbar', loadComponent: () => import('./features/components/snackbar-showcase.component').then(m => m.SnackbarShowcaseComponent) },
+      { path: 'sonner', loadComponent: () => import('./features/components/sonner-showcase.component').then(m => m.SonnerShowcaseComponent) },
       { path: 'bottom-sheet', loadComponent: () => import('./features/components/bottom-sheet-showcase.component').then(m => m.BottomSheetShowcaseComponent) },
       { path: 'divider', loadComponent: () => import('./features/components/divider-showcase.component').then(m => m.DividerShowcaseComponent) },
       { path: 'grid-list', loadComponent: () => import('./features/components/grid-list-showcase.component').then(m => m.GridListShowcaseComponent) },
       { path: 'stepper', loadComponent: () => import('./features/components/stepper-showcase.component').then(m => m.StepperShowcaseComponent) },
-      { path: 'sort-header', loadComponent: () => import('./features/components/sort-header-showcase.component').then(m => m.SortHeaderShowcaseComponent) },
       { path: 'ripples', loadComponent: () => import('./features/components/ripples-showcase.component').then(m => m.RipplesShowcaseComponent) }
     ]
   },

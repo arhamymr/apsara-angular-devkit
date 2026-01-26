@@ -19,7 +19,7 @@ import { cn } from '../../lib/cn';
             [checked]="modelValue() === option.value"
             [disabled]="isDisabled() || option.disabled"
             (change)="onRadioChange(option.value)"
-            class="w-4 h-4 border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer
+            class="w-4 h-4 border-gray-300 text-[var(--primary)] focus:ring-[var(--primary)] cursor-pointer
                    disabled:cursor-not-allowed disabled:opacity-50" />
           <span class="text-sm text-gray-700" [class.opacity-50]="isDisabled() || option.disabled">
             {{ option.label }}

@@ -1,4 +1,4 @@
-import { Component, input, output, signal, forwardRef } from '@angular/core';
+import { Component, input, output, signal, computed, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { cn } from '../../lib/cn';
@@ -42,7 +42,8 @@ export interface SelectOption {
             <button
               type="button"
               class="w-full flex items-center gap-3 px-3 py-2 text-sm text-foreground"
-              [class.bg-accent]="modelValue() === option.value"
+              [class.bg-[var(--primary)]]="modelValue() === option.value"
+              [class.text-[var(--primary-foreground)]]="modelValue() === option.value"
               [disabled]="option.disabled"
               role="option"
               [attr.aria-selected]="modelValue() === option.value"
@@ -73,10 +74,11 @@ export class SelectComponent implements ControlValueAccessor {
   ariaLabelledBy = input<string>('');
   noResultsText = input<string>('No results found');
   searchEnabled = input<boolean>(false);
-  disabled = signal(false);
+  disabled = input<boolean>(false);
   modelValue = signal('');
   isOpen = signal(false);
   searchQuery = signal('');
+  internalDisabled = signal(false);
   changed = output<string>();
   opened = output<void>();
   closed = output<void>();
@@ -111,11 +113,11 @@ export class SelectComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.disabled.set(isDisabled);
+    this.internalDisabled.set(isDisabled);
   }
 
   isDisabled(): boolean {
-    return this.disabled();
+    return this.internalDisabled();
   }
 
   onToggle(): void {

@@ -31,9 +31,9 @@ interface GridListProp {
             <div class="p-6">
               <app-grid-list [cols]="2">
                 @for (item of items(); track $index) {
-                  <div class="bg-gray-100 rounded-lg p-6 text-center">
-                    <p class="font-medium text-gray-900">Item {{ $index + 1 }}</p>
-                  </div>
+                  <app-card class="h-full flex items-center justify-center p-6">
+                    <p class="font-medium text-foreground">Item {{ $index + 1 }}</p>
+                  </app-card>
                 }
               </app-grid-list>
             </div>
@@ -65,9 +65,9 @@ interface GridListProp {
                     <span class="text-xs text-muted-foreground font-medium mb-2 block">2 Columns</span>
                     <app-grid-list [cols]="2">
                       @for (item of items(); track $index) {
-                        <div class="bg-gray-100 rounded-lg p-4 text-center">
-                          <p class="font-medium text-gray-900">{{ $index + 1 }}</p>
-                        </div>
+                        <app-card class="p-4 text-center">
+                          <p class="font-medium text-foreground">{{ $index + 1 }}</p>
+                        </app-card>
                       }
                     </app-grid-list>
                   </div>
@@ -75,9 +75,9 @@ interface GridListProp {
                     <span class="text-xs text-muted-foreground font-medium mb-2 block">3 Columns</span>
                     <app-grid-list [cols]="3" [gap]="'1.5rem'">
                       @for (item of items(); track $index) {
-                        <div class="bg-blue-50 rounded-lg p-4 text-center">
-                          <p class="font-medium text-blue-900">Card {{ $index + 1 }}</p>
-                        </div>
+                        <app-card class="p-4 text-center bg-muted/50">
+                          <p class="font-medium text-foreground">Card {{ $index + 1 }}</p>
+                        </app-card>
                       }
                     </app-grid-list>
                   </div>
@@ -85,9 +85,9 @@ interface GridListProp {
                     <span class="text-xs text-muted-foreground font-medium mb-2 block">4 Columns</span>
                     <app-grid-list [cols]="4">
                       @for (item of items(); track $index) {
-                        <div class="bg-green-50 rounded-lg p-4 text-center">
-                          <p class="font-medium text-green-900">{{ $index + 1 }}</p>
-                        </div>
+                        <app-card class="p-4 text-center">
+                          <p class="font-medium text-foreground">{{ $index + 1 }}</p>
+                        </app-card>
                       }
                     </app-grid-list>
                   </div>
@@ -136,21 +136,29 @@ export class GridListShowcaseComponent {
 
   usageCode = `<app-grid-list [cols]="2" [gap]="'1rem'">
   @for (item of items; track $index) {
-    <div>Item {{ $index + 1 }}</div>
+    <app-card>Item {{ $index + 1 }}</app-card>
   }
 </app-grid-list>`;
 
   basicCode = `<app-grid-list [cols]="2">
   @for (item of items(); track $index) {
-    <div class="bg-gray-100 rounded-lg p-6 text-center">
-      <p class="font-medium text-gray-900">Item {{ $index + 1 }}</p>
-    </div>
+    <app-card class="h-full flex items-center justify-center p-6">
+      <p class="font-medium text-foreground">Item {{ $index + 1 }}</p>
+    </app-card>
   }
 </app-grid-list>`;
 
-  colsCode = `<app-grid-list [cols]="2">...</app-grid-list>
-<app-grid-list [cols]="3">...</app-grid-list>
-<app-grid-list [cols]="4">...</app-grid-list>`;
+  colsCode = `<app-grid-list [cols]="2">
+  <app-card>...</app-card>
+</app-grid-list>
+
+<app-grid-list [cols]="3">
+  <app-card>...</app-card>
+</app-grid-list>
+
+<app-grid-list [cols]="4">
+  <app-card>...</app-card>
+</app-grid-list>`;
 
   propsData = (): GridListProp[] => [
     { name: 'cols', type: 'number', default: '1', description: 'Number of columns in the grid' },

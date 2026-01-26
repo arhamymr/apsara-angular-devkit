@@ -31,7 +31,8 @@
     }
   },
   "include": [
-    "app/**/*.ts"
+    "app/**/*.ts",
+    "main.ts"
   ],
   "exclude": [
     "node_modules",
