@@ -105,7 +105,7 @@ export class ComponentsOverviewComponent {
         { id: 'button', title: 'Button', icon: Square, description: 'Trigger actions and events' },
         { id: 'checkbox', title: 'Checkbox', icon: CheckSquare, description: 'Multi-selection control' },
         { id: 'radio', title: 'Radio', icon: Radio, description: 'Single selection from options' },
-        { id: 'slide-toggle', title: 'Slide Toggle', icon: ToggleLeft, description: 'On/off binary switch' },
+        { id: 'switch', title: 'Switch', icon: ToggleLeft, description: 'On/off binary toggle' },
         { id: 'button-toggle', title: 'Button Toggle', icon: ToggleLeft, description: 'Grouped exclusive buttons' },
         { id: 'input', title: 'Input', icon: TextCursorInput, description: 'Text field for user entry' },
         { id: 'select', title: 'Select', icon: List, description: 'Dropdown selection control' },

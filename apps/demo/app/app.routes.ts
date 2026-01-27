@@ -31,6 +31,7 @@ export const routes: Routes = [
       { path: 'tabs', loadComponent: () => import('./features/components/tabs-showcase.component').then(m => m.TabsShowcaseComponent) },
       { path: 'checkbox', loadComponent: () => import('./features/components/checkbox-showcase.component').then(m => m.CheckboxShowcaseComponent) },
       { path: 'radio', loadComponent: () => import('./features/components/radio-showcase.component').then(m => m.RadioShowcaseComponent) },
+      { path: 'switch', loadComponent: () => import('./features/components/switch-showcase.component').then(m => m.SwitchShowcaseComponent) },
       { path: 'button-toggle', loadComponent: () => import('./features/components/button-toggle-showcase.component').then(m => m.ButtonToggleShowcaseComponent) },
       { path: 'select', loadComponent: () => import('./features/components/select-showcase.component').then(m => m.SelectShowcaseComponent) },
       { path: 'autocomplete', loadComponent: () => import('./features/components/autocomplete-showcase.component').then(m => m.AutocompleteShowcaseComponent) },

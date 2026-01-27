@@ -30,16 +30,14 @@ interface ComponentCategory {
           </a>
           <div class="px-6 mb-6">
             <div class="relative">
-              <lucide-angular [img]="Search" class="!text-[18px] !w-[18px] !h-[18px] absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--foreground-variant,#999)]"></lucide-angular>
-              <input 
-                type="text" 
+              <app-input
                 [ngModel]="searchQuery()"
-                (ngModelChange)="searchQuery.set($event)" 
+                (ngModelChange)="searchQuery.set($event)"
                 placeholder="Search components..."
-                class="w-full pl-9 pr-4 py-2 text-sm border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-150"
+                [prefixIcon]="Search"
               />
               @if (searchQuery()) {
-                <button (click)="searchQuery.set('')" class="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 hover:bg-muted rounded-full transition-colors">
+                <button (click)="searchQuery.set('')" class="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 hover:bg-muted rounded-full transition-colors z-10">
                   <lucide-angular [img]="X" class="!text-[14px] !w-[14px] !h-[14px] text-[color:var(--foreground-variant,#999)]"></lucide-angular>
                 </button>
               }
@@ -60,7 +58,7 @@ interface ComponentCategory {
                     <li>
                       <a [routerLink]="'/components/' + item.id"
                           routerLinkActive="bg-card text-primary"
-                          class="flex items-center gap-3 py-2.5 px-6 text-[color:var(--foreground,#1a1b1f)] no-underline text-sm transition-all duration-150 hover:bg-primary/10">
+                          class="flex items-center gap-3 py-2.5 px-6 text-[color:var(--foreground,#1a1b1f)] no-underline text-sm transition-all duration-150 hover:bg-gray-100">
                         <lucide-angular [img]="item.icon" class="!text-[20px] !w-[20px] !h-[20px] text-[color:var(--foreground-variant,#666)]"></lucide-angular>
                         <span>{{ item.title }}</span>
                       </a>
@@ -211,6 +209,7 @@ export class ComponentDocLayoutComponent {
         { id: 'button', title: 'Button', icon: Square },
         { id: 'checkbox', title: 'Checkbox', icon: CheckSquare },
         { id: 'radio', title: 'Radio', icon: Radio },
+        { id: 'switch', title: 'Switch', icon: ToggleLeft },
         { id: 'button-toggle', title: 'Button Toggle', icon: ToggleLeft },
         { id: 'input', title: 'Input', icon: TextSelect },
         { id: 'select', title: 'Select', icon: List },
@@ -243,7 +242,6 @@ export class ComponentDocLayoutComponent {
         { id: 'icon', title: 'Icon', icon: Smile },
         { id: 'progress-bar', title: 'Progress Bar', icon: Loader },
         { id: 'spinner', title: 'Spinner', icon: RotateCw },
-        { id: 'sort-header', title: 'Sort Header', icon: ArrowUpDown },
         { id: 'alert', title: 'Alert', icon: AlertTriangle }
       ]
     },
