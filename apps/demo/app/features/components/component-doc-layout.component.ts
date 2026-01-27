@@ -19,7 +19,7 @@ interface ComponentCategory {
 @Component({
   selector: 'app-component-doc-layout',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, RouterOutlet, LucideAngularModule, FormsModule, BottomSheetComponent],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, LucideAngularModule, FormsModule, BottomSheetComponent, InputComponent],
   template: `
     <div class="flex min-h-[calc(100vh-72px)]">
       <aside class="hidden md:block w-[280px] flex-shrink-0 bg-background border-r overflow-y-auto sticky top-[72px] h-[calc(100vh-72px)]">
@@ -211,7 +211,6 @@ export class ComponentDocLayoutComponent {
         { id: 'button', title: 'Button', icon: Square },
         { id: 'checkbox', title: 'Checkbox', icon: CheckSquare },
         { id: 'radio', title: 'Radio', icon: Radio },
-        { id: 'slide-toggle', title: 'Slide Toggle', icon: ToggleLeft },
         { id: 'button-toggle', title: 'Button Toggle', icon: ToggleLeft },
         { id: 'input', title: 'Input', icon: TextSelect },
         { id: 'select', title: 'Select', icon: List },

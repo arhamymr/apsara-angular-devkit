@@ -160,6 +160,7 @@ interface ButtonProp {
   `
 })
 export class ButtonShowcaseComponent {
+  private readonly viewportScroller = inject(ViewportScroller);
   Plus = Plus;
   ArrowRight = ArrowRight;
   Download = Download;

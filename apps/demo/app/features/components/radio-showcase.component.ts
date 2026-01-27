@@ -16,6 +16,11 @@ interface RadioProp {
   imports: [CommonModule, RadioComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent, FormsModule, ReactiveFormsModule],
   template: `
     <section id="radio" class="mb-16 scroll-m-20">
+      <div class="mb-6">
+        <h2 class="text-2xl font-semibold text-foreground mb-2">Radio</h2>
+        <p class="text-muted-foreground">A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.</p>
+      </div>
+
       <app-card>
         <app-tabs [options]="previewCodeOptions" [modelValue]="basicTab()" (changed)="basicTab.set($event)">
           @if (basicTab() === 'preview') {
@@ -29,8 +34,8 @@ interface RadioProp {
                     [(ngModel)]="selectedGender" />
                 </div>
               </div>
-              <div class="p-4 bg-blue-50 rounded-lg mt-4">
-                <p class="text-sm text-blue-600">
+              <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg mt-4 border border-blue-100 dark:border-blue-800">
+                <p class="text-sm text-blue-600 dark:text-blue-400">
                   <strong>Selected:</strong> {{ selectedGender() || 'None' }}
                 </p>
               </div>
@@ -92,15 +97,15 @@ interface RadioProp {
                   name="plan"
                   [options]="planOptions"
                   [formControl]="planControl" />
-                <div class="mt-4">
-                  <button class="px-3 py-1 bg-gray-200 rounded mr-2" (click)="planControl.disable()">Disable</button>
-                  <button class="px-3 py-1 bg-gray-200 rounded" (click)="planControl.enable()">Enable</button>
+                <div class="mt-4 flex gap-2">
+                  <button class="px-3 py-1 bg-muted hover:bg-muted/80 text-foreground text-sm rounded transition-colors" (click)="planControl.disable()">Disable</button>
+                  <button class="px-3 py-1 bg-muted hover:bg-muted/80 text-foreground text-sm rounded transition-colors" (click)="planControl.enable()">Enable</button>
                 </div>
-                <div class="p-4 bg-green-50 rounded-lg mt-4">
-                  <p class="text-sm text-green-600">
+                <div class="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg mt-4 border border-green-100 dark:border-green-800">
+                  <p class="text-sm text-green-600 dark:text-green-400">
                     <strong>Form Value:</strong> {{ planControl.value }}
                   </p>
-                  <p class="text-sm text-green-600">
+                  <p class="text-sm text-green-600 dark:text-green-400">
                     <strong>Form Status:</strong> {{ planControl.status }}
                   </p>
                 </div>
@@ -202,6 +207,7 @@ planControl = new FormControl('pro');
     { name: 'name', type: 'string', description: 'Radio group name (required)' },
     { name: 'options', type: 'RadioOption[]', description: 'Array of { value, label, disabled? }' },
     { name: 'modelValue', type: 'string', description: 'Currently selected value (Signal)' },
+    { name: 'disabled', type: 'boolean', description: 'Disables all radio buttons in the group' },
     { name: 'legend', type: 'string', description: 'Legend text for the fieldset (screen reader only)' },
     { name: 'onChange', type: 'output<string>', description: 'Emitted when selection changes' }
   ];

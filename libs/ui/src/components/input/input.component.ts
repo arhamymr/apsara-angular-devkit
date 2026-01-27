@@ -1,16 +1,14 @@
-import { Component, input, output, forwardRef, contentChild, ContentChild } from '@angular/core';
+import { Component, input, output, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { cn } from '../../lib/cn';
 import { LucideAngularModule } from 'lucide-angular';
 
 export type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search' | 'date' | 'datetime-local' | 'time' | 'file';
-
 export type InputSize = 'sm' | 'md' | 'lg' | 'xl';
-
 export type InputRadius = 'none' | 'sm' | 'md' | 'lg' | 'full';
 
-  @Component({
+@Component({
   selector: 'app-input',
   standalone: true,
   imports: [CommonModule, FormsModule, LucideAngularModule],
@@ -33,7 +31,9 @@ export type InputRadius = 'none' | 'sm' | 'md' | 'lg' | 'full';
 
       <div class="relative flex items-center w-full">
         @if (prefixIcon()) {
-          <span class="absolute left-1 flex items-center justify-center w-9 h-9 text-muted-foreground text-lg">{{ prefixIcon() }}</span>
+          <span class="absolute left-1 flex items-center justify-center w-9 h-9 text-muted-foreground text-lg">
+            <lucide-angular [img]="prefixIcon()" [size]="18"></lucide-angular>
+          </span>
         }
 
         <input
@@ -87,7 +87,7 @@ export class InputComponent implements ControlValueAccessor {
   readonly error = input<string>('');
   readonly hint = input<string>('');
   readonly required = input<boolean>(false);
-  readonly prefixIcon = input<string>('');
+  readonly prefixIcon = input<any>('');
   readonly accept = input<string>('');
   readonly multiple = input<boolean>(false);
   readonly orientation = input<'vertical' | 'inline'>('vertical');
@@ -96,17 +96,13 @@ export class InputComponent implements ControlValueAccessor {
   readonly radius = input<InputRadius>('md');
   readonly classes = input<string>('');
 
-  protected showPassword = false;
-
-  isString(value: any): boolean {
-    return typeof value === 'string';
-  }
-}
   readonly fileChange = output<File[]>();
 
-  private onChange: (value: string) => void = () => {};
-  private onTouched: () => void = () => {};
+  protected showPassword = false;
   protected internalValue = '';
+
+  private onChange: (value: any) => void = () => { };
+  private onTouched: () => void = () => { };
 
   cn = cn;
 
@@ -131,30 +127,32 @@ export class InputComponent implements ControlValueAccessor {
     return radii[this.radius()];
   }
 
-  writeValue(value: string): void {
+  writeValue(value: any): void {
     this.internalValue = value ?? '';
   }
 
-  registerOnChange(fn: (value: string) => void): void {
+  registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: () => void): void {
+  registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
   setDisabledState(isDisabled: boolean): void {
+    // Handled by signal property if needed, but standard CVA method
   }
 
   onInput(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.type === 'file') {
-      const files = Array.from(input.files || []);
+    const inputEl = event.target as HTMLInputElement;
+    if (this.type() === 'file') {
+      const files = Array.from(inputEl.files || []);
       this.fileChange.emit(files);
-      this.onChange('');
+      this.onChange(files);
     } else {
-      this.onChange(input.value);
-      this.internalValue = input.value;
+      const value = inputEl.value;
+      this.internalValue = value;
+      this.onChange(value);
     }
   }
 

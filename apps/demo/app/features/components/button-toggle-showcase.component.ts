@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonToggleComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, CardComponent, TabsComponent, TableComponent } from '@apsara/ui';
 import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-snippet.component';
+import { LucideAngularModule, Grid, List, AlignJustify, Calendar, Hash, DollarSign } from 'lucide-angular';
 
 interface ButtonToggleProp {
   name: string;
@@ -12,7 +13,7 @@ interface ButtonToggleProp {
 @Component({
   selector: 'app-button-toggle-showcase',
   standalone: true,
-  imports: [CommonModule, ButtonToggleComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent],
+  imports: [CommonModule, ButtonToggleComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent, LucideAngularModule],
   template: `
     <app-alert variant="warning" class="mb-6">
       <app-alert-title>AI Generated Content</app-alert-title>
@@ -121,15 +122,15 @@ export class ButtonToggleShowcaseComponent {
   selectedSort = signal<string>('date');
 
   viewOptions = [
-    { value: 'grid', label: 'Grid', icon: 'grid_view' },
-    { value: 'list', label: 'List', icon: 'view_list' },
-    { value: 'compact', label: 'Compact', icon: 'density_small' }
+    { value: 'grid', label: 'Grid', icon: Grid },
+    { value: 'list', label: 'List', icon: List },
+    { value: 'compact', label: 'Compact', icon: AlignJustify }
   ];
 
   sortOptions = [
-    { value: 'date', label: 'Date' },
-    { value: 'name', label: 'Name' },
-    { value: 'price', label: 'Price' }
+    { value: 'date', label: 'Date', icon: Calendar },
+    { value: 'name', label: 'Name', icon: Hash },
+    { value: 'price', label: 'Price', icon: DollarSign }
   ];
 
   installCode = `npm install @apsara/ui/button-toggle`;

@@ -23,7 +23,6 @@ export { RadioShowcaseComponent } from './radio-showcase.component';
 export { RipplesShowcaseComponent } from './ripples-showcase.component';
 export { SelectShowcaseComponent } from './select-showcase.component';
 export { SidenavShowcaseComponent } from './sidenav-showcase.component';
-export { SlideToggleShowcaseComponent } from './slide-toggle-showcase.component';
 export { SliderShowcaseComponent } from './slider-showcase.component';
 export { SonnerShowcaseComponent } from './sonner-showcase.component';
 export { SpinnerShowcaseComponent } from './spinner-showcase.component';

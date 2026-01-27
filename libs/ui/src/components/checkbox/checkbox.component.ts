@@ -22,7 +22,7 @@ const checkboxVariants = cva(
         xl: 'w-6 h-6',
       },
       color: {
-        default: 'border-gray-300 text-blue-600 focus:ring-blue-500',
+        default: 'border-gray-300 text-primary focus:ring-primary',
         secondary: 'border-gray-300 text-gray-600 focus:ring-gray-500',
         destructive: 'border-red-300 text-red-600 focus:ring-red-500',
         success: 'border-green-300 text-green-600 focus:ring-green-500',
@@ -108,8 +108,8 @@ export class CheckboxComponent implements ControlValueAccessor {
     this._isChecked.set(value);
   }
 
-  private _onChange: (value: boolean) => void = () => {};
-  private _onTouched: () => void = () => {};
+  private _onChange: (value: boolean) => void = () => { };
+  private _onTouched: () => void = () => { };
 
   writeValue(value: boolean): void {
     this._isChecked.set(value ?? false);

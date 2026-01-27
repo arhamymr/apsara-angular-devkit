@@ -9,19 +9,26 @@ export interface SelectOption {
   label: string;
   disabled?: boolean;
   group?: string;
-  icon?: string;
+  icon?: any;
 }
 
 @Component({
   selector: 'app-select',
   standalone: true,
   imports: [CommonModule, FormsModule, LucideAngularModule],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SelectComponent),
+      multi: true
+    }
+  ],
   template: `
     <div class="relative">
       <button
         type="button"
         class="w-full flex items-center justify-between px-3 py-2 rounded-lg border bg-card text-foreground border-border"
-        [disabled]="isDisabled()"
+        [disabled]="isDisabled() || disabled()"
         (click)="onToggle()"
         [attr.aria-expanded]="isOpen()"
         [attr.aria-labelledby]="ariaLabelledBy()">
@@ -38,18 +45,29 @@ export interface SelectOption {
           class="absolute z-50 w-full mt-1 py-1 rounded-lg shadow-lg border overflow-auto bg-card border-border max-h-[240px]"
           role="listbox"
           [attr.aria-label]="ariaLabel()">
+          @if (searchEnabled()) {
+            <div class="px-2 py-1.5 border-b border-border sticky top-0 bg-card z-10">
+              <div class="relative items-center flex">
+                 <lucide-angular [img]="Search" [size]="14" class="absolute left-2 text-muted-foreground" />
+                 <input
+                  type="text"
+                  [(ngModel)]="searchQuery"
+                  class="w-full pl-8 pr-2 py-1 text-sm bg-transparent border-none outline-none placeholder:text-muted-foreground"
+                  placeholder="Search..." />
+              </div>
+            </div>
+          }
           @for (option of filteredOptions; track option.value) {
             <button
               type="button"
-              class="w-full flex items-center gap-3 px-3 py-2 text-sm text-foreground"
-              [class.bg-[var(--primary)]]="modelValue() === option.value"
-              [class.text-[var(--primary-foreground)]]="modelValue() === option.value"
+              class="w-full flex items-center gap-3 px-3 py-2 text-sm text-foreground hover:bg-muted transition-colors cursor-pointer"
+              [class.bg-muted]="modelValue() === option.value"
               [disabled]="option.disabled"
               role="option"
               [attr.aria-selected]="modelValue() === option.value"
               (click)="onSelect(option)">
               @if (option.icon) {
-                <lucide-angular [img]="getIcon(option.icon)" [size]="18" />
+                <lucide-angular [img]="option.icon" [size]="18" />
               }
               <span>{{ option.label }}</span>
               @if (modelValue() === option.value) {
@@ -68,6 +86,7 @@ export interface SelectOption {
 export class SelectComponent implements ControlValueAccessor {
   ChevronDown = ChevronDown;
   Check = Check;
+  Search = Search;
   options = input<SelectOption[]>([]);
   placeholder = input<string>('Select an option');
   ariaLabel = input<string>('');
@@ -83,8 +102,8 @@ export class SelectComponent implements ControlValueAccessor {
   opened = output<void>();
   closed = output<void>();
 
-  private onChange: (value: string) => void = () => {};
-  private onTouched: () => void = () => {};
+  private onChange: (value: string) => void = () => { };
+  private onTouched: () => void = () => { };
 
   get filteredOptions(): SelectOption[] {
     let opts = this.options();

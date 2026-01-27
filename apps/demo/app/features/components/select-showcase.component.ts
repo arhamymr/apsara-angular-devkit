@@ -1,8 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SelectComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, CardComponent, TabsComponent, TableComponent } from '@apsara/ui';
+import { SelectComponent, CardComponent, TabsComponent, TableComponent } from '@apsara/ui';
 import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-snippet.component';
 import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { LucideAngularModule, ArrowDown, ArrowUp, Minus, Globe, Search, User, Shield, Eye } from 'lucide-angular';
 
 interface SelectProp {
   name: string;
@@ -13,12 +14,8 @@ interface SelectProp {
 @Component({
   selector: 'app-select-showcase',
   standalone: true,
-  imports: [CommonModule, SelectComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, SelectComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent, FormsModule, ReactiveFormsModule, LucideAngularModule],
   template: `
-    <app-alert variant="warning" class="mb-6">
-      <app-alert-title>AI Generated Content</app-alert-title>
-      <app-alert-description>This component code may have been AI generated. Please review and verify before using in production.</app-alert-description>
-    </app-alert>
     <section id="select" class="mb-16 scroll-m-20">
       <div class="mb-6">
         <h2 class="text-2xl font-semibold text-foreground mb-2">Select</h2>
@@ -46,11 +43,11 @@ interface SelectProp {
                     [(ngModel)]="selectedPriority" />
                 </div>
               </div>
-              <div class="p-4 bg-blue-50 rounded-lg mt-4">
-                <p class="text-sm text-blue-600">
+              <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg mt-4 max-w-sm border border-blue-100 dark:border-blue-800">
+                <p class="text-sm text-blue-600 dark:text-blue-400">
                   <strong>Selected Country:</strong> {{ selectedCountry() || 'None' }}
                 </p>
-                <p class="text-sm text-blue-600">
+                <p class="text-sm text-blue-600 dark:text-blue-400">
                   <strong>Selected Priority:</strong> {{ selectedPriority() || 'None' }}
                 </p>
               </div>
@@ -87,8 +84,8 @@ interface SelectProp {
                     [noResultsText]="'No framework found'"
                     [(ngModel)]="selectedFramework" />
                 </div>
-                <div class="p-4 bg-blue-50 rounded-lg mt-4 max-w-sm">
-                  <p class="text-sm text-blue-600">
+                <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg mt-4 max-w-sm border border-blue-100 dark:border-blue-800">
+                  <p class="text-sm text-blue-600 dark:text-blue-400">
                     <strong>Selected:</strong> {{ selectedFramework() || 'None' }}
                   </p>
                 </div>
@@ -134,15 +131,15 @@ interface SelectProp {
                     [placeholder]="'Select a role'"
                     [formControl]="roleControl" />
                 </div>
-                <div class="mt-4">
-                  <button class="px-3 py-1 bg-gray-200 rounded mr-2" (click)="roleControl.disable()">Disable</button>
-                  <button class="px-3 py-1 bg-gray-200 rounded" (click)="roleControl.enable()">Enable</button>
+                <div class="mt-4 flex gap-2">
+                  <button class="px-3 py-1 bg-muted hover:bg-muted/80 text-foreground text-sm rounded transition-colors" (click)="roleControl.disable()">Disable</button>
+                  <button class="px-3 py-1 bg-muted hover:bg-muted/80 text-foreground text-sm rounded transition-colors" (click)="roleControl.enable()">Enable</button>
                 </div>
-                <div class="p-4 bg-green-50 rounded-lg mt-4 max-w-sm">
-                  <p class="text-sm text-green-600">
+                <div class="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg mt-4 max-w-sm border border-green-100 dark:border-green-800">
+                  <p class="text-sm text-green-600 dark:text-green-400">
                     <strong>Form Value:</strong> {{ roleControl.value }}
                   </p>
-                  <p class="text-sm text-green-600">
+                  <p class="text-sm text-green-600 dark:text-green-400">
                     <strong>Form Status:</strong> {{ roleControl.status }}
                   </p>
                 </div>
@@ -198,9 +195,9 @@ export class SelectShowcaseComponent {
   ];
 
   priorityOptions = [
-    { value: 'low', label: 'Low Priority', icon: 'arrow_downward' },
-    { value: 'medium', label: 'Medium Priority', icon: 'remove' },
-    { value: 'high', label: 'High Priority', icon: 'arrow_upward' }
+    { value: 'low', label: 'Low Priority', icon: ArrowDown },
+    { value: 'medium', label: 'Medium Priority', icon: Minus },
+    { value: 'high', label: 'High Priority', icon: ArrowUp }
   ];
 
   frameworkOptions = [

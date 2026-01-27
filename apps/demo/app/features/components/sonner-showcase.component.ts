@@ -1,12 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertComponent, AlertTitleComponent, AlertDescriptionComponent, ButtonComponent, CardComponent, TabsComponent, toast } from '@apsara/ui';
+import { ButtonComponent, CardComponent, TabsComponent, TableComponent, toast } from '@apsara/ui';
 import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-snippet.component';
 
 @Component({
   selector: 'app-sonner-showcase',
   standalone: true,
-  imports: [CommonModule, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, ButtonComponent, CardComponent, TabsComponent, CodeSnippetComponent],
+  imports: [CommonModule, ButtonComponent, CardComponent, TabsComponent, TableComponent, CodeSnippetComponent],
   template: `
     <section id="sonner" class="mb-16 scroll-m-20">
       <div class="mb-6">
