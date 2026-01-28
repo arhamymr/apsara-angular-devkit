@@ -97,17 +97,25 @@ export class BottomSheetComponent {
   title = input<string>('');
   hasHandle = input<boolean>(true);
   closeOnBackdropClick = input<boolean>(true);
-  height = input<'full' | 'half'>('full');
+  height = input<number>(50);
   closed = output<void>();
 
   protected isClosing = signal(false);
-  protected heightClass = computed(() => 
-    this.height() === 'full' ? 'h-[100vh]' : 'h-[50vh]'
-  );
 
-  protected contentHeightClass = computed(() => 
-    this.height() === 'full' ? 'h-[calc(100vh-8rem)]' : 'h-[calc(50vh-8rem)]'
-  );
+  private validateHeight(value: number): number {
+    return Math.max(Math.min(value, 100), 20);
+  }
+
+  protected heightClass = computed(() => {
+    const percentage = this.validateHeight(this.height());
+    return `h-[${percentage}vh]`;
+  });
+
+  protected contentHeightClass = computed(() => {
+    const percentage = this.validateHeight(this.height());
+    const contentHeight = Math.max(percentage - 32, 20);
+    return `h-[calc(${contentHeight}vh-8rem)]`;
+  });
 
   onBackdropClick(): void {
     if (this.closeOnBackdropClick()) {
