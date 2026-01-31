@@ -1,11 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { CardComponent, SliderComponent } from '@aether/ui';
 
 @Component({
   selector: 'app-slider-showcase',
   standalone: true,
-  imports: [CommonModule, CardComponent, SliderComponent],
+  imports: [CommonModule, FormsModule, CardComponent, SliderComponent],
   template: `
     <app-card class="flex-1 flex flex-col h-full">
       <div class="mb-6">
@@ -18,21 +19,21 @@ import { CardComponent, SliderComponent } from '@aether/ui';
               <span class="text-sm font-semibold text-primary">{{ sliderValue1() }}</span>
               <span class="text-sm text-foreground">Volume</span>
             </div>
-            <app-slider [min]="0" [max]="100" [modelValue]="sliderValue1()" (changed)="sliderValue1.set($event)" />
+            <app-slider [(ngModel)]="sliderValue1" [min]="0" [max]="100" [showValue]="false" />
           </div>
           <div class="flex flex-col gap-3">
             <div class="flex items-center justify-between">
               <span class="text-sm font-semibold text-primary">{{ sliderValue2() }}%</span>
               <span class="text-sm text-foreground">Brightness</span>
             </div>
-            <app-slider [min]="0" [max]="100" [modelValue]="sliderValue2()" (changed)="sliderValue2.set($event)" />
+            <app-slider [(ngModel)]="sliderValue2" [min]="0" [max]="100" [showValue]="false" />
           </div>
           <div class="flex flex-col gap-3">
             <div class="flex items-center justify-between">
               <span class="text-sm font-semibold text-primary">{{ sliderValue3() }}%</span>
               <span class="text-sm text-foreground">Opacity</span>
             </div>
-            <app-slider [min]="0" [max]="100" [modelValue]="sliderValue3()" (changed)="sliderValue3.set($event)" />
+            <app-slider [(ngModel)]="sliderValue3" [min]="0" [max]="100" [showValue]="false" />
           </div>
         </div>
     </app-card>

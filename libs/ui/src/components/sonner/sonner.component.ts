@@ -1,9 +1,10 @@
-import { Component, input, ViewEncapsulation } from '@angular/core';
+import { Component, input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { NgxSonnerToaster } from 'ngx-sonner';
 
 @Component({
   selector: 'app-sonner',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgxSonnerToaster],
   template: `
     <ngx-sonner-toaster

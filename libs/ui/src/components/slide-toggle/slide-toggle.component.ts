@@ -1,10 +1,11 @@
-import { Component, input, output, signal, Input } from '@angular/core';
+import { Component, input, output, signal, ChangeDetectionStrategy, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cn } from '../../lib/cn';
 
 @Component({
   selector: 'app-slide-toggle',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
   template: `
     <label
@@ -40,15 +41,16 @@ export class SlideToggleComponent {
   label = input<string>('');
   changed = output<boolean>();
 
+  // Backwards compatibility alias
   get isDisabled() { return this._isDisabled; }
-
-  isChecked(): boolean {
-    return this.checked();
-  }
 
   @Input()
   set disabled(value: boolean) {
     this._isDisabled.set(value);
+  }
+
+  isChecked(): boolean {
+    return this.checked();
   }
 
   onToggle(): void {

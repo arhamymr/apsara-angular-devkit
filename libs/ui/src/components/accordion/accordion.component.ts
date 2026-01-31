@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cn } from '../../lib/cn';
 import { LucideAngularModule, ChevronDown } from 'lucide-angular';
@@ -6,6 +6,7 @@ import { LucideAngularModule, ChevronDown } from 'lucide-angular';
 @Component({
   selector: 'app-accordion',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, LucideAngularModule],
   template: `
     <div class="border border-border rounded-lg overflow-hidden">

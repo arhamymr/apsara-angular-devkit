@@ -1,8 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SliderComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, CardComponent, TabsComponent, TableComponent } from '@aether/ui';
+import { SliderComponent, CardComponent, TabsComponent, TableComponent } from '@aether/ui';
 import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-snippet.component';
 import { LucideAngularModule, Volume2 } from 'lucide-angular';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 
 interface SliderProp {
   name: string;
@@ -14,12 +15,8 @@ interface SliderProp {
 @Component({
   selector: 'app-slider-showcase',
   standalone: true,
-  imports: [CommonModule, SliderComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, CardComponent, TabsComponent, TableComponent, LucideAngularModule, CodeSnippetComponent],
+  imports: [CommonModule, SliderComponent, CardComponent, TabsComponent, TableComponent, LucideAngularModule, CodeSnippetComponent, FormsModule, ReactiveFormsModule],
   template: `
-    <app-alert variant="warning" class="mb-6">
-      <app-alert-title>AI Generated Content</app-alert-title>
-      <app-alert-description>This component code may have been AI generated. Please review and verify before using in production.</app-alert-description>
-    </app-alert>
     <section id="slider" class="mb-16 scroll-m-20">
       <div class="mb-6">
         <h2 class="text-2xl font-semibold text-foreground mb-2">Slider</h2>
@@ -33,11 +30,10 @@ interface SliderProp {
               <div class="flex items-center gap-4">
                 <lucide-angular [img]="Volume2" class="text-gray-400" />
                 <app-slider
+                  [(ngModel)]="volume"
                   [min]="0"
                   [max]="100"
-                  [modelValue]="volume()"
-                  [showValue]="true"
-                  (changed)="onVolumeChange($event)" />
+                  [showValue]="true" />
                 <lucide-angular [img]="Volume2" class="text-gray-400" />
               </div>
             </div>
@@ -65,15 +61,82 @@ interface SliderProp {
             @if (rangeTab() === 'preview') {
               <div class="p-6">
                 <app-slider
+                  [(ngModel)]="price"
                   [min]="0"
                   [max]="1000"
                   [step]="10"
-                  [modelValue]="price()"
-                  [showValue]="true"
-                  (changed)="onPriceChange($event)" />
+                  [showValue]="true" />
               </div>
             } @else {
               <app-code-snippet [code]="rangeCode" language="html" />
+            }
+          </app-tabs>
+        </app-card>
+      </div>
+
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold text-foreground mb-4">Disabled State</h3>
+        <p class="text-muted-foreground mb-4">Sliders can be disabled to prevent user interaction</p>
+        <app-card>
+          <app-tabs [options]="previewCodeOptions" [modelValue]="disabledTab()" (changed)="disabledTab.set($event)">
+            @if (disabledTab() === 'preview') {
+              <div class="p-6">
+                <div class="flex flex-col gap-6">
+                  <div>
+                    <span class="text-xs text-muted-foreground font-medium mb-2 block">Disabled (value 30)</span>
+                    <app-slider [ngModel]="30" [disabled]="true" />
+                  </div>
+                  <div>
+                    <span class="text-xs text-muted-foreground font-medium mb-2 block">Disabled (value 70)</span>
+                    <app-slider [ngModel]="70" [disabled]="true" [showValue]="false" />
+                  </div>
+                  <div>
+                    <span class="text-xs text-muted-foreground font-medium mb-2 block">Disabled with custom range</span>
+                    <app-slider [ngModel]="50" [min]="20" [max]="80" [disabled]="true" />
+                  </div>
+                </div>
+              </div>
+            } @else {
+              <app-code-snippet [code]="disabledCode" language="html" />
+            }
+          </app-tabs>
+        </app-card>
+      </div>
+
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold text-foreground mb-4">Form Integration</h3>
+        <p class="text-muted-foreground mb-4">Sliders work seamlessly with Angular's Reactive Forms and Template-driven forms</p>
+        
+        <app-card class="mb-4">
+          <app-tabs [options]="previewCodeOptions" [modelValue]="reactiveFormTab()" (changed)="reactiveFormTab.set($event)">
+            @if (reactiveFormTab() === 'preview') {
+              <div class="p-6">
+                <form [formGroup]="volumeForm" class="space-y-4">
+                  <app-slider formControlName="volume" [min]="0" [max]="100" [showValue]="true" />
+                  <div class="text-sm text-muted-foreground">
+                    Form value: {{ volumeForm.value.volume }}
+                  </div>
+                </form>
+              </div>
+            } @else {
+              <app-code-snippet [code]="reactiveFormCode" language="typescript" />
+            }
+          </app-tabs>
+        </app-card>
+
+        <app-card>
+          <app-tabs [options]="previewCodeOptions" [modelValue]="templateFormTab()" (changed)="templateFormTab.set($event)">
+            @if (templateFormTab() === 'preview') {
+              <div class="p-6">
+                <form>
+                  <app-slider [(ngModel)]="templateVolume" name="volume" [min]="0" [max]="100" [showValue]="true" />
+                </form>
+                <div class="text-sm text-muted-foreground mt-2">
+                  Value: {{ templateVolume() }}
+                </div>
+              </div>
+            } @else {
+              <app-code-snippet [code]="templateFormCode" language="html" />
             }
           </app-tabs>
         </app-card>
@@ -86,18 +149,18 @@ interface SliderProp {
             @if (sizesTab() === 'preview') {
               <div class="p-6">
                 <div class="flex flex-col gap-6">
-                  <app-slider
-                    [modelValue]="30"
-                    [size]="'sm'"
-                    [showValue]="false" />
-                  <app-slider
-                    [modelValue]="50"
-                    [size]="'md'"
-                    [showValue]="false" />
-                  <app-slider
-                    [modelValue]="70"
-                    [size]="'lg'"
-                    [showValue]="false" />
+                  <div>
+                    <span class="text-xs text-muted-foreground font-medium mb-2 block">Small</span>
+                    <app-slider [ngModel]="30" [size]="'sm'" [showValue]="false" />
+                  </div>
+                  <div>
+                    <span class="text-xs text-muted-foreground font-medium mb-2 block">Medium</span>
+                    <app-slider [ngModel]="50" [size]="'md'" [showValue]="false" />
+                  </div>
+                  <div>
+                    <span class="text-xs text-muted-foreground font-medium mb-2 block">Large</span>
+                    <app-slider [ngModel]="70" [size]="'lg'" [showValue]="false" />
+                  </div>
                 </div>
               </div>
             } @else {
@@ -134,60 +197,81 @@ export class SliderShowcaseComponent {
 
   basicTab = signal<string>('preview');
   rangeTab = signal<string>('preview');
+  disabledTab = signal<string>('preview');
+  reactiveFormTab = signal<string>('preview');
+  templateFormTab = signal<string>('preview');
   sizesTab = signal<string>('preview');
 
   Volume2 = Volume2;
-  volume = signal(75);
-  price = signal(500);
+  volume = 75;
+  price = 500;
+  templateVolume = signal(50);
+
+  volumeForm = new FormGroup({
+    volume: new FormControl(75)
+  });
 
   installCode = `npm install @aether/ui/slider`;
 
-  importCode = `import { SliderComponent } from '@aether/ui/slider';`;
+  importCode = `import { SliderComponent } from '@aether/ui/slider';
+import { FormsModule } from '@angular/forms';`;
 
   usageCode = `<app-slider
+  [(ngModel)]="volume"
   [min]="0"
   [max]="100"
-  [modelValue]="volume"
-  [showValue]="true"
-  (changed)="onVolumeChange($event)" />`;
+  [showValue]="true" />`;
 
   basicCode = `<div class="flex items-center gap-4">
   <lucide-angular [img]="Volume2" />
   <app-slider
+    [(ngModel)]="volume"
     [min]="0"
     [max]="100"
-    [modelValue]="volume()"
-    [showValue]="true"
-    (changed)="onVolumeChange($event)" />
+    [showValue]="true" />
 </div>`;
 
   rangeCode = `<app-slider
+  [(ngModel)]="price"
   [min]="0"
   [max]="1000"
   [step]="10"
-  [modelValue]="price()"
-  [showValue]="true"
-  (changed)="onPriceChange($event)" />`;
+  [showValue]="true" />`;
 
-  sizesCode = `<app-slider [modelValue]="30" [size]="'sm'" [showValue]="false" />
-<app-slider [modelValue]="50" [size]="'md'" [showValue]="false" />
-<app-slider [modelValue]="70" [size]="'lg'" [showValue]="false" />`;
+  disabledCode = `<app-slider [ngModel]="30" [disabled]="true" />
+<app-slider [ngModel]="70" [disabled]="true" [showValue]="false" />
+<app-slider [ngModel]="50" [min]="20" [max]="80" [disabled]="true" />`;
+
+  reactiveFormCode = `import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+
+export class MyComponent {
+  volumeForm = new FormGroup({
+    volume: new FormControl(75)
+  });
+}`;
+
+  templateFormCode = `import { FormsModule } from '@angular/forms';
+
+export class MyComponent {
+  volume = 50;
+}
+
+// In template:
+<form>
+  <app-slider [(ngModel)]="volume" name="volume" />
+</form>`;
+
+  sizesCode = `<app-slider [ngModel]="30" [size]="'sm'" [showValue]="false" />
+<app-slider [ngModel]="50" [size]="'md'" [showValue]="false" />
+<app-slider [ngModel]="70" [size]="'lg'" [showValue]="false" />`;
 
   propsData = (): SliderProp[] => [
     { name: 'min', type: 'number', default: '0', description: 'Minimum value' },
     { name: 'max', type: 'number', default: '100', description: 'Maximum value' },
     { name: 'step', type: 'number', default: '1', description: 'Step increment' },
-    { name: 'modelValue', type: 'number', description: 'Current value' },
-    { name: 'showValue', type: 'boolean', default: 'true', description: 'Shows current value' },
-    { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Slider size' },
+    { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the slider' },
+    { name: 'showValue', type: 'boolean', default: 'true', description: 'Shows current value below slider' },
+    { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Slider size variant' },
     { name: 'changed', type: 'EventEmitter<number>', description: 'Emitted when value changes' }
   ];
-
-  onVolumeChange(value: number): void {
-    this.volume.set(value);
-  }
-
-  onPriceChange(value: number): void {
-    this.price.set(value);
-  }
 }

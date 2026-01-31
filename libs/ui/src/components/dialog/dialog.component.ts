@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Dialog, DialogModule, DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { ButtonComponent } from '../button';
@@ -19,6 +19,7 @@ export interface DialogResult {
 @Component({
   selector: 'app-dialog',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DialogModule, CommonModule, ButtonComponent],
   template: `
     @if (isOpen()) {

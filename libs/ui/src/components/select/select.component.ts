@@ -1,4 +1,4 @@
-import { Component, input, output, signal, computed, forwardRef } from '@angular/core';
+import { Component, input, output, signal, computed, forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { cn } from '../../lib/cn';
@@ -15,6 +15,7 @@ export interface SelectOption {
 @Component({
   selector: 'app-select',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, FormsModule, LucideAngularModule],
   providers: [
     {

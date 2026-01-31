@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/cn';
 
@@ -24,6 +24,7 @@ export type BadgeVariantProps = VariantProps<typeof badgeVariants>;
 @Component({
   selector: 'app-badge',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <span [class]="cn(badgeVariants({ variant: variant() }))">
       <ng-content />

@@ -1,4 +1,4 @@
-import { Component, input, output, signal, TemplateRef } from '@angular/core';
+import { Component, input, output, signal, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkMenuModule, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { cn } from '../../lib/cn';
@@ -7,6 +7,7 @@ import { LucideAngularModule, ChevronDown, Menu, Search, Plus, Pencil, Trash2, S
 @Component({
   selector: 'app-menu',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, CdkMenuModule, CdkMenuTrigger, CdkMenuItem, LucideAngularModule],
   template: `
     @if (trigger()) {

@@ -1,6 +1,7 @@
-import { Component, input, output, forwardRef, contentChild, ContentChild } from '@angular/core';
+import { Component, input, output, forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/cn';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -10,9 +11,57 @@ export type InputSize = 'sm' | 'md' | 'lg' | 'xl';
 
 export type InputRadius = 'none' | 'sm' | 'md' | 'lg' | 'full';
 
-  @Component({
+const inputVariants = cva(
+  [
+    'w-full',
+    'border-[1.5px]',
+    'bg-input',
+    'text-foreground',
+    'transition-all',
+    'box-border',
+    'placeholder:text-muted-foreground',
+    'focus:outline-none',
+    'focus:border-primary',
+    'focus:ring-3',
+    'focus:ring-[oklch(0.55_0.2_250/0.1)]',
+    'disabled:bg-muted',
+    'disabled:cursor-not-allowed',
+    'disabled:opacity-60',
+  ],
+  {
+    variants: {
+      size: {
+        sm: 'px-3 py-1.5 text-xs',
+        md: 'px-3.5 py-2.5 text-sm',
+        lg: 'px-4 py-3 text-base',
+        xl: 'px-5 py-3.5 text-lg'
+      },
+      radius: {
+        none: 'rounded-none',
+        sm: 'rounded-sm',
+        md: 'rounded-md',
+        lg: 'rounded-lg',
+        full: 'rounded-full'
+      },
+      error: {
+        true: 'border-destructive focus:ring-[oklch(0.6098_0.244_28.41/0.1)]',
+        false: ''
+      },
+    },
+    defaultVariants: {
+      size: 'md',
+      radius: 'md',
+      error: false,
+    }
+  }
+);
+
+export type InputVariantProps = VariantProps<typeof inputVariants>;
+
+@Component({
   selector: 'app-input',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, FormsModule, LucideAngularModule],
   providers: [
     {
@@ -36,7 +85,7 @@ export type InputRadius = 'none' | 'sm' | 'md' | 'lg' | 'full';
           @if (isString(prefixIcon())) {
             <span class="absolute left-1 flex items-center justify-center w-9 h-9 text-muted-foreground text-lg">{{ prefixIcon() }}</span>
           } @else if (isIcon(prefixIcon())) {
-            <lucide-angular [img]="prefixIcon()" class="absolute left-1 w-5 h-5 text-muted-foreground flex items-center justify-center" />
+            <lucide-angular [img]="prefixIcon()" [size]="20" class="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
           }
         }
 
@@ -52,17 +101,15 @@ export type InputRadius = 'none' | 'sm' | 'md' | 'lg' | 'full';
           (blur)="onBlur()"
           (focus)="onFocus()"
           [class]="cn(
-            'w-full border-[1.5px] bg-input text-foreground transition-all box-border',
-            getSizeClasses(),
-            getRadiusClasses(),
-            'placeholder:text-muted-foreground',
-            'focus:outline-none focus:border-primary focus:ring-3 focus:ring-[oklch(0.55_0.2_250/0.1)]',
-            'disabled:bg-muted disabled:cursor-not-allowed disabled:opacity-60',
+            inputVariants({
+              size: size(),
+              radius: radius(),
+              error: !!error()
+            }),
             getInputType() === 'file' && 'px-3 py-2 cursor-pointer',
             (getInputType() === 'date' || getInputType() === 'datetime-local' || getInputType() === 'time') && 'cursor-pointer',
             !!prefixIcon() && 'pl-10',
             isPassword() && 'pr-10',
-            !!error() && 'border-destructive focus:ring-[oklch(0.6098_0.244_28.41/0.1)]',
             classes()
           )" />
 
@@ -117,27 +164,7 @@ export class InputComponent implements ControlValueAccessor {
   protected internalValue = '';
 
   cn = cn;
-
-  public getSizeClasses(): string {
-    const sizes: Record<InputSize, string> = {
-      sm: 'px-3 py-1.5 text-xs',
-      md: 'px-3.5 py-2.5 text-sm',
-      lg: 'px-4 py-3 text-base',
-      xl: 'px-5 py-3.5 text-lg'
-    };
-    return sizes[this.size()];
-  }
-
-  public getRadiusClasses(): string {
-    const radii: Record<InputRadius, string> = {
-      none: 'rounded-none',
-      sm: 'rounded-sm',
-      md: 'rounded-md',
-      lg: 'rounded-lg',
-      full: 'rounded-full'
-    };
-    return radii[this.radius()];
-  }
+  inputVariants = inputVariants;
 
   writeValue(value: string): void {
     this.internalValue = value ?? '';

@@ -97,6 +97,31 @@ interface ProgressProp {
       </div>
 
       <div class="mt-8">
+        <h3 class="text-lg font-semibold text-foreground mb-4">Accessibility</h3>
+        <app-card>
+          <app-tabs [options]="previewCodeOptions" [modelValue]="accessibilityTab()" (changed)="accessibilityTab.set($event)">
+            @if (accessibilityTab() === 'preview') {
+              <div class="p-6">
+                <div class="flex flex-col gap-4">
+                  <app-progress [value]="60" [role]="'progressbar'" [ariaLabel]="'Loading progress'" />
+                  <p class="text-sm text-muted-foreground">
+                    The progress bar uses semantic HTML with ARIA attributes for screen readers.
+                    You can customize the role and label for specific use cases.
+                  </p>
+                  <app-progress [value]="100" [role]="'none'" />
+                  <p class="text-sm text-muted-foreground">
+                    For decorative progress bars, use role="none" to hide from screen readers.
+                  </p>
+                </div>
+              </div>
+            } @else {
+              <app-code-snippet [code]="accessibilityCode" language="html" />
+            }
+          </app-tabs>
+        </app-card>
+      </div>
+
+      <div class="mt-8">
         <h3 class="text-lg font-semibold text-foreground mb-4">Props</h3>
         <ng-template #tableHeader>
           <th class="text-left p-3 bg-muted font-semibold text-muted-foreground text-xs uppercase tracking-wide">Prop</th>
@@ -124,6 +149,7 @@ export class ProgressBarShowcaseComponent {
   basicTab = signal<string>('preview');
   colorsTab = signal<string>('preview');
   sizesTab = signal<string>('preview');
+  accessibilityTab = signal<string>('preview');
 
   progressValue = signal(60);
 
@@ -155,11 +181,23 @@ export class ProgressBarShowcaseComponent {
 <app-progress [value]="60" size="md" />
 <app-progress [value]="60" size="lg" />`;
 
+  accessibilityCode = `<app-progress 
+  [value]="60"
+  [role]="'progressbar'"
+  [ariaLabel]="'Loading progress'" />
+
+<!-- For decorative progress bars -->
+<app-progress 
+  [value]="100"
+  [role]="'none'" />`;
+
   propsData = (): ProgressProp[] => [
-    { name: 'value', type: 'number', description: 'Current progress value' },
+    { name: 'value', type: 'number', default: '0', description: 'Current progress value' },
     { name: 'max', type: 'number', default: '100', description: 'Maximum value' },
     { name: 'color', type: "'primary' | 'success' | 'warning' | 'danger'", default: "'primary'", description: 'Progress bar color' },
-    { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Progress bar size' }
+    { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Progress bar size' },
+    { name: 'role', type: "'progressbar' | 'none'", default: "'progressbar'", description: 'ARIA role for accessibility' },
+    { name: 'ariaLabel', type: 'string', default: "'Progress'", description: 'ARIA label for screen readers' }
   ];
 
   increaseProgress(): void {

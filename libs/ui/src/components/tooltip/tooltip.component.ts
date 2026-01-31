@@ -1,4 +1,4 @@
-import { Component, input, output, signal, TemplateRef, ContentChild } from '@angular/core';
+import { Component, input, output, signal, TemplateRef, ContentChild, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OverlayModule, OverlayRef } from '@angular/cdk/overlay';
 import { PortalModule, ComponentPortal } from '@angular/cdk/portal';
@@ -7,6 +7,7 @@ import { cn } from '../../lib/cn';
 @Component({
   selector: 'app-tooltip',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, OverlayModule, PortalModule],
   template: `
     <div

@@ -1,4 +1,4 @@
-import { Component, input, output, signal, TemplateRef } from '@angular/core';
+import { Component, input, output, signal, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cn } from '../../lib/cn';
 
@@ -14,6 +14,7 @@ export interface TreeNode<T = unknown> {
 @Component({
   selector: 'app-tree',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
   template: `
     <div class="py-2">

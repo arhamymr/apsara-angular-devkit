@@ -1,4 +1,4 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, input, output, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkMenuModule } from '@angular/cdk/menu';
 import { cn } from '../../lib/cn';
@@ -7,6 +7,7 @@ import { LucideAngularModule, X } from 'lucide-angular';
 @Component({
   selector: 'app-chips',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, CdkMenuModule, LucideAngularModule],
   template: `
     <div class="flex flex-wrap gap-2">

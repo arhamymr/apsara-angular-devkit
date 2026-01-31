@@ -1,10 +1,11 @@
-import { Component, input, contentChildren, computed } from '@angular/core';
+import { Component, input, contentChildren, computed, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cn } from '../../lib/cn';
 
 @Component({
   selector: 'app-list',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
   template: `
     <ul

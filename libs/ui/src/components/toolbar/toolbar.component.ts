@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../button';
 import { cn } from '../../lib/cn';
@@ -6,6 +6,7 @@ import { cn } from '../../lib/cn';
 @Component({
   selector: 'app-toolbar',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, ButtonComponent],
   template: `
     <header

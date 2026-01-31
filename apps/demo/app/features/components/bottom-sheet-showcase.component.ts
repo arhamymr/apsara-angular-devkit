@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BottomSheetComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, ButtonComponent, CardComponent, TabsComponent, TableComponent } from '@aether/ui';
+import { BottomSheetComponent, ButtonComponent, CardComponent, TabsComponent, TableComponent } from '@aether/ui';
 import { CodeSnippetComponent } from '../../shared/components/code-snippet/code-snippet.component';
 import { LucideAngularModule, Mail, MessageSquare, Link } from 'lucide-angular';
 
@@ -13,7 +13,7 @@ interface BottomSheetProp {
 @Component({
   selector: 'app-bottom-sheet-showcase',
   standalone: true,
-  imports: [CommonModule, BottomSheetComponent, AlertComponent, AlertTitleComponent, AlertDescriptionComponent, ButtonComponent, CardComponent, TabsComponent, TableComponent, LucideAngularModule, CodeSnippetComponent],
+  imports: [CommonModule, BottomSheetComponent, ButtonComponent, CardComponent, TabsComponent, TableComponent, LucideAngularModule, CodeSnippetComponent],
   template: `
     <section id="bottom-sheet" class="mb-16 scroll-m-20">
       <div class="mb-6">

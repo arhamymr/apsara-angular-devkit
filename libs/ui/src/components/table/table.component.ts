@@ -1,10 +1,11 @@
-import { Component, input, TemplateRef } from '@angular/core';
+import { Component, input, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cn } from '../../lib/cn';
 
 @Component({
   selector: 'app-table',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
   template: `
     <div [class]="cn('overflow-x-auto border rounded-lg', $class())">

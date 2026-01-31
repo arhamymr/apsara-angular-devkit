@@ -1,4 +1,4 @@
-import { Component, input, output, forwardRef, signal, Input } from '@angular/core';
+import { Component, input, output, forwardRef, signal, ChangeDetectionStrategy, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -47,6 +47,7 @@ const checkboxVariants = cva(
 @Component({
   selector: 'app-checkbox',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, FormsModule],
   template: `
     <label class="flex items-center gap-2 cursor-pointer" [class.cursor-not-allowed]="isDisabled()">
@@ -92,11 +93,11 @@ export class CheckboxComponent implements ControlValueAccessor {
   readonly radius = input<CheckboxRadius>('md');
   readonly class = input<string>('');
   private _isDisabled = signal(false);
-  private _isChecked = signal(false);
+  isChecked = signal(false);
   onChange = output<boolean>();
 
+  // Backwards compatibility aliases
   get isDisabled() { return this._isDisabled; }
-  get isChecked() { return this._isChecked; }
 
   @Input()
   set disabled(value: boolean) {
@@ -105,14 +106,14 @@ export class CheckboxComponent implements ControlValueAccessor {
 
   @Input()
   set checked(value: boolean) {
-    this._isChecked.set(value);
+    this.isChecked.set(value);
   }
 
   private _onChange: (value: boolean) => void = () => { };
   private _onTouched: () => void = () => { };
 
   writeValue(value: boolean): void {
-    this._isChecked.set(value ?? false);
+    this.isChecked.set(value ?? false);
   }
 
   registerOnChange(fn: (value: boolean) => void): void {
@@ -130,7 +131,7 @@ export class CheckboxComponent implements ControlValueAccessor {
   onCheckboxChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     const checked = target.checked;
-    this._isChecked.set(checked);
+    this.isChecked.set(checked);
     this._onChange(checked);
     this.onChange.emit(checked);
   }

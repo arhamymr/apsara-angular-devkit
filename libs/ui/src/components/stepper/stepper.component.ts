@@ -1,4 +1,4 @@
-import { Component, input, output, signal, Input } from '@angular/core';
+import { Component, input, output, signal, ChangeDetectionStrategy, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkStepperModule, CdkStep } from '@angular/cdk/stepper';
 import { ButtonComponent } from '../button';
@@ -7,6 +7,7 @@ import { cn } from '../../lib/cn';
 @Component({
   selector: 'app-stepper',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, CdkStepperModule, ButtonComponent],
   template: `
     <div class="w-full">
@@ -64,9 +65,12 @@ export class StepperComponent {
     return this._currentStep();
   }
 
-  @Input()
-  set currentStep(value: number) {
-    this._currentStep.set(value);
+  currentStep = input<number>(0);
+
+  constructor() {
+    effect(() => {
+      this._currentStep.set(this.currentStep());
+    });
   }
 
   onNext(): void {

@@ -1,4 +1,4 @@
-import { Component, input, output, forwardRef, signal } from '@angular/core';
+import { Component, input, output, forwardRef, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { cn } from '../../lib/cn';
@@ -6,6 +6,7 @@ import { cn } from '../../lib/cn';
 @Component({
   selector: 'app-radio',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, FormsModule],
   providers: [
     {
